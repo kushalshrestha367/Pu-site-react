@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const slides = [
   '/assets/img/carousel-1.jpg',
@@ -18,7 +19,7 @@ export default function HeroCarousel() {
   }, []);
 
   return (
-    <div className="relative w-full h-[500px] md:h-[calc(100vh-160px)] overflow-hidden mt-[130px] xl:mt-[140px]">
+    <div className="relative w-full h-[500px] md:h-[calc(100vh-160px)] overflow-hidden ">
       <AnimatePresence initial={false}>
         <motion.div
           key={i}
@@ -56,12 +57,12 @@ export default function HeroCarousel() {
                   initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}
                   className="flex flex-wrap gap-3"
                 >
-                  <a href="#" className="bg-accent hover:bg-accent/90 text-white py-3 px-6 rounded transition">
+                  <Link to="#" className="bg-accent hover:bg-accent/90 text-white py-3 px-6 rounded transition">
                     Explore Programs &amp; Enroll
-                  </a>
-                  <a href="#" className="bg-white/20 hover:bg-white/30 text-white py-3 px-6 rounded transition">
+                  </Link>
+                  <Link to="#" className="bg-white/20 hover:bg-white/30 text-white py-3 px-6 rounded transition">
                     Know Us
-                  </a>
+                  </Link>
                 </motion.div>
               </div>
             </div>

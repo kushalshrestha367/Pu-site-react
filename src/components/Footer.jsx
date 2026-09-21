@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Reveal from './Reveal';
 import {
   Briefcase, Phone, Mail, MapPin, Clock,
@@ -52,13 +53,13 @@ export default function Footer() {
               <p className="text-white/60 text-xs uppercase tracking-wider font-semibold mb-3">Follow us</p>
               <div className="flex gap-2">
                 {[Facebook, Instagram, Youtube, TwitterX, Linkedin].map((Icon, i) => (
-                  <a
+                  <Link
                     key={i}
-                    href="#"
+                    to="#"
                     className="w-9 h-9 rounded-full border border-white flex items-center justify-center hover:bg-white hover:text-footerbg transition"
                   >
                     <Icon size={16} />
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -82,7 +83,7 @@ export default function Footer() {
                 </div>
                 <div className="flex items-center justify-center sm:justify-start gap-2">
                   <Mail size={14} className="text-white/80" />
-                  <a href="mailto:info@purbuniv.edu.np" className="hover:underline">info@purbuniv.edu.np</a>
+                  <Link to="mailto:info@purbuniv.edu.np" className="hover:underline">info@purbuniv.edu.np</Link>
                 </div>
               </div>
             </div>
@@ -130,10 +131,10 @@ export default function Footer() {
         <div className="container-x flex flex-col lg:flex-row items-center justify-between gap-4 text-sm text-white/60">
           <p>Copyright © 2024-2026. <span className="text-white/80">Purbanchal University</span>. All Rights Reserved</p>
           <div className="flex flex-wrap items-center gap-6">
-            <a href="#!" className="hover:text-white">Privacy Policy</a>
-            <a href="#!" className="hover:text-white">Terms of Service</a>
+            <Link to="#!" className="hover:text-white">Privacy Policy</Link>
+            <Link to="#!" className="hover:text-white">Terms of Service</Link>
             <span className="text-xs">
-              Developed By <a href="https://saffron.info.np/" target="_blank" rel="noreferrer" className="text-yellow-500">Saffron Infosys</a>.
+              Developed By <Link to="https://saffron.info.np/" target="_blank" rel="noreferrer" className="text-yellow-500">Saffron Infosys</Link>.
             </span>
           </div>
         </div>
@@ -148,9 +149,9 @@ function FooterCol({ title, items }) {
       <h6 className="font-heading font-semibold text-footeraccent mb-5">{title}</h6>
       <nav className="flex flex-col gap-3">
         {items.map((i) => (
-          <a key={i} href="#!" className="text-white/70 hover:text-white hover:translate-x-1 transition text-sm">
+          <Link key={i} to="#!" className="text-white/70 hover:text-white hover:translate-x-1 transition text-sm">
             {i}
-          </a>
+          </Link>
         ))}
       </nav>
     </div>

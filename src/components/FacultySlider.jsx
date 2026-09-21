@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Reveal from './Reveal';
+import { Link } from 'react-router-dom';
 
 const faculties = [
   { img: '/assets/img/faculty/laws.jpg', title: 'Faculty of Law', no: '01' },
@@ -54,10 +55,10 @@ export default function FacultySlider() {
           className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory"
         >
           {faculties.map((f) => (
-            <a
+            <Link
               key={f.no}
               data-card
-              href="#"
+              to="#"
               className="relative block shrink-0 w-[280px] md:w-[380px] snap-start"
             >
               <img src={f.img} alt={f.title} className="w-full h-[22rem] object-cover" />
@@ -65,7 +66,7 @@ export default function FacultySlider() {
                 <h4 className="text-2xl font-bold leading-tight max-w-[70%] font-heading" dangerouslySetInnerHTML={{ __html: f.title.replace(' ', ' <br>') }} />
                 <span className="text-4xl font-bold leading-none">{f.no}</span>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </Reveal>

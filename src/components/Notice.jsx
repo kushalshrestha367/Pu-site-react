@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import Reveal from './Reveal';
+import { Link } from 'react-router-dom';
 
 const notices = [
   {
@@ -84,12 +85,12 @@ export default function Notice() {
 
           {/* More Notices Button */}
           <div className="mt-10">
-            <a
-              href="#"
+            <Link
+              to="#"
               className="inline-flex items-center gap-2 border border-white text-white px-6 py-2.5 text-sm font-semibold hover:bg-white hover:text-[#1a1f3c] transition-colors duration-300"
             >
               More Notices <ArrowRight size={16} />
-            </a>
+            </Link>
           </div>
         </Reveal>
 
@@ -111,12 +112,12 @@ export default function Notice() {
             {n.body}
           </p>
           
-          <a 
-            href="#" 
+          <Link
+            to="#" 
             className="inline-flex items-center gap-1 text-red-600 font-bold hover:text-red-700 transition-colors mt-auto"
           >
             Read More <ArrowRight size={16} />
-          </a>
+          </Link>
         </Reveal>
 
       </div>

@@ -1,6 +1,7 @@
 import { GraduationCap, Users, School } from 'lucide-react';
 import Reveal from './Reveal';
 import Counter from './Counter';
+import { Link } from 'react-router-dom';
 
 const stats = [
   { icon: <GraduationCap size={28} />, end: 250, label: 'Programs', suffix: '+' },
@@ -21,12 +22,12 @@ export default function About() {
             Accessible, affordable, and diverse. PU offers 250+ programs, 25,800+ students, and a strong
             alumni network, driving regional growth and sustainable education.
           </p>
-          <a
-            href="#"
+          <Link
+            to="#"
             className="inline-block bg-accent hover:bg-accent/90 text-white py-3 px-8 rounded-md transition"
           >
             Learn More
-          </a>
+          </Link>
         </Reveal>
 
         <Reveal variant="left" delay={1} className="grid grid-cols-2 gap-8">

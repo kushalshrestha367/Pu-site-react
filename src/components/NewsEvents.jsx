@@ -1,5 +1,6 @@
 import { Calendar, ArrowRight } from 'lucide-react';
 import Reveal from './Reveal';
+import { Link } from 'react-router-dom';
 
 const news = [
   { img: '/assets/img/notice/1.jpeg', date: '13 Apr, 2026', title: 'पूर्वाञ्चल विश्वविद्यालयकी बरिष्ठ अधिकृत रिना हाडाको विदाई...' },
@@ -16,7 +17,7 @@ export default function NewsEvents() {
       <div className="container-x">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <h2 className="text-4xl font-bold text-heading font-heading">Latest News &amp; Events</h2>
-          <a href="#" className="text-puRed hover:text-puRed/80 inline-flex items-center gap-1 font-medium">
+          <a to="#" className="text-puRed hover:text-puRed/80 inline-flex items-center gap-1 font-medium">
             See More News <ArrowRight size={16} />
           </a>
         </div>
@@ -38,10 +39,10 @@ export default function NewsEvents() {
                     <span>{item.date}</span>
                   </div>
                   <h4 className="text-puDark text-lg font-bold leading-snug mb-4 flex-1">{item.title}</h4>
-                  <a href="#" className="text-puRed font-semibold inline-flex items-center gap-1 group/link">
+                  <Link to="#" className="text-puRed font-semibold inline-flex items-center gap-1 group/link">
                     Read More
                     <ArrowRight size={16} className="transition group-hover/link:translate-x-1" />
-                  </a>
+                  </Link>
                 </div>
               </article>
             </Reveal>

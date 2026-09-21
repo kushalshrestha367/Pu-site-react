@@ -1,5 +1,6 @@
 import { Phone, CalendarCheck, PlayCircle } from 'lucide-react';
 import Reveal from './Reveal';
+import { Link } from 'react-router-dom';
 
 export default function Hero() {
   return (
@@ -14,7 +15,7 @@ export default function Hero() {
       <div className="container-x grid lg:grid-cols-2 gap-10 items-center relative z-10">
         <Reveal variant="right" className="space-y-5">
           <h1 className="text-4xl md:text-5xl font-bold text-heading font-heading">
-            Welcome to Purbanchal University
+            Welcome to Purbanchal Universityy
           </h1>
           <p className="text-lg leading-relaxed text-body/80">
             Purbanchal University, established in 1995, is a leading institution of higher education in
@@ -25,12 +26,12 @@ export default function Hero() {
             successful careers and meaningful contributions to society.
           </p>
           <div className="flex flex-wrap gap-4">
-            <a href="#" className="bg-accent hover:bg-accent/90 text-white py-3 px-6 rounded-full font-semibold transition">
+            <Link to="#" className="bg-accent hover:bg-accent/90 text-white py-3 px-6 rounded-full font-semibold transition">
               Discover More
-            </a>
-            <a href="#" className="border-2 border-accent text-accent hover:bg-accent hover:text-white py-3 px-6 rounded-full font-semibold flex items-center gap-2 transition">
+            </Link>
+            <Link to="#" className="border-2 border-accent text-accent hover:bg-accent hover:text-white py-3 px-6 rounded-full font-semibold flex items-center gap-2 transition">
               <PlayCircle size={18} /> Watch Our Story
-            </a>
+            </Link>
           </div>
           <div className="flex items-center gap-4 p-4 border border-accent/30 rounded-xl bg-white/60 backdrop-blur">
             <div className="w-12 h-12 rounded-full bg-accent text-white flex items-center justify-center">
