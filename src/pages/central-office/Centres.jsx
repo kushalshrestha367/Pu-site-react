@@ -146,7 +146,7 @@ function ContactCard({ contact, directorName, directorImage }) {
     >
       <div className="h-1 w-full bg-[#252659]" />
 
-      <div className="p-6 sm:p-7">
+      <div className="p-6 sm:p-7 font-serif">
         {directorName && (
           <div className="mb-5 flex justify-center">
             <div className="relative">
@@ -175,7 +175,7 @@ function ContactCard({ contact, directorName, directorImage }) {
           </h3>
         )}
 
-        <p className="mt-1 text-center text-sm font-semibold text-amber-700">
+        <p className="mt-1 text-center text-sm font-semibold text-accent">
           {contact.role}
         </p>
 
@@ -446,7 +446,7 @@ export default function Centres() {
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 20 20"
                           fill="currentColor"
-                          className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-600"
+                          className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent"
                           aria-hidden="true"
                         >
                           <path

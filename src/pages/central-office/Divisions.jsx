@@ -327,14 +327,14 @@ function ContactCard({ contact }) {
     >
       <div className="h-1 w-full bg-[#252659]" />
 
-      <div className="p-5 sm:p-6 lg:p-7">
+      <div className="p-5 sm:p-6 lg:p-7 font-serif">
         {contact.name && (
           <h3 className="mb-2 text-center font-serif text-base font-bold leading-snug text-slate-900 sm:text-lg">
             {contact.name}
           </h3>
         )}
 
-        <p className="text-center text-[13px] font-semibold text-amber-700 sm:text-sm">
+        <p className="text-center text-[13px] font-semibold text-accent sm:text-sm">
           {contact.role}
         </p>
 

@@ -1,0 +1,86 @@
+const PDF_BASE = 'https://purbanchaluniversity.edu.np/images/downloads';
+
+const downloadData = [
+  {
+    slug: 'existing-list-registration-form',
+    title: 'मौजुदा सूचीमा दर्ता गर्ने फाराम',
+    subtitle: 'मौजुदा सूचीमा दर्ता गर्ने फाराम',
+    date: 'Jul 24, 2026',
+    type: 'pdf',
+    pdf: `${PDF_BASE}/9afeee6727254ea4354ca13f77db34d8.pdf`,
+  },
+  {
+    slug: 'pu-entrance-scholarship-procedure-2082',
+    title: 'पू. वि. प्रवेश परीक्षा, छात्रवृत्ति सम्बन्धी व्यवस्था तथा छात्रवृत्ति प्रवेश परीक्षा सम्बन्धी एकीकृत कार्यविधि २०८२',
+    subtitle: 'पू. वि. प्रवेश परीक्षा, छात्रवृत्ति सम्बन्धी व्यवस्था तथा छात्रवृत्ति प्रवेश परीक्षा सम्बन्धी एकीकृत कार्यविधि २०८२',
+    date: 'Aug 26, 2025',
+    type: 'pdf',
+    pdf: `${PDF_BASE}/2115931491fe419ee6359c3bf82aac41.pdf`,
+  },
+  {
+    slug: 'dean-appointment-procedure-2081-revised',
+    title: 'डीनको नियुक्तिका लागि खोज तथा सिफारिस सम्बन्धी प्रक्रिया, योग्यता तथा मापदण्ड-२०८१ (संसोधन सहित)',
+    subtitle: 'डीनको नियुक्तिका लागि खोज तथा सिफारिस सम्बन्धी प्रक्रिया, योग्यता तथा मापदण्ड-२०८१ (संसोधन सहित)',
+    date: 'May 03, 2025',
+    type: 'link',
+    link: 'https://forms.gle/u1uevXekks54J7NVA',
+  },
+  {
+    slug: 'faculty-dean-appointment-procedure-2081',
+    title: 'संकाय डीनको नियुक्तिका लागि खोज तथा सिफारिस सम्बन्धी प्रक्रिया, योग्यता तथा मापदण्ड-२०८१',
+    subtitle: 'संकाय डीनको नियुक्तिका लागि खोज तथा सिफारिस सम्बन्धी प्रक्रिया, योग्यता तथा मापदण्ड-२०८१',
+    date: 'Apr 27, 2025',
+    type: 'link',
+    link: 'https://forms.gle/u1uevXekks54J7NVA',
+  },
+  {
+    slug: 'pu-regulations-2053-part-a-b-33rd-amendment',
+    title: 'पूर्वाञ्चल विश्वविद्यालय नियमावली २०५३ को खण्ड-क र खण्ड-ख (सैँतीसौँ सभासम्मको संशोधन सहित)',
+    subtitle: 'पूर्वाञ्चल विश्वविद्यालय नियमावली २०५३ को खण्ड-क र खण्ड-ख',
+    date: 'Jun 26, 2024',
+    type: 'pdf',
+    pdf: `${PDF_BASE}/2f4eeee9fdbe585711e0f4d810fe0cc0.pdf`,
+  },
+  {
+    slug: 'pu-financial-regulation-2074',
+    title: 'पूर्वाञ्चल_विश्वविद्यालय_नियमावली_२०५३_खण्ड_(ग) वित्तीय व्यवस्था नियमावली २०७४ (संसोधन सहित)',
+    subtitle: 'पूर्वाञ्चल_विश्वविद्यालय_नियमावली_२०५३_खण्ड_(ग) वित्तीय व्यवस्था नियमावली २०७४ (संसोधन सहित)',
+    date: 'Apr 14, 2024',
+    type: 'pdf',
+    pdf: `${PDF_BASE}/cfe6da55b2af875d5e4fe1022cca4785.pdf`,
+  },
+  {
+    slug: 'pu-historical-background',
+    title: 'पूर्वाञ्चल विश्वविद्यालयको ऐतिहासिक पृष्ठभूमि',
+    subtitle: 'पूर्वाञ्चल विश्वविद्यालयको ऐतिहासिक पृष्ठभूमि',
+    date: 'Jun 06, 2024',
+    type: 'pdf',
+    pdf: `${PDF_BASE}/3950eba55d1890662cfd6cb539016cf2.pdf`,
+  },
+  {
+    slug: 'pu-regulations-2053-part-a-b-35th-amendment',
+    title: 'पूर्वाञ्चल विश्वविद्यालय नियमावली २०५३ को खण्ड-क र खण्ड-ख (पैँतीसौँ सभासम्मको संशोधन सहित)',
+    subtitle: 'पूर्वाञ्चल विश्वविद्यालय नियमावली २०५३ को खण्ड-क र खण्ड-ख (पैँतीसौँ सभासम्मको संशोधन सहित)',
+    date: 'Apr 14, 2024',
+    type: 'pdf',
+    pdf: `${PDF_BASE}/89210828cf6bd2a49a0e790c416bbeea.pdf`,
+  },
+  {
+    slug: 'pu-act-2050-amended',
+    title: 'पूर्वाञ्चल विश्वविद्यालय ऐन, २०५० (संशोधन सहित)',
+    subtitle: 'पूर्वाञ्चल विश्वविद्यालय ऐन, २०५०',
+    date: 'Apr 14, 2024',
+    type: 'pdf',
+    pdf: `${PDF_BASE}/6aa5969fced7c98221bac95b51e56da1.pdf`,
+  },
+  {
+    slug: 'pu-affiliation-policy-2080',
+    title: 'पू.वि. सम्बन्धन सम्बन्धी नीति, शर्त र प्रक्रिया २०८०',
+    subtitle: 'पू.वि. सम्बन्धन सम्बन्धी नीति, शर्त र प्रक्रिया २०८०',
+    date: 'Aug 06, 2025',
+    type: 'pdf',
+    pdf: `${PDF_BASE}/2ad089c8afb6da0842e8a81d51593c7a.pdf`,
+  },
+];
+
+export default downloadData;

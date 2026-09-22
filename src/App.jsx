@@ -12,7 +12,7 @@ import Layout from "./Layout";
 import FacultyOfArts from "./pages/facilities/FacultyOfArts";
 import FacultyofEducation from "./pages/facilities/FacultyofEducation";
 import FacultyofEngineering from "./pages/facilities/FacultyofEngineering";
-import FacultyofLaw from "./pages/facilities/FacultyofLaw";
+import FacultyofLaw from "./pages/fa~cilities/FacultyofLaw";
 import FacultyofManagement from "./pages/facilities/FacultyofManagement";
 import FacultyofMedical from "./pages/facilities/FacultyofMedical";
 import FacultyofScienceAndTechnology from "./pages/facilities/FacultyofScienceAndTechnology";
@@ -40,6 +40,8 @@ import Centres from "./pages/central-office/Centres";
 import Divisions from "./pages/central-office/Divisions";
 import NewsEvents from "./components/NewsEvents";
 import NewsEventDetail from "./components/NewsEventDetail";
+import NoticeDetail from "./pages/NoticeDetail";
+import DownloadDetail from "./pages/DownloadDetail";
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
   useEffect(() => {
@@ -230,9 +232,30 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: "notice",
+        element: <PassThrough />,
+        handle: { breadcrumb: "Notice" },
+        children: [
+          { index: true, element: <Notice /> },
+          {
+            path: ":slug",
+            element: <NoticeDetail />,
+            handle: { breadcrumb: "Detail" },
+          },
+        ],
+      },
+      {
         path: "download",
-        element: <Download />,
+        element: <PassThrough />,
         handle: { breadcrumb: "Downloads" },
+        children: [
+          { index: true, element: <Download /> },
+          {
+            path: ":slug",
+            element: <DownloadDetail />,
+            handle: { breadcrumb: "Detail" },
+          },
+        ],
       },
       {
         path: "notice",
