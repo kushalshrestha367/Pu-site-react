@@ -18,7 +18,7 @@ export default function Breadcrumbs() {
   if (crumbs.length <= 1) return null;
 
   return (
-    <div className="-ml-5 mb-8 bg-slate-200 pl-5">
+    <div className="-ml-5 mb-8 bg-slate-200 pl-5 md:pl-35">
       <nav aria-label="Breadcrumb" className="overflow-x-auto px-5 py-3 md:px-8">
         <ol className="flex flex-nowrap items-center whitespace-nowrap text-[15px] text-pu-dark">
           {crumbs.map((crumb, index) => {
