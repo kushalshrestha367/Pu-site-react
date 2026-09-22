@@ -15,7 +15,7 @@ import GalleryHasImage from './pages/gallery/GalleryHasImage';
 import GalleryHasVideo from './pages/gallery/GalleryHasVideo';
 import ContactUs from './pages/contact-us/ContactUs';
 import NewsEvents from './components/NewsEvents';
-import Download from './pages/download/download';
+import Download from './pages/download/Download';
 import Notice from './pages/notice/Notice';
 
 import AboutPu from './pages/about/AboutPu';
