@@ -2,54 +2,164 @@ import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1];
-
-/* ------------------------------------------------------------------
-   Data
------------------------------------------------------------------- */
 const dean = {
   name: "Prof. Ram Prasad Dhakal",
   role: "Dean",
   email: "info@pufale.edu.np",
-  image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&crop=faces&q=80",
+  image:
+    "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&crop=faces&q=80",
   website: "https://pufale.edu.np",
 };
 
 const programs = [
   { sn: 1, name: "LL. B.", duration: "3 Years", type: "Yearly" },
   { sn: 2, name: "B.A. LL.B.", duration: "5 Years", type: "Yearly" },
-  { sn: 3, name: "LL. M. in Business & International Trade Law", duration: "2 Years", type: "Yearly" },
-  { sn: 4, name: "LL. M. in Human Rights & Gender Justice", duration: "2 Years", type: "Yearly" },
-  { sn: 5, name: "LL. M. in Criminal Law & Justice", duration: "2 Years", type: "Yearly" },
+  {
+    sn: 3,
+    name: "LL. M. in Business & International Trade Law",
+    duration: "2 Years",
+    type: "Yearly",
+  },
+  {
+    sn: 4,
+    name: "LL. M. in Human Rights & Gender Justice",
+    duration: "2 Years",
+    type: "Yearly",
+  },
+  {
+    sn: 5,
+    name: "LL. M. in Criminal Law & Justice",
+    duration: "2 Years",
+    type: "Yearly",
+  },
 ];
 
 const colleges = [
-  { sn: 1, name: "P.U. College of Law", address: "Biratnagar, Morang", programs: "LL. B.-120, B.A. LL.B.-60" },
-  { sn: 2, name: "Bright Vision Law College", address: "Biratnagar, Morang", programs: "B.A. LL.B.-180, LL. M.-100" },
-  { sn: 3, name: "Chakrabarti Habi Education Academy", address: "Kathmandu", programs: "B.A. LL.B.-100, LL. M.-100" },
-  { sn: 4, name: "Kathmandu School of Law", address: "Dadhikot, Bhaktapur", programs: "B.A. LL.B.-250, LL. M.-100" },
-  { sn: 5, name: "Khwopa College of Law", address: "Dakocha, Bhaktapur", programs: "B.A. LL.B.-60" },
-  { sn: 6, name: "Lumbini Integrated Academy", address: "Tilottama, Rupandehi", programs: "B.A. LL.B.-60" },
-  { sn: 7, name: "Mega College of Law", address: "Lalitipur", programs: "B.A. LL.B.-60" },
-  { sn: 8, name: "Sagarmatha College of Law", address: "Dillibazar, Kathmandu", programs: "B.A. LL.B.-60" },
-  { sn: 9, name: "Solukhumbu Law Campus", address: "Salleri, Solukhumbu", programs: "LL.B.-60" },
-  { sn: 10, name: "Global School of Law", address: "New Baneshwor, Kathmandu", programs: "B.A. LL.B.-60" },
-  { sn: 11, name: "Siddhartha Law Campus", address: "Hetauda, Makawanpur", programs: "B.A. LL.B.-60" },
-  { sn: 12, name: "Model College of Law", address: "Janakpurdham, Dhanusha", programs: "B.A. LL.B.-60" },
-  { sn: 13, name: "Asian College of Law", address: "Nagarjun, Kathmandu", programs: "B.A. LL.B.-60" },
-  { sn: 14, name: "Kantipur International College of Law", address: "New Baneshwor, Kathmandu", programs: "B.A. LL.B.-60" },
-  { sn: 15, name: "Himalayan Whitehouse College of Law", address: "Putalisadak, Kathmandu", programs: "B.A. LL.B.-60" },
-  { sn: 16, name: "Maharshi Law College", address: "Kupondole, Lalitpur", programs: "B.A. LL.B.-60" },
-  { sn: 17, name: "Annapurna Law College", address: "Biratnagar, Morang", programs: "B.A. LL.B.-60" },
-  { sn: 18, name: "Imperial Law College", address: "Thapagaun, Kathmandu", programs: "B.A. LL.B.-60" },
-  { sn: 19, name: "Shree College of Law", address: "Bharatpur, Chitwan", programs: "B.A. LL.B.-60" },
+  {
+    sn: 1,
+    name: "P.U. College of Law",
+    address: "Biratnagar, Morang",
+    programs: "LL. B.-120, B.A. LL.B.-60",
+  },
+  {
+    sn: 2,
+    name: "Bright Vision Law College",
+    address: "Biratnagar, Morang",
+    programs: "B.A. LL.B.-180, LL. M.-100",
+  },
+  {
+    sn: 3,
+    name: "Chakrabarti Habi Education Academy",
+    address: "Kathmandu",
+    programs: "B.A. LL.B.-100, LL. M.-100",
+  },
+  {
+    sn: 4,
+    name: "Kathmandu School of Law",
+    address: "Dadhikot, Bhaktapur",
+    programs: "B.A. LL.B.-250, LL. M.-100",
+  },
+  {
+    sn: 5,
+    name: "Khwopa College of Law",
+    address: "Dakocha, Bhaktapur",
+    programs: "B.A. LL.B.-60",
+  },
+  {
+    sn: 6,
+    name: "Lumbini Integrated Academy",
+    address: "Tilottama, Rupandehi",
+    programs: "B.A. LL.B.-60",
+  },
+  {
+    sn: 7,
+    name: "Mega College of Law",
+    address: "Lalitipur",
+    programs: "B.A. LL.B.-60",
+  },
+  {
+    sn: 8,
+    name: "Sagarmatha College of Law",
+    address: "Dillibazar, Kathmandu",
+    programs: "B.A. LL.B.-60",
+  },
+  {
+    sn: 9,
+    name: "Solukhumbu Law Campus",
+    address: "Salleri, Solukhumbu",
+    programs: "LL.B.-60",
+  },
+  {
+    sn: 10,
+    name: "Global School of Law",
+    address: "New Baneshwor, Kathmandu",
+    programs: "B.A. LL.B.-60",
+  },
+  {
+    sn: 11,
+    name: "Siddhartha Law Campus",
+    address: "Hetauda, Makawanpur",
+    programs: "B.A. LL.B.-60",
+  },
+  {
+    sn: 12,
+    name: "Model College of Law",
+    address: "Janakpurdham, Dhanusha",
+    programs: "B.A. LL.B.-60",
+  },
+  {
+    sn: 13,
+    name: "Asian College of Law",
+    address: "Nagarjun, Kathmandu",
+    programs: "B.A. LL.B.-60",
+  },
+  {
+    sn: 14,
+    name: "Kantipur International College of Law",
+    address: "New Baneshwor, Kathmandu",
+    programs: "B.A. LL.B.-60",
+  },
+  {
+    sn: 15,
+    name: "Himalayan Whitehouse College of Law",
+    address: "Putalisadak, Kathmandu",
+    programs: "B.A. LL.B.-60",
+  },
+  {
+    sn: 16,
+    name: "Maharshi Law College",
+    address: "Kupondole, Lalitpur",
+    programs: "B.A. LL.B.-60",
+  },
+  {
+    sn: 17,
+    name: "Annapurna Law College",
+    address: "Biratnagar, Morang",
+    programs: "B.A. LL.B.-60",
+  },
+  {
+    sn: 18,
+    name: "Imperial Law College",
+    address: "Thapagaun, Kathmandu",
+    programs: "B.A. LL.B.-60",
+  },
+  {
+    sn: 19,
+    name: "Shree College of Law",
+    address: "Bharatpur, Chitwan",
+    programs: "B.A. LL.B.-60",
+  },
 ];
 
-/* ------------------------------------------------------------------
-   Icons
------------------------------------------------------------------- */
 function MailIcon({ className }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden="true">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
     </svg>
@@ -58,16 +168,19 @@ function MailIcon({ className }) {
 
 function ArrowUpRightIcon({ className }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden="true">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
       <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
       <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
     </svg>
   );
 }
 
-/* ------------------------------------------------------------------
-   Dean Block
------------------------------------------------------------------- */
 function DeanBlock({ reduce }) {
   return (
     <motion.div
@@ -79,7 +192,6 @@ function DeanBlock({ reduce }) {
     >
       <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50/50">
         <div className="grid grid-cols-1 md:grid-cols-12">
-          {/* Photo */}
           <div className="relative md:col-span-4 lg:col-span-3">
             <div className="relative aspect-square h-full w-full md:aspect-auto md:h-full">
               <img
@@ -96,7 +208,6 @@ function DeanBlock({ reduce }) {
             </div>
           </div>
 
-          {/* Info */}
           <div className="flex flex-col justify-center p-6 sm:p-8 md:col-span-8 lg:col-span-9 lg:p-10">
             <div className="mb-3 flex items-center gap-3">
               <span className="h-px w-6 bg-amber-500" />
@@ -114,7 +225,6 @@ function DeanBlock({ reduce }) {
               jurisprudence, and justice studies at Purbanchal University.
             </p>
 
-            {/* Contact links */}
             <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
               <a
                 href={`mailto:${dean.email}`}
@@ -126,8 +236,6 @@ function DeanBlock({ reduce }) {
                 {dean.email}
               </a>
             </div>
-
-            {/* Visit Website Button */}
             <div className="mt-6">
               <a
                 href={dean.website}
@@ -145,10 +253,6 @@ function DeanBlock({ reduce }) {
     </motion.div>
   );
 }
-
-/* ------------------------------------------------------------------
-   Main Component
------------------------------------------------------------------- */
 export default function FacultyofLaw() {
   const reduce = useReducedMotion();
 
@@ -165,7 +269,6 @@ export default function FacultyofLaw() {
   return (
     <section className="relative w-full bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        {/* HERO */}
         <motion.header
           initial={reduce ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -184,15 +287,11 @@ export default function FacultyofLaw() {
           </h1>
 
           <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-slate-600 sm:text-[15px]">
-            Legal education programmes and affiliated law colleges across
-            Nepal.
+            Legal education programmes and affiliated law colleges across Nepal.
           </p>
         </motion.header>
 
-        {/* DEAN BLOCK */}
         <DeanBlock reduce={reduce} />
-
-        {/* PROGRAMS */}
         <div className="mb-16 sm:mb-20">
           <motion.div {...reveal()} className="mb-8">
             <h2 className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">
@@ -228,8 +327,8 @@ export default function FacultyofLaw() {
                       p.type === "Yearly"
                         ? "bg-emerald-50 text-emerald-700"
                         : p.type === "Research"
-                        ? "bg-purple-50 text-purple-700"
-                        : "bg-blue-50 text-blue-700"
+                          ? "bg-purple-50 text-purple-700"
+                          : "bg-blue-50 text-blue-700"
                     }`}
                   >
                     {p.type}
@@ -239,8 +338,6 @@ export default function FacultyofLaw() {
             ))}
           </div>
         </div>
-
-        {/* COLLEGES */}
         <div>
           <motion.div {...reveal()} className="mb-8">
             <h2 className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">

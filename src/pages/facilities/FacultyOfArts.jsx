@@ -3,54 +3,178 @@ import { motion, useReducedMotion } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1];
 
-/* ------------------------------------------------------------------
-   Data
------------------------------------------------------------------- */
 const dean = {
   name: "Prof. Ram Prasad Dhakal",
   role: "Dean",
   email: "info@pufale.edu.np",
-  // Random placeholder — swap with your real dean photo later
-  image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&crop=faces&q=80",
+  image:
+    "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&crop=faces&q=80",
   website: "https://pufale.edu.np",
 };
 
 const programs = [
   { sn: 1, name: "Bachelor of Arts (BA)", duration: "4 Years", type: "Yearly" },
-  { sn: 2, name: "Bachelor of Arts (BA Honours)", duration: "4 Years", type: "Yearly" },
-  { sn: 3, name: "Bachelor of Social Work (BSW)", duration: "4 Years", type: "Semester" },
-  { sn: 4, name: "Bachelor of Mass Communication & Journalism (BAMCJ)", duration: "4 Years", type: "Semester" },
-  { sn: 5, name: "Bachelor of Media Technology (BMT)", duration: "4 Years", type: "Semester" },
-  { sn: 6, name: "Bachelor of Liberal Arts & Science (BLAS)", duration: "4 Years", type: "Semester" },
-  { sn: 7, name: "Bachelor of Interior Design (BID)", duration: "4 Years", type: "Semester" },
-  { sn: 8, name: "Master of Journalism & Mass Communication (MAMCJ)", duration: "2 Years", type: "Semester" },
-  { sn: 9, name: "Master of Media Technology (MMT)", duration: "2 Years", type: "Semester" },
-  { sn: 10, name: "Master of Development Studies (MDEVS)", duration: "2 Years", type: "Semester" },
-  { sn: 11, name: "Master of Development Communication (MDC)", duration: "2 Years", type: "Semester" },
-  { sn: 12, name: "Master of Science in Population & Rural Development", duration: "2 Years", type: "Semester" },
-  { sn: 13, name: "Master of Sociology / Anthropology", duration: "2 Years", type: "Yearly" },
-  { sn: 14, name: "Master of Social Work (MSW)", duration: "2 Years", type: "Semester" },
+  {
+    sn: 2,
+    name: "Bachelor of Arts (BA Honours)",
+    duration: "4 Years",
+    type: "Yearly",
+  },
+  {
+    sn: 3,
+    name: "Bachelor of Social Work (BSW)",
+    duration: "4 Years",
+    type: "Semester",
+  },
+  {
+    sn: 4,
+    name: "Bachelor of Mass Communication & Journalism (BAMCJ)",
+    duration: "4 Years",
+    type: "Semester",
+  },
+  {
+    sn: 5,
+    name: "Bachelor of Media Technology (BMT)",
+    duration: "4 Years",
+    type: "Semester",
+  },
+  {
+    sn: 6,
+    name: "Bachelor of Liberal Arts & Science (BLAS)",
+    duration: "4 Years",
+    type: "Semester",
+  },
+  {
+    sn: 7,
+    name: "Bachelor of Interior Design (BID)",
+    duration: "4 Years",
+    type: "Semester",
+  },
+  {
+    sn: 8,
+    name: "Master of Journalism & Mass Communication (MAMCJ)",
+    duration: "2 Years",
+    type: "Semester",
+  },
+  {
+    sn: 9,
+    name: "Master of Media Technology (MMT)",
+    duration: "2 Years",
+    type: "Semester",
+  },
+  {
+    sn: 10,
+    name: "Master of Development Studies (MDEVS)",
+    duration: "2 Years",
+    type: "Semester",
+  },
+  {
+    sn: 11,
+    name: "Master of Development Communication (MDC)",
+    duration: "2 Years",
+    type: "Semester",
+  },
+  {
+    sn: 12,
+    name: "Master of Science in Population & Rural Development",
+    duration: "2 Years",
+    type: "Semester",
+  },
+  {
+    sn: 13,
+    name: "Master of Sociology / Anthropology",
+    duration: "2 Years",
+    type: "Yearly",
+  },
+  {
+    sn: 14,
+    name: "Master of Social Work (MSW)",
+    duration: "2 Years",
+    type: "Semester",
+  },
 ];
 
 const colleges = [
-  { sn: 1, name: "Janta Adarsha Multiple Campus", address: "Biratnagar, Morang", programs: "BSW-48, PGDPCP-33, MSW-33" },
-  { sn: 2, name: "Chakrabarti Hadi Educational Academy", address: "Kathmandu", programs: "BA (Hon.)-100, MA (Eng.)-100" },
-  { sn: 3, name: "College of Journalism & Mass Communication", address: "Kathmandu", programs: "BAMCJ-25, MAMCJ-25, MDC-25" },
-  { sn: 4, name: "Kadambari Memorial College", address: "Kathmandu", programs: "BSW-48, MSW-33" },
-  { sn: 5, name: "Kantipur International College", address: "Kathmandu", programs: "BID-96" },
-  { sn: 6, name: "Kartok Bidy Mandir Multiple Campus", address: "Kartok, Ilam", programs: "B.A.-40" },
-  { sn: 7, name: "Shepherd College", address: "Kathmandu", programs: "BMT-48, MMT-33" },
-  { sn: 8, name: "Himalayan Whitehouse Int'l College", address: "Kathmandu", programs: "BLAS-25" },
-  { sn: 9, name: "Centre of Population and Development", address: "Biratnagar, Morang", programs: "M. Sc. PRD-33" },
-  { sn: 10, name: "Kantipur City College", address: "Kathmandu", programs: "MAMCJ-33" },
-  { sn: 11, name: "Polygon College", address: "Kathmandu", programs: "MAMCJ-40" },
-  { sn: 12, name: "Global College of Social Science & Technology", address: "Kathmandu", programs: "MDS-33" },
-  { sn: 13, name: "Sagarmatha Multiple College", address: "Kathmandu", programs: "MA (Soc/Anth)-50" },
+  {
+    sn: 1,
+    name: "Janta Adarsha Multiple Campus",
+    address: "Biratnagar, Morang",
+    programs: "BSW-48, PGDPCP-33, MSW-33",
+  },
+  {
+    sn: 2,
+    name: "Chakrabarti Hadi Educational Academy",
+    address: "Kathmandu",
+    programs: "BA (Hon.)-100, MA (Eng.)-100",
+  },
+  {
+    sn: 3,
+    name: "College of Journalism & Mass Communication",
+    address: "Kathmandu",
+    programs: "BAMCJ-25, MAMCJ-25, MDC-25",
+  },
+  {
+    sn: 4,
+    name: "Kadambari Memorial College",
+    address: "Kathmandu",
+    programs: "BSW-48, MSW-33",
+  },
+  {
+    sn: 5,
+    name: "Kantipur International College",
+    address: "Kathmandu",
+    programs: "BID-96",
+  },
+  {
+    sn: 6,
+    name: "Kartok Bidy Mandir Multiple Campus",
+    address: "Kartok, Ilam",
+    programs: "B.A.-40",
+  },
+  {
+    sn: 7,
+    name: "Shepherd College",
+    address: "Kathmandu",
+    programs: "BMT-48, MMT-33",
+  },
+  {
+    sn: 8,
+    name: "Himalayan Whitehouse Int'l College",
+    address: "Kathmandu",
+    programs: "BLAS-25",
+  },
+  {
+    sn: 9,
+    name: "Centre of Population and Development",
+    address: "Biratnagar, Morang",
+    programs: "M. Sc. PRD-33",
+  },
+  {
+    sn: 10,
+    name: "Kantipur City College",
+    address: "Kathmandu",
+    programs: "MAMCJ-33",
+  },
+  {
+    sn: 11,
+    name: "Polygon College",
+    address: "Kathmandu",
+    programs: "MAMCJ-40",
+  },
+  {
+    sn: 12,
+    name: "Global College of Social Science & Technology",
+    address: "Kathmandu",
+    programs: "MDS-33",
+  },
+  {
+    sn: 13,
+    name: "Sagarmatha Multiple College",
+    address: "Kathmandu",
+    programs: "MA (Soc/Anth)-50",
+  },
 ];
 
-/* ------------------------------------------------------------------
-   Dean Block — photo + info side by side
------------------------------------------------------------------- */
 function DeanBlock({ reduce }) {
   return (
     <motion.div
@@ -62,7 +186,6 @@ function DeanBlock({ reduce }) {
     >
       <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50/50">
         <div className="grid grid-cols-1 md:grid-cols-12">
-          {/* ---------- Photo ---------- */}
           <div className="relative md:col-span-4 lg:col-span-3">
             <div className="relative aspect-square h-full w-full md:aspect-auto md:h-full">
               <img
@@ -75,12 +198,9 @@ function DeanBlock({ reduce }) {
                   e.currentTarget.parentElement.classList.add("bg-[#252659]");
                 }}
               />
-              {/* Gradient fade at bottom on mobile */}
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-50/50 to-transparent md:hidden" />
             </div>
           </div>
-
-          {/* ---------- Info ---------- */}
           <div className="flex flex-col justify-center p-6 sm:p-8 md:col-span-8 lg:col-span-9 lg:p-10">
             <div className="mb-3 flex items-center gap-3">
               <span className="h-px w-6 bg-amber-500" />
@@ -145,9 +265,6 @@ function DeanBlock({ reduce }) {
   );
 }
 
-/* ------------------------------------------------------------------
-   Main Component
------------------------------------------------------------------- */
 export default function FacultyOfArts() {
   const reduce = useReducedMotion();
 
@@ -164,9 +281,6 @@ export default function FacultyOfArts() {
   return (
     <section className="relative w-full bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        {/* ============================================================
-            HERO
-        ============================================================ */}
         <motion.header
           initial={reduce ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -190,14 +304,7 @@ export default function FacultyOfArts() {
           </p>
         </motion.header>
 
-        {/* ============================================================
-            DEAN BLOCK
-        ============================================================ */}
         <DeanBlock reduce={reduce} />
-
-        {/* ============================================================
-            PROGRAMS
-        ============================================================ */}
         <div className="mb-16 sm:mb-20">
           <motion.div {...reveal()} className="mb-8">
             <h2 className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">
@@ -243,9 +350,6 @@ export default function FacultyOfArts() {
           </div>
         </div>
 
-        {/* ============================================================
-            COLLEGES
-        ============================================================ */}
         <div>
           <motion.div {...reveal()} className="mb-8">
             <h2 className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">

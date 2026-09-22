@@ -2,8 +2,7 @@ import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 const D = "..................................................";
-const toNepali = (n) =>
-  String(n).replace(/\d/g, (d) => "०१२३४५६७८९"[d]);
+const toNepali = (n) => String(n).replace(/\d/g, (d) => "०१२३४५६७८९"[d]);
 
 const toNepaliOrdinal = (n) => toNepali(n) + ".";
 
@@ -11,7 +10,6 @@ const ex = (name) => [name, "सदस्य", "पदेन"];
 const nom = (name) => [name, "सदस्य", "मनोनीत"];
 const blank = () => nom(`${D},`);
 
-/* ---------- Content ---------- */
 const sections = [
   {
     t: "पूर्वाञ्चल विश्वविद्यालय ऐन, २०५० को दफा १२ को उपदफा (१) को खण्ड (क) बमोजिम",
@@ -39,7 +37,6 @@ const note =
 
 const EASE = [0.22, 1, 0.36, 1];
 
-/* ---------- Badge ---------- */
 function StatusBadge({ status }) {
   const isExOfficio = status === "पदेन";
   return (
@@ -67,11 +64,11 @@ export default function ExecutiveCouncil() {
   const totalMembers = sections.reduce((sum, s) => sum + s.r.length, 0);
   const nominatedCount = sections.reduce(
     (sum, s) => sum + s.r.filter((r) => r[2] === "मनोनीत").length,
-    0
+    0,
   );
   const exOfficioCount = sections.reduce(
     (sum, s) => sum + s.r.filter((r) => r[2] === "पदेन").length,
-    0
+    0,
   );
 
   const reveal = (delay = 0) =>
@@ -113,7 +110,6 @@ export default function ExecutiveCouncil() {
 
   return (
     <section className="relative w-full overflow-hidden bg-white py-8 sm:py-12 lg:py-16">
-      {/* Dot grid background */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -129,7 +125,6 @@ export default function ExecutiveCouncil() {
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* ---------- Hero Header ---------- */}
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -152,7 +147,6 @@ export default function ExecutiveCouncil() {
           </p>
         </motion.div>
 
-        {/* ---------- Stat Cards ---------- */}
         <div className="mb-8 grid grid-cols-2 gap-2.5 sm:mb-10 sm:grid-cols-4 sm:gap-4">
           {stats.map((s, i) => (
             <motion.div
@@ -181,10 +175,6 @@ export default function ExecutiveCouncil() {
             </motion.div>
           ))}
         </div>
-
-        {/* ============================================================
-            DESKTOP / TABLET — Table view (md and up)
-        ============================================================ */}
         <motion.div
           {...reveal(0.2)}
           className="hidden overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-200/50 md:block"
@@ -211,7 +201,6 @@ export default function ExecutiveCouncil() {
               <tbody>
                 {sections.map((s, si) => (
                   <React.Fragment key={si}>
-                    {/* Section header row */}
                     <tr>
                       <td
                         colSpan={4}
@@ -228,7 +217,6 @@ export default function ExecutiveCouncil() {
                       </td>
                     </tr>
 
-                    {/* Member rows */}
                     {s.r.map(([name, post, status], ri) => (
                       <motion.tr
                         key={ri}
@@ -259,7 +247,6 @@ export default function ExecutiveCouncil() {
                   </React.Fragment>
                 ))}
 
-                {/* Note row */}
                 <tr>
                   <td
                     colSpan={4}
@@ -287,10 +274,6 @@ export default function ExecutiveCouncil() {
             </table>
           </div>
         </motion.div>
-
-        {/* ============================================================
-            MOBILE — Card view (below md)
-        ============================================================ */}
         <div className="space-y-4 md:hidden">
           {sections.map((s, si) => (
             <motion.div
@@ -301,7 +284,6 @@ export default function ExecutiveCouncil() {
               transition={{ duration: 0.55, ease: EASE }}
               className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
             >
-              {/* Section header */}
               <div className="flex items-start gap-2.5 border-b border-slate-100 bg-slate-50/80 px-3.5 py-3">
                 <span className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#252659] text-[10px] font-bold text-white">
                   {toNepali(si + 1)}
@@ -311,7 +293,6 @@ export default function ExecutiveCouncil() {
                 </p>
               </div>
 
-              {/* Members */}
               <ul className="divide-y divide-slate-100">
                 {s.r.map(([name, post, status], ri) => (
                   <li
@@ -339,8 +320,6 @@ export default function ExecutiveCouncil() {
               </ul>
             </motion.div>
           ))}
-
-          {/* Note card (mobile) */}
           <motion.div
             {...reveal()}
             className="rounded-2xl border border-slate-200 bg-slate-50 p-4"

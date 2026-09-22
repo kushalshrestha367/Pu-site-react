@@ -34,7 +34,6 @@ function AboutHasMessage() {
     
     <section className="relative w-full overflow-hidden bg-white py-16 sm:py-24">
       {/* <Breadcrumbs/> */}
-      {/* Quiet background: one soft dot grid, faded at the edges */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -51,8 +50,6 @@ function AboutHasMessage() {
       
       
       <div className="relative z-10 mx-auto max-w-6xl px-5 sm:px-8">
-        
-        {/* ---------- Heading ---------- */}
         <motion.header {...reveal()} className="mb-14 max-w-3xl sm:mb-20">
           <div className="mb-5 flex items-center gap-3">
             <span className="h-[3px] w-8 rounded-full bg-[#252659]" />
@@ -70,10 +67,8 @@ function AboutHasMessage() {
         </motion.header>
 
         <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-12 lg:gap-16">
-          {/* ---------- Portrait ---------- */}
           <div className="mx-auto w-full max-w-sm lg:sticky lg:top-28 lg:col-span-4">
             <div className="relative">
-              {/* Solid amber arch offset behind the photo */}
               <motion.div
                 aria-hidden="true"
                 initial={reduce ? false : { opacity: 0, x: -16, y: 16 }}
@@ -97,8 +92,6 @@ function AboutHasMessage() {
                   draggable={false}
                 />
               </motion.div>
-
-              {/* Name card overlapping the photo */}
               <motion.div
                 {...reveal(0.5)}
                 className="relative mx-auto -mt-10 w-[88%] rounded-2xl border border-slate-200 bg-white px-5 py-4 text-center shadow-lg shadow-slate-200/10"
@@ -131,8 +124,6 @@ function AboutHasMessage() {
               </motion.div>
             </div>
           </div>
-
-          {/* ---------- Message ---------- */}
           <div className="lg:col-span-8">
             {/* Lead statement */}
             <motion.p
@@ -152,8 +143,6 @@ function AboutHasMessage() {
             </motion.p>
             
             <div className="my-10 h-px w-full bg-gradient-to-r from-[#252659] via-slate-500 to-transparent" />
-
-            {/* Body */}
             <div className="space-y-6 font-serif text-[1.05rem] leading-[1.9] text-slate-700 sm:text-lg">
               {paragraphs.map((text, i) =>
                 text === "QUOTE" ? (
@@ -189,8 +178,6 @@ function AboutHasMessage() {
                 achieve what we have targeted and make our dream come true.
               </motion.p>
             </div>
-
-            {/* ---------- Sign-off ---------- */}
             <motion.div
               {...reveal()}
               className="mt-14 flex flex-col gap-5 border-t border-slate-200 pt-8 sm:flex-row sm:items-center"

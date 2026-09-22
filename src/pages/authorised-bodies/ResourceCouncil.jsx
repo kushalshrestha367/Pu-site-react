@@ -2,8 +2,7 @@ import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 const D = "..................................................";
-const toNepali = (n) =>
-  String(n).replace(/\d/g, (d) => "०१२३४५६७८९"[d]);
+const toNepali = (n) => String(n).replace(/\d/g, (d) => "०१२३४५६७८९"[d]);
 
 const toNepaliOrdinal = (n) => toNepali(n) + ".";
 
@@ -12,7 +11,6 @@ const ex = (name) => [name, "सदस्य", "पदेन"];
 const blank = () => nom(`${D},`);
 const vacant = "............................. (हाल रिक्त)";
 
-/* ---------- Content ---------- */
 const sections = [
   {
     t: "पूर्वाञ्चल विश्वविद्यालय ऐन, २०५० को दफा १४ को उपदफा (१) को खण्ड (क) बमोजिम (कार्यकारी परिषदबाट मनोनीत व्यक्ति)",
@@ -67,7 +65,6 @@ const note =
 
 const EASE = [0.22, 1, 0.36, 1];
 
-/* ---------- Badge ---------- */
 function StatusBadge({ status }) {
   const isExOfficio = status === "पदेन";
   return (
@@ -105,9 +102,7 @@ function RemovedNote() {
           clipRule="evenodd"
         />
       </svg>
-      <span>
-        यो खण्ड केही नेपाल ऐन संसोधन गर्ने ऐन, २०७२ द्वारा हटाइएको छ।
-      </span>
+      <span>यो खण्ड केही नेपाल ऐन संसोधन गर्ने ऐन, २०७२ द्वारा हटाइएको छ।</span>
     </div>
   );
 }
@@ -119,11 +114,11 @@ export default function ResourceCouncil() {
   const totalMembers = sections.reduce((sum, s) => sum + s.r.length, 0);
   const nominatedCount = sections.reduce(
     (sum, s) => sum + s.r.filter((r) => r[2] === "मनोनीत").length,
-    0
+    0,
   );
   const exOfficioCount = sections.reduce(
     (sum, s) => sum + s.r.filter((r) => r[2] === "पदेन").length,
-    0
+    0,
   );
 
   const reveal = (delay = 0) =>
@@ -165,7 +160,6 @@ export default function ResourceCouncil() {
 
   return (
     <section className="relative w-full overflow-hidden bg-white py-8 sm:py-12 lg:py-16">
-      {/* Dot grid background */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -181,7 +175,6 @@ export default function ResourceCouncil() {
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* ---------- Hero Header ---------- */}
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -203,8 +196,6 @@ export default function ResourceCouncil() {
             {intro}
           </p>
         </motion.div>
-
-        {/* ---------- Stat Cards ---------- */}
         <div className="mb-8 grid grid-cols-2 gap-2.5 sm:mb-10 sm:grid-cols-4 sm:gap-4">
           {stats.map((s, i) => (
             <motion.div
@@ -233,10 +224,6 @@ export default function ResourceCouncil() {
             </motion.div>
           ))}
         </div>
-
-        {/* ============================================================
-            DESKTOP / TABLET — Table view (md and up)
-        ============================================================ */}
         <motion.div
           {...reveal(0.2)}
           className="hidden overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-200/50 md:block"
@@ -263,7 +250,6 @@ export default function ResourceCouncil() {
               <tbody>
                 {sections.map((s, si) => (
                   <React.Fragment key={si}>
-                    {/* Section header row */}
                     <tr>
                       <td
                         colSpan={4}
@@ -284,8 +270,6 @@ export default function ResourceCouncil() {
                         </div>
                       </td>
                     </tr>
-
-                    {/* Removed clause note */}
                     {s.removed && (
                       <tr>
                         <td
@@ -297,7 +281,6 @@ export default function ResourceCouncil() {
                       </tr>
                     )}
 
-                    {/* Member rows */}
                     {s.r.map(([name, post, status], ri) => {
                       const finalPost = s.customPost || post;
                       return (
@@ -331,7 +314,6 @@ export default function ResourceCouncil() {
                   </React.Fragment>
                 ))}
 
-                {/* Note row */}
                 <tr>
                   <td
                     colSpan={4}
@@ -360,9 +342,6 @@ export default function ResourceCouncil() {
           </div>
         </motion.div>
 
-        {/* ============================================================
-            MOBILE — Card view (below md)
-        ============================================================ */}
         <div className="space-y-4 md:hidden">
           {sections.map((s, si) => (
             <motion.div
@@ -375,7 +354,6 @@ export default function ResourceCouncil() {
                 s.removed ? "border-rose-200" : "border-slate-200"
               }`}
             >
-              {/* Section header */}
               <div
                 className={`border-b px-3.5 py-3 ${
                   s.removed
@@ -394,14 +372,11 @@ export default function ResourceCouncil() {
                 </p>
               </div>
 
-              {/* Removed note on mobile */}
               {s.removed && (
                 <div className="bg-white">
                   <RemovedNote />
                 </div>
               )}
-
-              {/* Members */}
               {s.r.length > 0 && (
                 <ul className="divide-y divide-slate-100">
                   {s.r.map(([name, post, status], ri) => (
@@ -431,8 +406,6 @@ export default function ResourceCouncil() {
               )}
             </motion.div>
           ))}
-
-          {/* Note card (mobile) */}
           <motion.div
             {...reveal()}
             className="rounded-2xl border border-slate-200 bg-slate-50 p-4"

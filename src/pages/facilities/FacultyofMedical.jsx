@@ -3,14 +3,12 @@ import { motion, useReducedMotion } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1];
 
-/* ------------------------------------------------------------------
-   Data
------------------------------------------------------------------- */
 const dean = {
   name: "Dr. Shyam Kumar Mallik",
   role: "Dean",
   email: "info@pufomas.edu.np",
-  image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&crop=faces&q=80",
+  image:
+    "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&crop=faces&q=80",
   website: "https://pufomas.edu.np",
 };
 
@@ -20,64 +18,302 @@ const deputyDean = {
 };
 
 const programs = [
-  { sn: 1, name: "Post Basic Bachelor of Nursing Science (PBNS)", duration: "3 Years", type: "Yearly" },
-  { sn: 2, name: "Bachelor in Pharmacy", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 3, name: "Bachelor of Public Health (BPH)", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 4, name: "Bachelor of Science in Medical Laboratory Technology (B.Sc. MLT)", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 5, name: "Bachelor of Science in Nursing", duration: "4 Years", type: "Yearly" },
-  { sn: 6, name: "Master of Public Health (MPH)", duration: "2 Years / 4 Semesters", type: "Semester" },
-  { sn: 7, name: "Master in Pharmacy (M. Pharm.)", duration: "2 Years / 4 Semesters", type: "Semester" },
-  { sn: 8, name: "Bachelor of Medicine and Bachelor of Surgery (MBBS)", duration: "5 Years", type: "Yearly" },
+  {
+    sn: 1,
+    name: "Post Basic Bachelor of Nursing Science (PBNS)",
+    duration: "3 Years",
+    type: "Yearly",
+  },
+  {
+    sn: 2,
+    name: "Bachelor in Pharmacy",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 3,
+    name: "Bachelor of Public Health (BPH)",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 4,
+    name: "Bachelor of Science in Medical Laboratory Technology (B.Sc. MLT)",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 5,
+    name: "Bachelor of Science in Nursing",
+    duration: "4 Years",
+    type: "Yearly",
+  },
+  {
+    sn: 6,
+    name: "Master of Public Health (MPH)",
+    duration: "2 Years / 4 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 7,
+    name: "Master in Pharmacy (M. Pharm.)",
+    duration: "2 Years / 4 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 8,
+    name: "Bachelor of Medicine and Bachelor of Surgery (MBBS)",
+    duration: "5 Years",
+    type: "Yearly",
+  },
 ];
 
 const colleges = [
-  { sn: 1, name: "Purbanchal University School of Health Sciences", address: "Gothgaun, Morang", programs: "BSc. Nursing, PBNS, BPH, B. Pharm, BSc. MLT, M.Pharm, MPH" },
-  { sn: 2, name: "Alka Hospital Pvt. Ltd.", address: "Jawalakhel, Lalitpur", programs: "PBNS" },
-  { sn: 3, name: "Asian college for Advance Studies Pvt. Ltd.", address: "Satdobato, Lalitpur", programs: "BSc. Nursing, PBNS, BPH, B. Pharm" },
-  { sn: 4, name: "B & B Medical Institute", address: "Gwarko, Lalitpur", programs: "PBNS, BSc. Nursing" },
-  { sn: 5, name: "Bheri Nursing College", address: "Nepalgunj, Banke", programs: "PBNS, BSc. Nursing" },
-  { sn: 6, name: "Birat Health College", address: "Biratnagar, Morang", programs: "PBNS, BSc. Nursing, BPH" },
-  { sn: 7, name: "Chakrabarti Habi Education Academy College of Nursing Science", address: "Bhaktapur", programs: "PBNS, BSc. Nursing, BPH" },
-  { sn: 8, name: "Charak Academy Pvt. Ltd.", address: "Pokhara, Kaski", programs: "PBNS, BSc. Nursing" },
-  { sn: 9, name: "Devdaha College of Science & Technology Pvt. Ltd.", address: "Butwal, Rupandehi", programs: "BSc. Nursing" },
-  { sn: 10, name: "Edenburgh International College", address: "Biratnagar, Morang", programs: "BPH" },
-  { sn: 11, name: "Everest College of Nursing", address: "Sinamangal, Kathmandu", programs: "PBNS, BSc. Nursing" },
-  { sn: 12, name: "Hamro School of Nursing Pvt. Ltd.", address: "Biratnagar, Morang", programs: "BSN" },
-  { sn: 13, name: "HOPE International College", address: "Satdobato, Lalitpur", programs: "BSc. Nursing, PBNS, BPH, B. Pharm" },
-  { sn: 14, name: "Innovative College of Health Science Pvt. Ltd.", address: "Sifal, Kathmandu", programs: "PBNS" },
-  { sn: 15, name: "Kantipur Academy of Health Science", address: "Tinkune, Kathmandu", programs: "BSc. Nursing, PBNS, BPH, B.Pharm" },
-  { sn: 16, name: "Kathmandu Model Hospital School of Nursing", address: "Swoyambhu, Kathmandu", programs: "PBNS, BSc. Nursing" },
-  { sn: 17, name: "Kathmandu Multiple College", address: "Gaushala, Kathmandu", programs: "BPH, B. Pharm" },
-  { sn: 18, name: "Koshi Health & Science Campus", address: "Biratnagar, Morang", programs: "BPH, PBNS" },
-  { sn: 19, name: "Krishna Medical & Technical Research Centre Pvt. Ltd.", address: "Janakpurdham, Dhanusha", programs: "PBNS, BSc. Nursing, B. Pharm., BPH" },
-  { sn: 20, name: "Little Buddha College of Health Science", address: "Minbhaban, Kathmandu", programs: "BPH, B. Pharm" },
-  { sn: 21, name: "Mayadevi Technical College", address: "Butwal, Rupandehi", programs: "PBNS" },
-  { sn: 22, name: "N.P.I. Narayani Samudayik Hospital Ltd.", address: "Chitwan", programs: "BSc. Nursing, PBNS" },
-  { sn: 23, name: "Nagarik College of Health Sciences", address: "Kathmandu", programs: "PBNS, BSc. Nursing" },
-  { sn: 24, name: "National Academy for Medical Science", address: "Kathmandu", programs: "BSc. Nursing, BPH, B.Pharmacy-20" },
-  { sn: 25, name: "Nepal Institute of Health Science", address: "Kathmandu", programs: "BSc. Nursing, PBNS, BPH" },
-  { sn: 26, name: "Nepal Polytechnic Institute", address: "Bharatpur, Chitwan", programs: "PBNS" },
-  { sn: 27, name: "Norvic College of Health Sciences and Technologies", address: "Maharajgunj, Kathmandu", programs: "PBNS, BSc. Nursing, B. Pharm., BPH" },
-  { sn: 28, name: "Novel Academy", address: "Pokhara, Kaski", programs: "BSc. Nursing, B. Pharm" },
-  { sn: 29, name: "Oasis Medical College Teaching Hospital & Research Center (P) Ltd.", address: "Bharatpur, Chitwan", programs: "BSc. Nursing, PBNS, BPH" },
-  { sn: 30, name: "Om Health Campus Pvt. Ltd.", address: "Chabahil, Kathmandu", programs: "BSc. Nursing, PBNS, BPH" },
-  { sn: 31, name: "Sanjeevani College of Medical Science", address: "Butwal, Rupandehi", programs: "BSc. Nursing, PBNS, BPH" },
-  { sn: 32, name: "SANN Institute of Nursing Pvt. Ltd.", address: "Kathmandu", programs: "BSc. Nursing" },
-  { sn: 33, name: "Saptarishi Multiple College", address: "Rajbiraj, Saptari", programs: "BPH" },
-  { sn: 34, name: "Shree Medical & Technical College", address: "Chitwan", programs: "BSc. Nursing, PBNS, BPH, B. Pharm, M.Pharm, MPH" },
-  { sn: 35, name: "Sinha Health Foundation", address: "Janakpurdham, Dhanusha", programs: "BSc. Nursing, PBNS, B. Pharm., BPH" },
-  { sn: 36, name: "Susma Koirala Memorial Nursing Campus", address: "Sankhu, Kathmandu", programs: "BSc. Nursing" },
-  { sn: 37, name: "Unique Medical College & Teaching Hospital Pvt. Ltd.", address: "Rajbiraj, Saptari", programs: "PBNS, BPH" },
-  { sn: 38, name: "Valley College of Technical Science", address: "Kathmandu", programs: "BPH, B. Pharm" },
-  { sn: 39, name: "Yeti Health Science Academy", address: "Kathmandu", programs: "BSc. Nursing, BPH, PBNS" },
+  {
+    sn: 1,
+    name: "Purbanchal University School of Health Sciences",
+    address: "Gothgaun, Morang",
+    programs: "BSc. Nursing, PBNS, BPH, B. Pharm, BSc. MLT, M.Pharm, MPH",
+  },
+  {
+    sn: 2,
+    name: "Alka Hospital Pvt. Ltd.",
+    address: "Jawalakhel, Lalitpur",
+    programs: "PBNS",
+  },
+  {
+    sn: 3,
+    name: "Asian college for Advance Studies Pvt. Ltd.",
+    address: "Satdobato, Lalitpur",
+    programs: "BSc. Nursing, PBNS, BPH, B. Pharm",
+  },
+  {
+    sn: 4,
+    name: "B & B Medical Institute",
+    address: "Gwarko, Lalitpur",
+    programs: "PBNS, BSc. Nursing",
+  },
+  {
+    sn: 5,
+    name: "Bheri Nursing College",
+    address: "Nepalgunj, Banke",
+    programs: "PBNS, BSc. Nursing",
+  },
+  {
+    sn: 6,
+    name: "Birat Health College",
+    address: "Biratnagar, Morang",
+    programs: "PBNS, BSc. Nursing, BPH",
+  },
+  {
+    sn: 7,
+    name: "Chakrabarti Habi Education Academy College of Nursing Science",
+    address: "Bhaktapur",
+    programs: "PBNS, BSc. Nursing, BPH",
+  },
+  {
+    sn: 8,
+    name: "Charak Academy Pvt. Ltd.",
+    address: "Pokhara, Kaski",
+    programs: "PBNS, BSc. Nursing",
+  },
+  {
+    sn: 9,
+    name: "Devdaha College of Science & Technology Pvt. Ltd.",
+    address: "Butwal, Rupandehi",
+    programs: "BSc. Nursing",
+  },
+  {
+    sn: 10,
+    name: "Edenburgh International College",
+    address: "Biratnagar, Morang",
+    programs: "BPH",
+  },
+  {
+    sn: 11,
+    name: "Everest College of Nursing",
+    address: "Sinamangal, Kathmandu",
+    programs: "PBNS, BSc. Nursing",
+  },
+  {
+    sn: 12,
+    name: "Hamro School of Nursing Pvt. Ltd.",
+    address: "Biratnagar, Morang",
+    programs: "BSN",
+  },
+  {
+    sn: 13,
+    name: "HOPE International College",
+    address: "Satdobato, Lalitpur",
+    programs: "BSc. Nursing, PBNS, BPH, B. Pharm",
+  },
+  {
+    sn: 14,
+    name: "Innovative College of Health Science Pvt. Ltd.",
+    address: "Sifal, Kathmandu",
+    programs: "PBNS",
+  },
+  {
+    sn: 15,
+    name: "Kantipur Academy of Health Science",
+    address: "Tinkune, Kathmandu",
+    programs: "BSc. Nursing, PBNS, BPH, B.Pharm",
+  },
+  {
+    sn: 16,
+    name: "Kathmandu Model Hospital School of Nursing",
+    address: "Swoyambhu, Kathmandu",
+    programs: "PBNS, BSc. Nursing",
+  },
+  {
+    sn: 17,
+    name: "Kathmandu Multiple College",
+    address: "Gaushala, Kathmandu",
+    programs: "BPH, B. Pharm",
+  },
+  {
+    sn: 18,
+    name: "Koshi Health & Science Campus",
+    address: "Biratnagar, Morang",
+    programs: "BPH, PBNS",
+  },
+  {
+    sn: 19,
+    name: "Krishna Medical & Technical Research Centre Pvt. Ltd.",
+    address: "Janakpurdham, Dhanusha",
+    programs: "PBNS, BSc. Nursing, B. Pharm., BPH",
+  },
+  {
+    sn: 20,
+    name: "Little Buddha College of Health Science",
+    address: "Minbhaban, Kathmandu",
+    programs: "BPH, B. Pharm",
+  },
+  {
+    sn: 21,
+    name: "Mayadevi Technical College",
+    address: "Butwal, Rupandehi",
+    programs: "PBNS",
+  },
+  {
+    sn: 22,
+    name: "N.P.I. Narayani Samudayik Hospital Ltd.",
+    address: "Chitwan",
+    programs: "BSc. Nursing, PBNS",
+  },
+  {
+    sn: 23,
+    name: "Nagarik College of Health Sciences",
+    address: "Kathmandu",
+    programs: "PBNS, BSc. Nursing",
+  },
+  {
+    sn: 24,
+    name: "National Academy for Medical Science",
+    address: "Kathmandu",
+    programs: "BSc. Nursing, BPH, B.Pharmacy-20",
+  },
+  {
+    sn: 25,
+    name: "Nepal Institute of Health Science",
+    address: "Kathmandu",
+    programs: "BSc. Nursing, PBNS, BPH",
+  },
+  {
+    sn: 26,
+    name: "Nepal Polytechnic Institute",
+    address: "Bharatpur, Chitwan",
+    programs: "PBNS",
+  },
+  {
+    sn: 27,
+    name: "Norvic College of Health Sciences and Technologies",
+    address: "Maharajgunj, Kathmandu",
+    programs: "PBNS, BSc. Nursing, B. Pharm., BPH",
+  },
+  {
+    sn: 28,
+    name: "Novel Academy",
+    address: "Pokhara, Kaski",
+    programs: "BSc. Nursing, B. Pharm",
+  },
+  {
+    sn: 29,
+    name: "Oasis Medical College Teaching Hospital & Research Center (P) Ltd.",
+    address: "Bharatpur, Chitwan",
+    programs: "BSc. Nursing, PBNS, BPH",
+  },
+  {
+    sn: 30,
+    name: "Om Health Campus Pvt. Ltd.",
+    address: "Chabahil, Kathmandu",
+    programs: "BSc. Nursing, PBNS, BPH",
+  },
+  {
+    sn: 31,
+    name: "Sanjeevani College of Medical Science",
+    address: "Butwal, Rupandehi",
+    programs: "BSc. Nursing, PBNS, BPH",
+  },
+  {
+    sn: 32,
+    name: "SANN Institute of Nursing Pvt. Ltd.",
+    address: "Kathmandu",
+    programs: "BSc. Nursing",
+  },
+  {
+    sn: 33,
+    name: "Saptarishi Multiple College",
+    address: "Rajbiraj, Saptari",
+    programs: "BPH",
+  },
+  {
+    sn: 34,
+    name: "Shree Medical & Technical College",
+    address: "Chitwan",
+    programs: "BSc. Nursing, PBNS, BPH, B. Pharm, M.Pharm, MPH",
+  },
+  {
+    sn: 35,
+    name: "Sinha Health Foundation",
+    address: "Janakpurdham, Dhanusha",
+    programs: "BSc. Nursing, PBNS, B. Pharm., BPH",
+  },
+  {
+    sn: 36,
+    name: "Susma Koirala Memorial Nursing Campus",
+    address: "Sankhu, Kathmandu",
+    programs: "BSc. Nursing",
+  },
+  {
+    sn: 37,
+    name: "Unique Medical College & Teaching Hospital Pvt. Ltd.",
+    address: "Rajbiraj, Saptari",
+    programs: "PBNS, BPH",
+  },
+  {
+    sn: 38,
+    name: "Valley College of Technical Science",
+    address: "Kathmandu",
+    programs: "BPH, B. Pharm",
+  },
+  {
+    sn: 39,
+    name: "Yeti Health Science Academy",
+    address: "Kathmandu",
+    programs: "BSc. Nursing, BPH, PBNS",
+  },
 ];
 
-/* ------------------------------------------------------------------
-   Icons
------------------------------------------------------------------- */
 function MailIcon({ className }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden="true">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
     </svg>
@@ -86,16 +322,19 @@ function MailIcon({ className }) {
 
 function ArrowUpRightIcon({ className }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden="true">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
       <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
       <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
     </svg>
   );
 }
 
-/* ------------------------------------------------------------------
-   Dean Block
------------------------------------------------------------------- */
 function DeanBlock({ reduce }) {
   return (
     <motion.div
@@ -107,7 +346,6 @@ function DeanBlock({ reduce }) {
     >
       <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50/50">
         <div className="grid grid-cols-1 md:grid-cols-12">
-          {/* Photo */}
           <div className="relative md:col-span-4 lg:col-span-3">
             <div className="relative aspect-square h-full w-full md:aspect-auto md:h-full">
               <img
@@ -123,8 +361,6 @@ function DeanBlock({ reduce }) {
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-50/50 to-transparent md:hidden" />
             </div>
           </div>
-
-          {/* Info */}
           <div className="flex flex-col justify-center p-6 sm:p-8 md:col-span-8 lg:col-span-9 lg:p-10">
             <div className="mb-3 flex items-center gap-3">
               <span className="h-px w-6 bg-amber-500" />
@@ -138,12 +374,11 @@ function DeanBlock({ reduce }) {
             </h2>
 
             <p className="mt-3 max-w-lg text-[13.5px] leading-relaxed text-slate-600 sm:text-[14.5px]">
-              Leading the Faculty of Medical Allied Sciences — advancing
-              health education, clinical training, and medical research at
-              Purbanchal University.
+              Leading the Faculty of Medical Allied Sciences — advancing health
+              education, clinical training, and medical research at Purbanchal
+              University.
             </p>
 
-            {/* Contact links */}
             <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
               <a
                 href={`mailto:${dean.email}`}
@@ -155,8 +390,6 @@ function DeanBlock({ reduce }) {
                 {dean.email}
               </a>
             </div>
-
-            {/* Visit Website Button */}
             <div className="mt-6">
               <a
                 href={dean.website}
@@ -172,7 +405,6 @@ function DeanBlock({ reduce }) {
         </div>
       </div>
 
-      {/* Deputy Dean */}
       <div className="mt-4 flex flex-col items-start gap-3 rounded-2xl border border-dashed border-slate-200 bg-slate-50/40 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
         <div className="flex items-center gap-3">
           <span className="h-px w-6 bg-amber-500" />
@@ -191,10 +423,6 @@ function DeanBlock({ reduce }) {
     </motion.div>
   );
 }
-
-/* ------------------------------------------------------------------
-   Main Component
------------------------------------------------------------------- */
 export default function FacultyofMedical() {
   const reduce = useReducedMotion();
 
@@ -211,7 +439,6 @@ export default function FacultyofMedical() {
   return (
     <section className="relative w-full bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        {/* HERO */}
         <motion.header
           initial={reduce ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -235,10 +462,7 @@ export default function FacultyofMedical() {
           </p>
         </motion.header>
 
-        {/* DEAN BLOCK */}
         <DeanBlock reduce={reduce} />
-
-        {/* PROGRAMS */}
         <div className="mb-16 sm:mb-20">
           <motion.div {...reveal()} className="mb-8">
             <h2 className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">
@@ -274,8 +498,8 @@ export default function FacultyofMedical() {
                       p.type === "Yearly"
                         ? "bg-emerald-50 text-emerald-700"
                         : p.type === "Research"
-                        ? "bg-purple-50 text-purple-700"
-                        : "bg-blue-50 text-blue-700"
+                          ? "bg-purple-50 text-purple-700"
+                          : "bg-blue-50 text-blue-700"
                     }`}
                   >
                     {p.type}
@@ -285,8 +509,6 @@ export default function FacultyofMedical() {
             ))}
           </div>
         </div>
-
-        {/* COLLEGES */}
         <div>
           <motion.div {...reveal()} className="mb-8">
             <h2 className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">

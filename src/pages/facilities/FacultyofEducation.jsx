@@ -2,71 +2,276 @@ import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1];
-
-/* ------------------------------------------------------------------
-   Data
------------------------------------------------------------------- */
 const dean = {
   name: "Prof. Ram Prasad Dhakal",
   role: "Dean",
   email: "info@pufale.edu.np",
-  image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&crop=faces&q=80",
+  image:
+    "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&crop=faces&q=80",
   website: "https://pufale.edu.np",
 };
 
 const programs = [
-  { sn: 1, name: "Bachelor of Education (B.Ed.)", duration: "4 Years", type: "Yearly" },
-  { sn: 2, name: "One Year Bachelor of Education", duration: "1 Year", type: "Yearly" },
-  { sn: 3, name: "One Year Bachelor of Education (Distance Mode)", duration: "1 Year", type: "Yearly" },
-  { sn: 4, name: "Master of Education (M. Ed.)", duration: "2 Years", type: "Yearly" },
+  {
+    sn: 1,
+    name: "Bachelor of Education (B.Ed.)",
+    duration: "4 Years",
+    type: "Yearly",
+  },
+  {
+    sn: 2,
+    name: "One Year Bachelor of Education",
+    duration: "1 Year",
+    type: "Yearly",
+  },
+  {
+    sn: 3,
+    name: "One Year Bachelor of Education (Distance Mode)",
+    duration: "1 Year",
+    type: "Yearly",
+  },
+  {
+    sn: 4,
+    name: "Master of Education (M. Ed.)",
+    duration: "2 Years",
+    type: "Yearly",
+  },
 ];
 
 const colleges = [
-  { sn: 1, name: "Janta Adarsha Multiple Campus", address: "Biratnagar, Morang", programs: "B. Ed.-60, One Year B. Ed.-40, M. Ed.-50" },
-  { sn: 2, name: "Annapurna Multiple College", address: "Kanchanrup, Saptari", programs: "B. Ed.-200, One Year B.Ed.-60" },
-  { sn: 3, name: "Caliber International College", address: "Rajbiraj, Saptari", programs: "B. Ed.-100" },
-  { sn: 4, name: "Chisankhugadi Campus", address: "Khanibhanjyang, Okhaldunga", programs: "B. Ed.-60" },
-  { sn: 5, name: "Damauli College", address: "Damauli, Tanahu", programs: "B. Ed.-120" },
-  { sn: 6, name: "Everest Multiple College", address: "Salleri, Solukhumbu", programs: "B. Ed.-180" },
-  { sn: 7, name: "Gograha College", address: "Biratnagar, Morang", programs: "B. Ed.-80, One Year B. Ed.-40, M. Ed.-50" },
-  { sn: 8, name: "Harinagara Multiple College", address: "Harinagar, Sunsari", programs: "B. Ed.-60" },
-  { sn: 9, name: "Himalayan Kiran Public Campus", address: "Khandabari, Sankhuwasabha", programs: "B. Ed.-80, One Year B. Ed.-40, M. Ed.-180" },
-  { sn: 10, name: "Institute of Open Learning, Kathmandu", address: "Kathmandu", programs: "One Year B. Ed. (Distance Mode)-60" },
-  { sn: 11, name: "Karfok Bidya Mandir Multiple Campus", address: "Karfok, Illam", programs: "B. Ed.-60, One Year B. Ed.-50" },
-  { sn: 12, name: "Laxmiballav Narsing Multiple College", address: "Babhangamakatti, Saptari", programs: "B. Ed.-200" },
-  { sn: 13, name: "Lumbini Adarsha Degree College", address: "Kawashoti, Nawalparasi", programs: "B. Ed.-180, One Year B. Ed.-50, M. Ed.-150" },
-  { sn: 14, name: "Madan Aashrit Smriti Multiple College", address: "Kerkha, Jhapa", programs: "B. Ed.-80, One Year B. Ed.-40, M. Ed.-180" },
-  { sn: 15, name: "Mangal Prasad Women's College", address: "Nepalgunj, Banke", programs: "B. Ed.-60" },
-  { sn: 16, name: "Mother Memorial College", address: "Phattepur, Saptari", programs: "B. Ed.-50" },
-  { sn: 17, name: "National Multiple College", address: "Dharan, Sunsari", programs: "B. Ed.-60" },
-  { sn: 18, name: "Public Campus", address: "Dhanibanigaun, Morang", programs: "B. Ed.-200" },
-  { sn: 19, name: "Royal Softech College", address: "Lahan, Siraha", programs: "B. Ed.-120" },
-  { sn: 20, name: "Saraswati Public Campus", address: "Dadarbairiya, Morang", programs: "B. Ed.-60" },
-  { sn: 21, name: "Sungava Multiple College", address: "Kanchanpur, Saptari", programs: "B. Ed.-100" },
-  { sn: 22, name: "Tribhuvan Campus", address: "Manechauka, Tanahu", programs: "B. Ed.-80, One Year B. Ed.-30" },
-  { sn: 23, name: "Triveni Public Campus", address: "Bahrabise, Sankhuwasabha", programs: "B. Ed.-60" },
-  { sn: 24, name: "Wana Campus", address: "Panchapakhan, Sankhuwasabha", programs: "B. Ed.-60" },
-  { sn: 25, name: "Annapurna College", address: "Biratnagar, Morang", programs: "M. Ed.-180" },
-  { sn: 26, name: "Edenburg International College", address: "Biratnagar, Morang", programs: "M. Ed.-180" },
-  { sn: 27, name: "Saptarishi Multiple College", address: "Rajbiraj, Saptari", programs: "M. Ed.-100" },
-  { sn: 28, name: "Libju Community Campus", address: "Manebhanjyang, Okhaldhunga", programs: "B.Ed.-60" },
-  { sn: 29, name: "Khadak Multiple Campus", address: "Kalyanpur, Saptari", programs: "B.Ed.-60" },
-  { sn: 30, name: "Gurans Multiple Campus", address: "Gurans, Dailekh", programs: "B.Ed.-60" },
-  { sn: 31, name: "Jagadamba Campus", address: "Sunkoshi, Okhaldhunga", programs: "B.Ed.-60" },
-  { sn: 32, name: "Siddanath Campus", address: "Bhangaha, Mahottari", programs: "B.Ed.-60" },
-  { sn: 33, name: "Arun Multiple Campus", address: "Arun-3, Bhojpur", programs: "B.Ed.-60" },
-  { sn: 34, name: "Narayani Multiple Campus", address: "Mauwakhola, Taplejung", programs: "B.Ed.-60" },
-  { sn: 35, name: "Saraswati Multiple Campus", address: "Gadhi-3, Aurabani, Sunsari", programs: "B.Ed.-60" },
-  { sn: 36, name: "Adarsha Campus", address: "Barahakshetra, Sunsari", programs: "B.Ed.-60" },
-  { sn: 37, name: "Amardaha Campus", address: "Sunbarsi-2, Amardaha, Morang", programs: "B.Ed.-60" },
+  {
+    sn: 1,
+    name: "Janta Adarsha Multiple Campus",
+    address: "Biratnagar, Morang",
+    programs: "B. Ed.-60, One Year B. Ed.-40, M. Ed.-50",
+  },
+  {
+    sn: 2,
+    name: "Annapurna Multiple College",
+    address: "Kanchanrup, Saptari",
+    programs: "B. Ed.-200, One Year B.Ed.-60",
+  },
+  {
+    sn: 3,
+    name: "Caliber International College",
+    address: "Rajbiraj, Saptari",
+    programs: "B. Ed.-100",
+  },
+  {
+    sn: 4,
+    name: "Chisankhugadi Campus",
+    address: "Khanibhanjyang, Okhaldunga",
+    programs: "B. Ed.-60",
+  },
+  {
+    sn: 5,
+    name: "Damauli College",
+    address: "Damauli, Tanahu",
+    programs: "B. Ed.-120",
+  },
+  {
+    sn: 6,
+    name: "Everest Multiple College",
+    address: "Salleri, Solukhumbu",
+    programs: "B. Ed.-180",
+  },
+  {
+    sn: 7,
+    name: "Gograha College",
+    address: "Biratnagar, Morang",
+    programs: "B. Ed.-80, One Year B. Ed.-40, M. Ed.-50",
+  },
+  {
+    sn: 8,
+    name: "Harinagara Multiple College",
+    address: "Harinagar, Sunsari",
+    programs: "B. Ed.-60",
+  },
+  {
+    sn: 9,
+    name: "Himalayan Kiran Public Campus",
+    address: "Khandabari, Sankhuwasabha",
+    programs: "B. Ed.-80, One Year B. Ed.-40, M. Ed.-180",
+  },
+  {
+    sn: 10,
+    name: "Institute of Open Learning, Kathmandu",
+    address: "Kathmandu",
+    programs: "One Year B. Ed. (Distance Mode)-60",
+  },
+  {
+    sn: 11,
+    name: "Karfok Bidya Mandir Multiple Campus",
+    address: "Karfok, Illam",
+    programs: "B. Ed.-60, One Year B. Ed.-50",
+  },
+  {
+    sn: 12,
+    name: "Laxmiballav Narsing Multiple College",
+    address: "Babhangamakatti, Saptari",
+    programs: "B. Ed.-200",
+  },
+  {
+    sn: 13,
+    name: "Lumbini Adarsha Degree College",
+    address: "Kawashoti, Nawalparasi",
+    programs: "B. Ed.-180, One Year B. Ed.-50, M. Ed.-150",
+  },
+  {
+    sn: 14,
+    name: "Madan Aashrit Smriti Multiple College",
+    address: "Kerkha, Jhapa",
+    programs: "B. Ed.-80, One Year B. Ed.-40, M. Ed.-180",
+  },
+  {
+    sn: 15,
+    name: "Mangal Prasad Women's College",
+    address: "Nepalgunj, Banke",
+    programs: "B. Ed.-60",
+  },
+  {
+    sn: 16,
+    name: "Mother Memorial College",
+    address: "Phattepur, Saptari",
+    programs: "B. Ed.-50",
+  },
+  {
+    sn: 17,
+    name: "National Multiple College",
+    address: "Dharan, Sunsari",
+    programs: "B. Ed.-60",
+  },
+  {
+    sn: 18,
+    name: "Public Campus",
+    address: "Dhanibanigaun, Morang",
+    programs: "B. Ed.-200",
+  },
+  {
+    sn: 19,
+    name: "Royal Softech College",
+    address: "Lahan, Siraha",
+    programs: "B. Ed.-120",
+  },
+  {
+    sn: 20,
+    name: "Saraswati Public Campus",
+    address: "Dadarbairiya, Morang",
+    programs: "B. Ed.-60",
+  },
+  {
+    sn: 21,
+    name: "Sungava Multiple College",
+    address: "Kanchanpur, Saptari",
+    programs: "B. Ed.-100",
+  },
+  {
+    sn: 22,
+    name: "Tribhuvan Campus",
+    address: "Manechauka, Tanahu",
+    programs: "B. Ed.-80, One Year B. Ed.-30",
+  },
+  {
+    sn: 23,
+    name: "Triveni Public Campus",
+    address: "Bahrabise, Sankhuwasabha",
+    programs: "B. Ed.-60",
+  },
+  {
+    sn: 24,
+    name: "Wana Campus",
+    address: "Panchapakhan, Sankhuwasabha",
+    programs: "B. Ed.-60",
+  },
+  {
+    sn: 25,
+    name: "Annapurna College",
+    address: "Biratnagar, Morang",
+    programs: "M. Ed.-180",
+  },
+  {
+    sn: 26,
+    name: "Edenburg International College",
+    address: "Biratnagar, Morang",
+    programs: "M. Ed.-180",
+  },
+  {
+    sn: 27,
+    name: "Saptarishi Multiple College",
+    address: "Rajbiraj, Saptari",
+    programs: "M. Ed.-100",
+  },
+  {
+    sn: 28,
+    name: "Libju Community Campus",
+    address: "Manebhanjyang, Okhaldhunga",
+    programs: "B.Ed.-60",
+  },
+  {
+    sn: 29,
+    name: "Khadak Multiple Campus",
+    address: "Kalyanpur, Saptari",
+    programs: "B.Ed.-60",
+  },
+  {
+    sn: 30,
+    name: "Gurans Multiple Campus",
+    address: "Gurans, Dailekh",
+    programs: "B.Ed.-60",
+  },
+  {
+    sn: 31,
+    name: "Jagadamba Campus",
+    address: "Sunkoshi, Okhaldhunga",
+    programs: "B.Ed.-60",
+  },
+  {
+    sn: 32,
+    name: "Siddanath Campus",
+    address: "Bhangaha, Mahottari",
+    programs: "B.Ed.-60",
+  },
+  {
+    sn: 33,
+    name: "Arun Multiple Campus",
+    address: "Arun-3, Bhojpur",
+    programs: "B.Ed.-60",
+  },
+  {
+    sn: 34,
+    name: "Narayani Multiple Campus",
+    address: "Mauwakhola, Taplejung",
+    programs: "B.Ed.-60",
+  },
+  {
+    sn: 35,
+    name: "Saraswati Multiple Campus",
+    address: "Gadhi-3, Aurabani, Sunsari",
+    programs: "B.Ed.-60",
+  },
+  {
+    sn: 36,
+    name: "Adarsha Campus",
+    address: "Barahakshetra, Sunsari",
+    programs: "B.Ed.-60",
+  },
+  {
+    sn: 37,
+    name: "Amardaha Campus",
+    address: "Sunbarsi-2, Amardaha, Morang",
+    programs: "B.Ed.-60",
+  },
 ];
 
-/* ------------------------------------------------------------------
-   Icons
------------------------------------------------------------------- */
 function MailIcon({ className }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden="true">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
     </svg>
@@ -75,16 +280,18 @@ function MailIcon({ className }) {
 
 function ArrowUpRightIcon({ className }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden="true">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
       <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
       <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
     </svg>
   );
 }
-
-/* ------------------------------------------------------------------
-   Dean Block
------------------------------------------------------------------- */
 function DeanBlock({ reduce }) {
   return (
     <motion.div
@@ -96,7 +303,6 @@ function DeanBlock({ reduce }) {
     >
       <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50/50">
         <div className="grid grid-cols-1 md:grid-cols-12">
-          {/* Photo */}
           <div className="relative md:col-span-4 lg:col-span-3">
             <div className="relative aspect-square h-full w-full md:aspect-auto md:h-full">
               <img
@@ -112,8 +318,6 @@ function DeanBlock({ reduce }) {
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-50/50 to-transparent md:hidden" />
             </div>
           </div>
-
-          {/* Info */}
           <div className="flex flex-col justify-center p-6 sm:p-8 md:col-span-8 lg:col-span-9 lg:p-10">
             <div className="mb-3 flex items-center gap-3">
               <span className="h-px w-6 bg-amber-500" />
@@ -131,8 +335,6 @@ function DeanBlock({ reduce }) {
               pedagogical research, and educational development at Purbanchal
               University.
             </p>
-
-            {/* Contact links */}
             <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
               <a
                 href={`mailto:${dean.email}`}
@@ -144,8 +346,6 @@ function DeanBlock({ reduce }) {
                 {dean.email}
               </a>
             </div>
-
-            {/* Visit Website Button */}
             <div className="mt-6">
               <a
                 href={dean.website}
@@ -163,10 +363,6 @@ function DeanBlock({ reduce }) {
     </motion.div>
   );
 }
-
-/* ------------------------------------------------------------------
-   Main Component
------------------------------------------------------------------- */
 export default function FacultyofEducation() {
   const reduce = useReducedMotion();
 
@@ -183,7 +379,6 @@ export default function FacultyofEducation() {
   return (
     <section className="relative w-full bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        {/* HERO */}
         <motion.header
           initial={reduce ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -205,11 +400,8 @@ export default function FacultyofEducation() {
             Teacher education programmes and affiliated colleges across Nepal.
           </p>
         </motion.header>
-
-        {/* DEAN BLOCK */}
         <DeanBlock reduce={reduce} />
 
-        {/* PROGRAMS */}
         <div className="mb-16 sm:mb-20">
           <motion.div {...reveal()} className="mb-8">
             <h2 className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">
@@ -245,8 +437,8 @@ export default function FacultyofEducation() {
                       p.type === "Yearly"
                         ? "bg-emerald-50 text-emerald-700"
                         : p.type === "Research"
-                        ? "bg-purple-50 text-purple-700"
-                        : "bg-blue-50 text-blue-700"
+                          ? "bg-purple-50 text-purple-700"
+                          : "bg-blue-50 text-blue-700"
                     }`}
                   >
                     {p.type}
@@ -256,8 +448,6 @@ export default function FacultyofEducation() {
             ))}
           </div>
         </div>
-
-        {/* COLLEGES */}
         <div>
           <motion.div {...reveal()} className="mb-8">
             <h2 className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">

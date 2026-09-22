@@ -2,15 +2,12 @@ import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1];
-
-/* ------------------------------------------------------------------
-   Data
------------------------------------------------------------------- */
 const dean = {
   name: "Mr. Nabin Bhattarai",
   role: "Dean",
   email: "info@pufost.edu.np",
-  image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&crop=faces&q=80",
+  image:
+    "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&crop=faces&q=80",
   website: "https://pufost.edu.np",
 };
 
@@ -20,78 +17,387 @@ const deputyDean = {
 };
 
 const programs = [
-  { sn: 1, name: "Bachelor of Computer Application (BCA)", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 2, name: "Bachelor of Dairy Technology", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 3, name: "Bachelor of Food Technology", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 4, name: "Bachelor of Information Technology (BIT)", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 5, name: "Bachelor of Science (Honours) in Agriculture", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 6, name: "Bachelor of Science in Biotechnology", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 7, name: "Bachelor of Science in Forestry", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 8, name: "Bachelor of Technology in Biotechnology", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 9, name: "Bachelor of Veterinary Science & Animal Husbandry", duration: "5 Years / 10 Semesters", type: "Semester" },
-  { sn: 10, name: "Post Graduate Diploma in Computer Application (PGDCA)", duration: "1 Year / 2 Semesters", type: "Semester" },
-  { sn: 11, name: "Master of Science in Nutrition and Dietetics", duration: "2 Years / 4 Semesters", type: "Semester" },
-  { sn: 12, name: "Master of Computer Application (M.C.A.)", duration: "2 Years / 4 Semesters", type: "Semester" },
-  { sn: 13, name: "Master of Science in Agriculture (Agri-Business Management)", duration: "2 Years / 4 Semesters", type: "Semester" },
-  { sn: 14, name: "Master of Science in Meat Technology", duration: "2 Years / 4 Semesters", type: "Semester" },
-  { sn: 15, name: "Bachelor of Science in Food, Nutrition & Dietetics", duration: "4 Years / 8 Semesters", type: "Semester" },
+  {
+    sn: 1,
+    name: "Bachelor of Computer Application (BCA)",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 2,
+    name: "Bachelor of Dairy Technology",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 3,
+    name: "Bachelor of Food Technology",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 4,
+    name: "Bachelor of Information Technology (BIT)",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 5,
+    name: "Bachelor of Science (Honours) in Agriculture",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 6,
+    name: "Bachelor of Science in Biotechnology",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 7,
+    name: "Bachelor of Science in Forestry",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 8,
+    name: "Bachelor of Technology in Biotechnology",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 9,
+    name: "Bachelor of Veterinary Science & Animal Husbandry",
+    duration: "5 Years / 10 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 10,
+    name: "Post Graduate Diploma in Computer Application (PGDCA)",
+    duration: "1 Year / 2 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 11,
+    name: "Master of Science in Nutrition and Dietetics",
+    duration: "2 Years / 4 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 12,
+    name: "Master of Computer Application (M.C.A.)",
+    duration: "2 Years / 4 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 13,
+    name: "Master of Science in Agriculture (Agri-Business Management)",
+    duration: "2 Years / 4 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 14,
+    name: "Master of Science in Meat Technology",
+    duration: "2 Years / 4 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 15,
+    name: "Bachelor of Science in Food, Nutrition & Dietetics",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
 ];
 
 const colleges = [
-  { sn: 1, name: "P.U. School of Science and Technology (PUSAT)", address: "Biratnagar, Morang", programs: "BCA-60, BIT-60, B. Tech. in AI-48, PGDCA-20, MCA-33, MIT-33" },
-  { sn: 2, name: "G.P. Koirala College of Agriculture & Research Centre (GPCAR)", address: "Gothgaun, Morang", programs: "B. Sc. (Hons.) Ag.-96, B. Sc. Food, Nutrition & Dietetics-33" },
-  { sn: 3, name: "P.U. College of Environment and Forestry", address: "Gothgaun, Morang", programs: "B. Sc. Forestry-48" },
-  { sn: 4, name: "Nepal Polytechnic Institute", address: "Bharatpur, Chitwan", programs: "B. Sc. (Hons.) Ag.-96, B.V.Sc. & A.H.-48" },
-  { sn: 5, name: "Gomendra Multiple College", address: "Birtamode, Jhapa", programs: "BCA-96, M.C.A-33, B. Tech. in AI-48" },
-  { sn: 6, name: "Himalayan Whitehouse Int'l College", address: "Kathmandu", programs: "BIT-96, B. Tech. (Biotech.)-48" },
-  { sn: 7, name: "College of Information Technology and Engineering", address: "Kathmandu", programs: "BCA-80, BIT-40, MIT-33" },
-  { sn: 8, name: "Aryan School of Engineering and Management", address: "Kathmandu", programs: "BCA-48, BIT-96, B. Tech. in AI-48" },
-  { sn: 9, name: "Kantipur City College", address: "Kathmandu", programs: "BCA-80, BIT-48, MCA-40, PGDCA-30, B. Tech. in AI-48" },
-  { sn: 10, name: "College of Applied Food & Dairy Technology (CAFODAT)", address: "Lalitpur", programs: "B. Tech. (Food)-48, B. Tech. (Dairy)-33, M. Sc. in Nutrition & Dietetics-33, BIT-48" },
-  { sn: 11, name: "Kist College of Information Technology", address: "Kathmandu", programs: "BIT-48, MIT-33" },
-  { sn: 12, name: "Himalayan College of Agricultural Sciences and Technology", address: "Kathmandu", programs: "B. Sc. (Hons.) Ag.-96, B.V.Sc. & A.H.-48, M. Sc. (Meat/Dairy)-20/20, M.Sc. in Agri-Business Mgmt.-30" },
-  { sn: 13, name: "SANN International College for Higher Studies", address: "Kathmandu", programs: "B. Sc. (Biotech.)-40" },
-  { sn: 14, name: "Kantipur Valley College", address: "Lalitpur", programs: "B. Tech. (Biotech.)-48, BIT-48" },
-  { sn: 15, name: "Durga Devi Community Development Center", address: "Kamal, Jhapa", programs: "B. Sc. Forestry-48" },
-  { sn: 16, name: "Janakpur Community College", address: "Janakpur, Dhanusha", programs: "BIT-48, B.Sc.(Hons.) Ag.-48" },
-  { sn: 17, name: "Ilam Community Agriculture Campus", address: "Ilam", programs: "B. Sc. (Hons.) Ag.-48" },
-  { sn: 18, name: "Lumbini Adarsha Degree College", address: "Kawasoti, Nawalparasi", programs: "BIT-48" },
-  { sn: 19, name: "Madan Bhandari Memorial Academy", address: "Urlabari, Morang", programs: "B. Sc. (Hons.) Ag., BIT" },
-  { sn: 20, name: "Sushma Koirala Memorial Trust", address: "Nepalgunj, Banke", programs: "BIT-48" },
-  { sn: 21, name: "Lamahi Community Institute of Science & Technology", address: "Gadhawa, Dang", programs: "BIT-48" },
-  { sn: 22, name: "Kuleshwor Awas Campus", address: "Kathmandu", programs: "BIT-48" },
-  { sn: 23, name: "Mangal Prasad Women's College", address: "Nepalgunj, Banke", programs: "BCA-48" },
-  { sn: 24, name: "Lumbini Integrated Academy", address: "Tilottama, Rupandehi", programs: "B.Sc. Forestry-48" },
-  { sn: 25, name: "Sahid Aakash Memorial Campus (SAMC)", address: "Hetauda, Makawanpur", programs: "BIT-48" },
-  { sn: 26, name: "Global College of Social Science and Technology", address: "Baneshwor, Kathmandu", programs: "B. Tech. in AI-48" },
-  { sn: 27, name: "National Institute of Engineering and Technology", address: "Kupondole, Lalitpur", programs: "B. Tech. in AI-48" },
-  { sn: 28, name: "Gateway College of Professional Studies", address: "Basundhara, Kathmandu", programs: "B. Tech. in AI-48" },
-  { sn: 29, name: "Orchid College of Management and Technology", address: "Gaushala, Kathmandu", programs: "B. Tech. in AI-48, BIT-48" },
-  { sn: 30, name: "Central Engineering College", address: "Janakpurdham, Dhanusha", programs: "BIT-48" },
-  { sn: 31, name: "Saraswati Public Campus", address: "Dadarbairiya, Morang", programs: "BCA-48" },
-  { sn: 32, name: "Kasturi College", address: "Itahari, Sunsari", programs: "BIT-48" },
-  { sn: 33, name: "Hetauda Janapriya Campus", address: "Hetauda, Makawanpur", programs: "B.Sc. (Hons.) Ag.-48" },
-  { sn: 34, name: "Kathmandu Don Bosco College", address: "Kathmandu", programs: "BIT-48" },
-  { sn: 35, name: "Acme Engineering College", address: "Kathmandu", programs: "BIT-48" },
-  { sn: 36, name: "Model Purbanchal College", address: "Janakpur, Dhanusha", programs: "BIT-48" },
-  { sn: 37, name: "Kantipur International College", address: "Kathmandu", programs: "B. Tech. in AI-48" },
-  { sn: 38, name: "Khwopa Engineering College", address: "Bhaktapur", programs: "BIT-48, BCA-48" },
-  { sn: 39, name: "Southwestern School of Management and Technology", address: "Basundhara, Kathmandu", programs: "BIT-48" },
-  { sn: 40, name: "Devaki College of Management & Sciences", address: "Mirchaiya, Siraha", programs: "BCA IT-48" },
-  { sn: 41, name: "Birgunj Public College", address: "Birgunj, Parsa", programs: "BIT-48" },
-  { sn: 42, name: "Kathmandu Academy of Tourism and Hospitality", address: "Kathmandu", programs: "BIT-48" },
-  { sn: 43, name: "Asian College of Management & Technology", address: "Kathmandu", programs: "BIT-48" },
-  { sn: 44, name: "Hillside College of Engineering", address: "Kathmandu", programs: "BIT-48" },
-  { sn: 45, name: "Shepherd College", address: "Kathmandu", programs: "BIT-48" },
-  { sn: 46, name: "Kasthamandap College of Management", address: "Kalanki, Kathmandu", programs: "BIT-48" },
+  {
+    sn: 1,
+    name: "P.U. School of Science and Technology (PUSAT)",
+    address: "Biratnagar, Morang",
+    programs: "BCA-60, BIT-60, B. Tech. in AI-48, PGDCA-20, MCA-33, MIT-33",
+  },
+  {
+    sn: 2,
+    name: "G.P. Koirala College of Agriculture & Research Centre (GPCAR)",
+    address: "Gothgaun, Morang",
+    programs: "B. Sc. (Hons.) Ag.-96, B. Sc. Food, Nutrition & Dietetics-33",
+  },
+  {
+    sn: 3,
+    name: "P.U. College of Environment and Forestry",
+    address: "Gothgaun, Morang",
+    programs: "B. Sc. Forestry-48",
+  },
+  {
+    sn: 4,
+    name: "Nepal Polytechnic Institute",
+    address: "Bharatpur, Chitwan",
+    programs: "B. Sc. (Hons.) Ag.-96, B.V.Sc. & A.H.-48",
+  },
+  {
+    sn: 5,
+    name: "Gomendra Multiple College",
+    address: "Birtamode, Jhapa",
+    programs: "BCA-96, M.C.A-33, B. Tech. in AI-48",
+  },
+  {
+    sn: 6,
+    name: "Himalayan Whitehouse Int'l College",
+    address: "Kathmandu",
+    programs: "BIT-96, B. Tech. (Biotech.)-48",
+  },
+  {
+    sn: 7,
+    name: "College of Information Technology and Engineering",
+    address: "Kathmandu",
+    programs: "BCA-80, BIT-40, MIT-33",
+  },
+  {
+    sn: 8,
+    name: "Aryan School of Engineering and Management",
+    address: "Kathmandu",
+    programs: "BCA-48, BIT-96, B. Tech. in AI-48",
+  },
+  {
+    sn: 9,
+    name: "Kantipur City College",
+    address: "Kathmandu",
+    programs: "BCA-80, BIT-48, MCA-40, PGDCA-30, B. Tech. in AI-48",
+  },
+  {
+    sn: 10,
+    name: "College of Applied Food & Dairy Technology (CAFODAT)",
+    address: "Lalitpur",
+    programs:
+      "B. Tech. (Food)-48, B. Tech. (Dairy)-33, M. Sc. in Nutrition & Dietetics-33, BIT-48",
+  },
+  {
+    sn: 11,
+    name: "Kist College of Information Technology",
+    address: "Kathmandu",
+    programs: "BIT-48, MIT-33",
+  },
+  {
+    sn: 12,
+    name: "Himalayan College of Agricultural Sciences and Technology",
+    address: "Kathmandu",
+    programs:
+      "B. Sc. (Hons.) Ag.-96, B.V.Sc. & A.H.-48, M. Sc. (Meat/Dairy)-20/20, M.Sc. in Agri-Business Mgmt.-30",
+  },
+  {
+    sn: 13,
+    name: "SANN International College for Higher Studies",
+    address: "Kathmandu",
+    programs: "B. Sc. (Biotech.)-40",
+  },
+  {
+    sn: 14,
+    name: "Kantipur Valley College",
+    address: "Lalitpur",
+    programs: "B. Tech. (Biotech.)-48, BIT-48",
+  },
+  {
+    sn: 15,
+    name: "Durga Devi Community Development Center",
+    address: "Kamal, Jhapa",
+    programs: "B. Sc. Forestry-48",
+  },
+  {
+    sn: 16,
+    name: "Janakpur Community College",
+    address: "Janakpur, Dhanusha",
+    programs: "BIT-48, B.Sc.(Hons.) Ag.-48",
+  },
+  {
+    sn: 17,
+    name: "Ilam Community Agriculture Campus",
+    address: "Ilam",
+    programs: "B. Sc. (Hons.) Ag.-48",
+  },
+  {
+    sn: 18,
+    name: "Lumbini Adarsha Degree College",
+    address: "Kawasoti, Nawalparasi",
+    programs: "BIT-48",
+  },
+  {
+    sn: 19,
+    name: "Madan Bhandari Memorial Academy",
+    address: "Urlabari, Morang",
+    programs: "B. Sc. (Hons.) Ag., BIT",
+  },
+  {
+    sn: 20,
+    name: "Sushma Koirala Memorial Trust",
+    address: "Nepalgunj, Banke",
+    programs: "BIT-48",
+  },
+  {
+    sn: 21,
+    name: "Lamahi Community Institute of Science & Technology",
+    address: "Gadhawa, Dang",
+    programs: "BIT-48",
+  },
+  {
+    sn: 22,
+    name: "Kuleshwor Awas Campus",
+    address: "Kathmandu",
+    programs: "BIT-48",
+  },
+  {
+    sn: 23,
+    name: "Mangal Prasad Women's College",
+    address: "Nepalgunj, Banke",
+    programs: "BCA-48",
+  },
+  {
+    sn: 24,
+    name: "Lumbini Integrated Academy",
+    address: "Tilottama, Rupandehi",
+    programs: "B.Sc. Forestry-48",
+  },
+  {
+    sn: 25,
+    name: "Sahid Aakash Memorial Campus (SAMC)",
+    address: "Hetauda, Makawanpur",
+    programs: "BIT-48",
+  },
+  {
+    sn: 26,
+    name: "Global College of Social Science and Technology",
+    address: "Baneshwor, Kathmandu",
+    programs: "B. Tech. in AI-48",
+  },
+  {
+    sn: 27,
+    name: "National Institute of Engineering and Technology",
+    address: "Kupondole, Lalitpur",
+    programs: "B. Tech. in AI-48",
+  },
+  {
+    sn: 28,
+    name: "Gateway College of Professional Studies",
+    address: "Basundhara, Kathmandu",
+    programs: "B. Tech. in AI-48",
+  },
+  {
+    sn: 29,
+    name: "Orchid College of Management and Technology",
+    address: "Gaushala, Kathmandu",
+    programs: "B. Tech. in AI-48, BIT-48",
+  },
+  {
+    sn: 30,
+    name: "Central Engineering College",
+    address: "Janakpurdham, Dhanusha",
+    programs: "BIT-48",
+  },
+  {
+    sn: 31,
+    name: "Saraswati Public Campus",
+    address: "Dadarbairiya, Morang",
+    programs: "BCA-48",
+  },
+  {
+    sn: 32,
+    name: "Kasturi College",
+    address: "Itahari, Sunsari",
+    programs: "BIT-48",
+  },
+  {
+    sn: 33,
+    name: "Hetauda Janapriya Campus",
+    address: "Hetauda, Makawanpur",
+    programs: "B.Sc. (Hons.) Ag.-48",
+  },
+  {
+    sn: 34,
+    name: "Kathmandu Don Bosco College",
+    address: "Kathmandu",
+    programs: "BIT-48",
+  },
+  {
+    sn: 35,
+    name: "Acme Engineering College",
+    address: "Kathmandu",
+    programs: "BIT-48",
+  },
+  {
+    sn: 36,
+    name: "Model Purbanchal College",
+    address: "Janakpur, Dhanusha",
+    programs: "BIT-48",
+  },
+  {
+    sn: 37,
+    name: "Kantipur International College",
+    address: "Kathmandu",
+    programs: "B. Tech. in AI-48",
+  },
+  {
+    sn: 38,
+    name: "Khwopa Engineering College",
+    address: "Bhaktapur",
+    programs: "BIT-48, BCA-48",
+  },
+  {
+    sn: 39,
+    name: "Southwestern School of Management and Technology",
+    address: "Basundhara, Kathmandu",
+    programs: "BIT-48",
+  },
+  {
+    sn: 40,
+    name: "Devaki College of Management & Sciences",
+    address: "Mirchaiya, Siraha",
+    programs: "BCA IT-48",
+  },
+  {
+    sn: 41,
+    name: "Birgunj Public College",
+    address: "Birgunj, Parsa",
+    programs: "BIT-48",
+  },
+  {
+    sn: 42,
+    name: "Kathmandu Academy of Tourism and Hospitality",
+    address: "Kathmandu",
+    programs: "BIT-48",
+  },
+  {
+    sn: 43,
+    name: "Asian College of Management & Technology",
+    address: "Kathmandu",
+    programs: "BIT-48",
+  },
+  {
+    sn: 44,
+    name: "Hillside College of Engineering",
+    address: "Kathmandu",
+    programs: "BIT-48",
+  },
+  {
+    sn: 45,
+    name: "Shepherd College",
+    address: "Kathmandu",
+    programs: "BIT-48",
+  },
+  {
+    sn: 46,
+    name: "Kasthamandap College of Management",
+    address: "Kalanki, Kathmandu",
+    programs: "BIT-48",
+  },
 ];
-
-/* ------------------------------------------------------------------
-   Icons
------------------------------------------------------------------- */
 function MailIcon({ className }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden="true">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
     </svg>
@@ -100,16 +406,18 @@ function MailIcon({ className }) {
 
 function ArrowUpRightIcon({ className }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden="true">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
       <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
       <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
     </svg>
   );
 }
-
-/* ------------------------------------------------------------------
-   Dean Block
------------------------------------------------------------------- */
 function DeanBlock({ reduce }) {
   return (
     <motion.div
@@ -121,7 +429,6 @@ function DeanBlock({ reduce }) {
     >
       <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50/50">
         <div className="grid grid-cols-1 md:grid-cols-12">
-          {/* Photo */}
           <div className="relative md:col-span-4 lg:col-span-3">
             <div className="relative aspect-square h-full w-full md:aspect-auto md:h-full">
               <img
@@ -138,7 +445,6 @@ function DeanBlock({ reduce }) {
             </div>
           </div>
 
-          {/* Info */}
           <div className="flex flex-col justify-center p-6 sm:p-8 md:col-span-8 lg:col-span-9 lg:p-10">
             <div className="mb-3 flex items-center gap-3">
               <span className="h-px w-6 bg-amber-500" />
@@ -157,7 +463,6 @@ function DeanBlock({ reduce }) {
               sciences at Purbanchal University.
             </p>
 
-            {/* Contact links */}
             <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
               <a
                 href={`mailto:${dean.email}`}
@@ -170,7 +475,6 @@ function DeanBlock({ reduce }) {
               </a>
             </div>
 
-            {/* Visit Website Button */}
             <div className="mt-6">
               <a
                 href={dean.website}
@@ -186,7 +490,6 @@ function DeanBlock({ reduce }) {
         </div>
       </div>
 
-      {/* Deputy Dean */}
       <div className="mt-4 flex flex-col items-start gap-3 rounded-2xl border border-dashed border-slate-200 bg-slate-50/40 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
         <div className="flex items-center gap-3">
           <span className="h-px w-6 bg-amber-500" />
@@ -205,10 +508,6 @@ function DeanBlock({ reduce }) {
     </motion.div>
   );
 }
-
-/* ------------------------------------------------------------------
-   Main Component
------------------------------------------------------------------- */
 export default function FacultyofScienceAndTechnology() {
   const reduce = useReducedMotion();
 
@@ -225,7 +524,6 @@ export default function FacultyofScienceAndTechnology() {
   return (
     <section className="relative w-full bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        {/* HERO */}
         <motion.header
           initial={reduce ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -249,10 +547,7 @@ export default function FacultyofScienceAndTechnology() {
           </p>
         </motion.header>
 
-        {/* DEAN BLOCK */}
         <DeanBlock reduce={reduce} />
-
-        {/* PROGRAMS */}
         <div className="mb-16 sm:mb-20">
           <motion.div {...reveal()} className="mb-8">
             <h2 className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">
@@ -288,8 +583,8 @@ export default function FacultyofScienceAndTechnology() {
                       p.type === "Yearly"
                         ? "bg-emerald-50 text-emerald-700"
                         : p.type === "Research"
-                        ? "bg-purple-50 text-purple-700"
-                        : "bg-blue-50 text-blue-700"
+                          ? "bg-purple-50 text-purple-700"
+                          : "bg-blue-50 text-blue-700"
                     }`}
                   >
                     {p.type}
@@ -300,7 +595,6 @@ export default function FacultyofScienceAndTechnology() {
           </div>
         </div>
 
-        {/* COLLEGES */}
         <div>
           <motion.div {...reveal()} className="mb-8">
             <h2 className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">

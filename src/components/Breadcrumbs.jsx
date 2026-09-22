@@ -15,7 +15,6 @@ export default function Breadcrumbs() {
       return { pathname: match.pathname, label, noLink: Boolean(noLink) };
     });
 
-  // Nothing to show on the homepage
   if (crumbs.length <= 1) return null;
 
   return (

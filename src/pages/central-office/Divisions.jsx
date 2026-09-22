@@ -3,9 +3,6 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1];
 
-/* ------------------------------------------------------------------
-   Data
------------------------------------------------------------------- */
 const divisions = [
   {
     id: "planning",
@@ -107,9 +104,6 @@ const divisions = [
   },
 ];
 
-/* ------------------------------------------------------------------
-   Icons
------------------------------------------------------------------- */
 function DivisionIcon({ id, className }) {
   const common = {
     className,
@@ -139,9 +133,27 @@ function DivisionIcon({ id, className }) {
   if (id === "coordination")
     return (
       <svg {...common}>
-        <circle cx="12" cy="6" r="2.5" stroke="currentColor" strokeWidth="1.6" />
-        <circle cx="6" cy="18" r="2.5" stroke="currentColor" strokeWidth="1.6" />
-        <circle cx="18" cy="18" r="2.5" stroke="currentColor" strokeWidth="1.6" />
+        <circle
+          cx="12"
+          cy="6"
+          r="2.5"
+          stroke="currentColor"
+          strokeWidth="1.6"
+        />
+        <circle
+          cx="6"
+          cy="18"
+          r="2.5"
+          stroke="currentColor"
+          strokeWidth="1.6"
+        />
+        <circle
+          cx="18"
+          cy="18"
+          r="2.5"
+          stroke="currentColor"
+          strokeWidth="1.6"
+        />
         <path
           d="M12 8.5v4M7.5 16l3-3.5M16.5 16l-3-3.5"
           stroke="currentColor"
@@ -200,7 +212,13 @@ function DivisionIcon({ id, className }) {
     return (
       <svg {...common}>
         <circle cx="9" cy="9" r="3" stroke="currentColor" strokeWidth="1.6" />
-        <circle cx="17" cy="10" r="2.2" stroke="currentColor" strokeWidth="1.6" />
+        <circle
+          cx="17"
+          cy="10"
+          r="2.2"
+          stroke="currentColor"
+          strokeWidth="1.6"
+        />
         <path
           d="M3 19c0-3 2.7-5 6-5s6 2 6 5"
           stroke="currentColor"
@@ -299,10 +317,6 @@ function DivisionIcon({ id, className }) {
     </svg>
   );
 }
-
-/* ------------------------------------------------------------------
-   Contact Card
------------------------------------------------------------------- */
 function ContactCard({ contact }) {
   return (
     <motion.div
@@ -387,9 +401,6 @@ function ContactCard({ contact }) {
   );
 }
 
-/* ------------------------------------------------------------------
-   Mobile Sticky Tab Bar — premium horizontal scroll
------------------------------------------------------------------- */
 function MobileTabs({ divisions, activeId, onSelect, reduce }) {
   const scrollRef = useRef(null);
 
@@ -429,7 +440,7 @@ function MobileTabs({ divisions, activeId, onSelect, reduce }) {
                   onSelect(c.id);
                   // scroll active chip into view
                   const el = scrollRef.current?.querySelector(
-                    `[data-chip="${c.id}"]`
+                    `[data-chip="${c.id}"]`,
                   );
                   el?.scrollIntoView({
                     behavior: "smooth",
@@ -462,9 +473,6 @@ function MobileTabs({ divisions, activeId, onSelect, reduce }) {
   );
 }
 
-/* ------------------------------------------------------------------
-   Main Component
------------------------------------------------------------------- */
 export default function Divisions() {
   const [activeId, setActiveId] = useState(divisions[0].id);
   const reduce = useReducedMotion();
@@ -474,7 +482,6 @@ export default function Divisions() {
 
   return (
     <section className="relative w-full overflow-hidden bg-white py-8 sm:py-12 lg:py-16">
-      {/* Background */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -490,9 +497,6 @@ export default function Divisions() {
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12">
-        {/* ============================================================
-            HERO HEADER
-        ============================================================ */}
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -513,22 +517,13 @@ export default function Divisions() {
             Purbanchal University.
           </p>
         </motion.div>
-
-        {/* ============================================================
-            MOBILE STICKY TABS (below lg)
-        ============================================================ */}
         <MobileTabs
           divisions={divisions}
           activeId={activeId}
           onSelect={setActiveId}
           reduce={reduce}
         />
-
-        {/* ============================================================
-            MAIN LAYOUT
-        ============================================================ */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
-          {/* ---------- Desktop Sidebar ---------- */}
           <div
             className="hidden lg:col-span-4 lg:block"
             role="tablist"
@@ -585,8 +580,6 @@ export default function Divisions() {
               })}
             </div>
           </div>
-
-          {/* ---------- Content Panel ---------- */}
           <div className="lg:col-span-8">
             <AnimatePresence mode="wait">
               <motion.div
@@ -600,7 +593,6 @@ export default function Divisions() {
                 transition={{ duration: 0.5, ease: EASE }}
                 className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-200/50"
               >
-                {/* Panel header */}
                 <div className="border-b border-slate-100 bg-slate-50/60 px-5 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6">
                   <div className="flex items-start gap-3">
                     <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-[#252659]/5 text-[#252659] lg:hidden">
@@ -617,7 +609,6 @@ export default function Divisions() {
                   </div>
                 </div>
 
-                {/* Panel body */}
                 <div className="px-5 py-6 sm:px-6 sm:py-7 lg:px-8 lg:py-8">
                   {hasContent ? (
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-8">
@@ -629,9 +620,7 @@ export default function Divisions() {
                         {active.description.map((p, i) => (
                           <motion.p
                             key={i}
-                            initial={
-                              reduce ? false : { opacity: 0, y: 12 }
-                            }
+                            initial={reduce ? false : { opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{
                               duration: 0.5,

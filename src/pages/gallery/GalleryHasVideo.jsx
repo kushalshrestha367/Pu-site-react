@@ -10,7 +10,6 @@ export default function GalleryHasVideo() {
 
   return (
     <section className="relative flex min-h-[70vh] w-full items-center bg-white py-16 sm:py-20">
-      {/* Dot-grid background */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -26,7 +25,6 @@ export default function GalleryHasVideo() {
       />
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6 sm:px-8 lg:px-12">
-        {/* Eyebrow */}
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -38,8 +36,6 @@ export default function GalleryHasVideo() {
             Video Gallery
           </span>
         </motion.div>
-
-        {/* Title */}
         <motion.h1
           initial={reduce ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -50,8 +46,6 @@ export default function GalleryHasVideo() {
           <br />
           <span className="text-accent">Coming Soon</span>
         </motion.h1>
-
-        {/* Description */}
         <motion.p
           initial={reduce ? false : { opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
@@ -61,8 +55,6 @@ export default function GalleryHasVideo() {
           We're preparing a collection of videos highlighting Purbanchal
           University. Please check back soon.
         </motion.p>
-
-        {/* Button */}
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}

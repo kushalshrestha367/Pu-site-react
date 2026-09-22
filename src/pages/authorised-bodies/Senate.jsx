@@ -2,8 +2,7 @@ import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 const D = "..................................................";
-const toNepali = (n) =>
-  String(n).replace(/\d/g, (d) => "०१२३४५६७८९"[d]);
+const toNepali = (n) => String(n).replace(/\d/g, (d) => "०१२३४५६७८९"[d]);
 
 const toNepaliOrdinal = (n) => toNepali(n) + ".";
 
@@ -47,8 +46,12 @@ const sections = [
     r: [
       ex("माननीय श्री रुबिना अचार्य, सदस्य, प्रतिनिधि सभा, मोरङ क्षेत्र नं. ६"),
       ex("माननीय श्री गणेश कार्की, सदस्य, प्रतिनिधि सभा, मोरङ क्षेत्र नं. ३"),
-      ex("माननीय श्री जिवन आचार्य, सदस्य, कोशी प्रदेश सभा, मोरङ क्षेत्र नं. ६(१)"),
-      ex("माननीय श्री ज्ञानेन्द्र सुवेदी, सदस्य, कोशी प्रदेश सभा, मोरङ क्षेत्र नं. ३(२)"),
+      ex(
+        "माननीय श्री जिवन आचार्य, सदस्य, कोशी प्रदेश सभा, मोरङ क्षेत्र नं. ६(१)",
+      ),
+      ex(
+        "माननीय श्री ज्ञानेन्द्र सुवेदी, सदस्य, कोशी प्रदेश सभा, मोरङ क्षेत्र नं. ३(२)",
+      ),
     ],
   },
   {
@@ -96,7 +99,9 @@ const sections = [
   {
     t: "शिक्षा सम्बन्धी केही नेपाल ऐन संसोधन गर्न बनेको ऐन, २०७७ को दफा ७ को उपदफा (२) को खण्ड (ग) बमोजिम पूर्वाञ्चल विश्वविद्यालय ऐन, २०५० को दफा ७ को उपदफा (२) को खण्ड (ट) मा भएको संशोधन अनुसार विश्वविद्यालयको केन्द्रीय कार्यालय रहेको नगरपालिकाको प्रमुख र उप-प्रमुख",
     r: [
-      ex("श्री केदार प्रसाद गुरागाईं, नगर प्रमुख, सुन्दरहरैंचा नगरपालिका, मोरङ"),
+      ex(
+        "श्री केदार प्रसाद गुरागाईं, नगर प्रमुख, सुन्दरहरैंचा नगरपालिका, मोरङ",
+      ),
       ex("श्री अकली चौधरी, नगर उप-प्रमुख, सुन्दरहरैंचा नगरपालिका, मोरङ"),
     ],
   },
@@ -170,7 +175,6 @@ const note =
 
 const EASE = [0.22, 1, 0.36, 1];
 
-/* ---------- Badge ---------- */
 function StatusBadge({ status }) {
   const isExOfficio = status === "पदेन";
   return (
@@ -198,11 +202,11 @@ export default function UniversitySabhaTable() {
   const totalMembers = sections.reduce((sum, s) => sum + s.r.length, 0);
   const nominatedCount = sections.reduce(
     (sum, s) => sum + s.r.filter((r) => r[2] === "मनोनीत").length,
-    0
+    0,
   );
   const exOfficioCount = sections.reduce(
     (sum, s) => sum + s.r.filter((r) => r[2] === "पदेन").length,
-    0
+    0,
   );
 
   const reveal = (delay = 0) =>
@@ -244,7 +248,6 @@ export default function UniversitySabhaTable() {
 
   return (
     <section className="relative w-full overflow-hidden bg-white py-8 sm:py-12 lg:py-16">
-      {/* Dot grid background */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -260,7 +263,6 @@ export default function UniversitySabhaTable() {
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* ---------- Hero Header ---------- */}
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -275,13 +277,12 @@ export default function UniversitySabhaTable() {
           </div>
 
           <h1 className="font-serif text-xl font-bold leading-[1.4] tracking-tight text-slate-900 sm:text-2xl lg:text-3xl xl:text-4xl">
-            पूर्वाञ्चल विश्वविद्यालय ऐन, २०५०, केही नेपाल कानून संशोधन गर्ने
-            ऐन, २०६३ र शिक्षा सम्बन्धी केही नेपाल ऐन संसोधन गर्न बनेको ऐन,
-            २०७७ बमोजिम गठित विश्वविद्यालय सभाको विवरण
+            पूर्वाञ्चल विश्वविद्यालय ऐन, २०५०, केही नेपाल कानून संशोधन गर्ने ऐन,
+            २०६३ र शिक्षा सम्बन्धी केही नेपाल ऐन संसोधन गर्न बनेको ऐन, २०७७
+            बमोजिम गठित विश्वविद्यालय सभाको विवरण
           </h1>
         </motion.div>
 
-        {/* ---------- Stat Cards ---------- */}
         <div className="mb-8 grid grid-cols-2 gap-2.5 sm:mb-10 sm:grid-cols-4 sm:gap-4">
           {stats.map((s, i) => (
             <motion.div
@@ -311,9 +312,6 @@ export default function UniversitySabhaTable() {
           ))}
         </div>
 
-        {/* ============================================================
-            DESKTOP / TABLET — Table view (md and up)
-        ============================================================ */}
         <motion.div
           {...reveal(0.2)}
           className="hidden overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-200/50 md:block"
@@ -340,7 +338,6 @@ export default function UniversitySabhaTable() {
               <tbody>
                 {sections.map((s, si) => (
                   <React.Fragment key={si}>
-                    {/* Section header row */}
                     <tr>
                       <td
                         colSpan={4}
@@ -357,7 +354,6 @@ export default function UniversitySabhaTable() {
                       </td>
                     </tr>
 
-                    {/* Member rows */}
                     {s.r.map(([name, post, status], ri) => (
                       <motion.tr
                         key={ri}
@@ -388,7 +384,6 @@ export default function UniversitySabhaTable() {
                   </React.Fragment>
                 ))}
 
-                {/* Note row */}
                 <tr>
                   <td
                     colSpan={4}
@@ -417,7 +412,6 @@ export default function UniversitySabhaTable() {
           </div>
         </motion.div>
 
-       
         <div className="space-y-4 md:hidden">
           {sections.map((s, si) => (
             <motion.div
@@ -428,7 +422,6 @@ export default function UniversitySabhaTable() {
               transition={{ duration: 0.55, ease: EASE }}
               className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
             >
-              {/* Section header */}
               <div className="flex items-start gap-2.5 border-b border-slate-100 bg-slate-50/80 px-3.5 py-3">
                 {/* <span className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#252659] text-[10px] font-bold text-white">
                   {toNepali(si + 1)}
@@ -438,7 +431,6 @@ export default function UniversitySabhaTable() {
                 </p>
               </div>
 
-              {/* Members */}
               <ul className="divide-y divide-slate-100">
                 {s.r.map(([name, post, status], ri) => (
                   <li
@@ -467,7 +459,6 @@ export default function UniversitySabhaTable() {
             </motion.div>
           ))}
 
-          {/* Note card (mobile) */}
           <motion.div
             {...reveal()}
             className="rounded-2xl border border-slate-200 bg-slate-50 p-4"

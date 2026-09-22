@@ -131,8 +131,6 @@ function AboutHasMessageFromRegistrar() {
                   draggable={false}
                 />
               </motion.div>
-
-              {/* Name card */}
               <motion.div
                 {...reveal(0.5)}
                 className="relative mx-auto -mt-10 w-[88%] rounded-2xl border border-slate-200 bg-white px-5 py-4 text-center shadow-lg shadow-slate-200/10"
@@ -164,8 +162,6 @@ function AboutHasMessageFromRegistrar() {
               </motion.div>
             </div>
           </div>
-
-          {/* ---------- Message ---------- */}
           <div className="lg:col-span-8">
             {/* Lead statement */}
             <motion.p
@@ -185,10 +181,7 @@ function AboutHasMessageFromRegistrar() {
             </motion.p>
 
             <div className="my-10 h-px w-full bg-gradient-to-r from-[#252659] via-slate-500 to-transparent" />
-
-            {/* Body */}
             <div className="space-y-6 font-serif text-[1.05rem] leading-[1.9] text-slate-700 sm:text-lg">
-              {/* Skip the first paragraph since it's the lead statement above */}
               {content.slice(1).map((block, i) => {
                 if (block.type === "h") {
                   return (
@@ -222,8 +215,6 @@ function AboutHasMessageFromRegistrar() {
                 );
               })}
             </div>
-
-            {/* ---------- Sign-off ---------- */}
             <motion.div
               {...reveal()}
               className="mt-14 flex flex-col gap-5 border-t border-slate-200 pt-8 sm:flex-row sm:items-center"

@@ -3,13 +3,6 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1];
 
-/* ------------------------------------------------------------------
-   Data
-   Unified shape: every centre has `contact` (role/centre/poBox/email/phone).
-   A centre that also has a named director adds `directorName` + `directorImage`.
-   `description` / `note` are optional and only present for centres with
-   extended content.
------------------------------------------------------------------- */
 const centres = [
   {
     id: "research",
@@ -57,33 +50,74 @@ const centres = [
   },
 ];
 
-/* Small icon set used instead of "01/02/03" sequence markers */
 function CentreIcon({ id, className }) {
-  const common = { className, viewBox: "0 0 24 24", fill: "none", xmlns: "http://www.w3.org/2000/svg" };
+  const common = {
+    className,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+  };
   if (id === "research")
     return (
       <svg {...common}>
-        <path d="M12 3l8 4-8 4-8-4 8-4z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-        <path d="M6 10.5V15c0 1.4 2.7 3 6 3s6-1.6 6-3v-4.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d="M12 3l8 4-8 4-8-4 8-4z"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M6 10.5V15c0 1.4 2.7 3 6 3s6-1.6 6-3v-4.5"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     );
   if (id === "curriculum")
     return (
       <svg {...common}>
-        <path d="M4 5.5A1.5 1.5 0 015.5 4H11v16H5.5A1.5 1.5 0 014 18.5v-13z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-        <path d="M20 5.5A1.5 1.5 0 0018.5 4H13v16h5.5a1.5 1.5 0 001.5-1.5v-13z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+        <path
+          d="M4 5.5A1.5 1.5 0 015.5 4H11v16H5.5A1.5 1.5 0 014 18.5v-13z"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M20 5.5A1.5 1.5 0 0018.5 4H13v16h5.5a1.5 1.5 0 001.5-1.5v-13z"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinejoin="round"
+        />
       </svg>
     );
   return (
     <svg {...common}>
-      <path d="M3 12a9 9 0 1015.5-6.2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-      <path d="M3 5.5V10h4.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M12 8v4.5l3 2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M3 12a9 9 0 1015.5-6.2"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+      <path
+        d="M3 5.5V10h4.5"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 8v4.5l3 2"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 
-/* Initials avatar, used as a fallback if directorImage fails to load */
 function InitialsAvatar({ name, className }) {
   const initials = name
     .split(" ")
@@ -92,15 +126,14 @@ function InitialsAvatar({ name, className }) {
     .map((w) => w[0])
     .join("");
   return (
-    <div className={`flex items-center justify-center bg-[#252659] font-serif text-3xl font-bold text-white ${className}`}>
+    <div
+      className={`flex items-center justify-center bg-[#252659] font-serif text-3xl font-bold text-white ${className}`}
+    >
       {initials || name[0]}
     </div>
   );
 }
 
-/* ------------------------------------------------------------------
-   Contact Card
------------------------------------------------------------------- */
 function ContactCard({ contact, directorName, directorImage }) {
   const [imgFailed, setImgFailed] = useState(false);
 
@@ -156,23 +189,48 @@ function ContactCard({ contact, directorName, directorImage }) {
 
         <ul className="space-y-3 text-sm">
           <li className="flex items-start gap-2.5">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#252659]" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#252659]"
+              aria-hidden="true"
+            >
               <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
               <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
             </svg>
-            <a href={`mailto:${contact.email}`} className="break-all text-slate-700 transition-colors hover:text-[#252659] hover:underline">
+            <a
+              href={`mailto:${contact.email}`}
+              className="break-all text-slate-700 transition-colors hover:text-[#252659] hover:underline"
+            >
               {contact.email}
             </a>
           </li>
           <li className="flex items-start gap-2.5">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#252659]" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#252659]"
+              aria-hidden="true"
+            >
               <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
             </svg>
             <span className="text-slate-700">{contact.phone}</span>
           </li>
           <li className="flex items-start gap-2.5">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#252659]" aria-hidden="true">
-              <path fillRule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.976.544l.062.029.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clipRule="evenodd" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#252659]"
+              aria-hidden="true"
+            >
+              <path
+                fillRule="evenodd"
+                d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.976.544l.062.029.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z"
+                clipRule="evenodd"
+              />
             </svg>
             <span className="text-slate-700">{contact.poBox}</span>
           </li>
@@ -182,9 +240,6 @@ function ContactCard({ contact, directorName, directorImage }) {
   );
 }
 
-/* ------------------------------------------------------------------
-   Main Component
------------------------------------------------------------------- */
 export default function Centres() {
   const [activeId, setActiveId] = useState(centres[0].id);
   const reduce = useReducedMotion();
@@ -197,15 +252,17 @@ export default function Centres() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{
-          backgroundImage: "radial-gradient(circle, rgba(15,23,42,0.08) 1px, transparent 1.5px)",
+          backgroundImage:
+            "radial-gradient(circle, rgba(15,23,42,0.08) 1px, transparent 1.5px)",
           backgroundSize: "26px 26px",
-          WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 50% 30%, black 10%, transparent 75%)",
-          maskImage: "radial-gradient(ellipse 70% 60% at 50% 30%, black 10%, transparent 75%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 70% 60% at 50% 30%, black 10%, transparent 75%)",
+          maskImage:
+            "radial-gradient(ellipse 70% 60% at 50% 30%, black 10%, transparent 75%)",
         }}
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12">
-        {/* ---------- Header ---------- */}
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -214,21 +271,25 @@ export default function Centres() {
         >
           <div className="mb-4 flex items-center gap-3 sm:mb-5">
             <span className="h-[3px] w-8 rounded-full bg-[#252659]" />
-            <span className="text-xs font-semibold text-[#252659] sm:text-sm">केन्द्रहरू</span>
+            <span className="text-xs font-semibold text-[#252659] sm:text-sm">
+              केन्द्रहरू
+            </span>
           </div>
           <h1 className="font-serif text-xl font-bold leading-[1.4] tracking-tight text-slate-900 sm:text-2xl md:text-[28px] lg:text-3xl xl:text-4xl">
             केन्द्रहरूको विवरण
           </h1>
           <p className="mt-4 max-w-3xl text-[13.5px] leading-relaxed text-slate-600 sm:mt-5 sm:text-sm lg:text-[15px] xl:text-base">
-            Purbanchal University's research, curriculum, and monitoring
-            centres dedicated to academic excellence and institutional
-            development.
+            Purbanchal University's research, curriculum, and monitoring centres
+            dedicated to academic excellence and institutional development.
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
-          {/* ---------- Sidebar tabs ---------- */}
-          <div className="lg:col-span-4" role="tablist" aria-label="University centres">
+          <div
+            className="lg:col-span-4"
+            role="tablist"
+            aria-label="University centres"
+          >
             <div className="hidden lg:block">
               <div className="space-y-2.5">
                 {centres.map((c, i) => {
@@ -243,7 +304,11 @@ export default function Centres() {
                       onClick={() => setActiveId(c.id)}
                       initial={reduce ? false : { opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, delay: i * 0.08, ease: EASE }}
+                      transition={{
+                        duration: 0.5,
+                        delay: i * 0.08,
+                        ease: EASE,
+                      }}
                       whileHover={reduce ? {} : { x: 4 }}
                       className={`group relative flex w-full min-h-[64px] items-center gap-3 rounded-xl border px-5 py-4 text-left transition-all duration-300 ${
                         isActive
@@ -278,8 +343,6 @@ export default function Centres() {
                 })}
               </div>
             </div>
-
-            {/* Mobile tabs: separate stacked cards */}
             <div className="flex flex-col gap-2.5 lg:hidden">
               {centres.map((c) => {
                 const isActive = c.id === activeId;
@@ -305,7 +368,6 @@ export default function Centres() {
             </div>
           </div>
 
-          {/* ---------- Content panel ---------- */}
           <div className="lg:col-span-8">
             <AnimatePresence mode="wait">
               <motion.div
@@ -358,7 +420,11 @@ export default function Centres() {
                             key={i}
                             initial={reduce ? false : { opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.15 + i * 0.08, ease: EASE }}
+                            transition={{
+                              duration: 0.5,
+                              delay: 0.15 + i * 0.08,
+                              ease: EASE,
+                            }}
                             className="max-w-[65ch] text-[14px] leading-[1.85] text-slate-700 sm:text-[15px] xl:text-base"
                           >
                             {p}
@@ -376,11 +442,23 @@ export default function Centres() {
                       className="mt-8 rounded-2xl border border-blue-100 bg-blue-50/50 p-5 sm:p-6 text-justify"
                     >
                       <div className="flex items-start gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-600" aria-hidden="true">
-                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-600"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                         <p className="text-[13.5px] leading-relaxed text-slate-700 sm:text-sm">
-                          <span className="font-semibold text-slate-800">Note: </span>
+                          <span className="font-semibold text-slate-800">
+                            Note:{" "}
+                          </span>
                           {active.note}
                         </p>
                       </div>

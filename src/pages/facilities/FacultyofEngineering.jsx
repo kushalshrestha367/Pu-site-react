@@ -3,14 +3,12 @@ import { motion, useReducedMotion } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1];
 
-/* ------------------------------------------------------------------
-   Data
------------------------------------------------------------------- */
 const dean = {
   name: "Er. Dev Lal Yadav",
   role: "Dean",
   email: "dean@pufoe.edu.np",
-  image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&crop=faces&q=80",
+  image:
+    "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&crop=faces&q=80",
   website: "https://pufoe.edu.np",
 };
 
@@ -20,51 +18,228 @@ const deputyDean = {
 };
 
 const programs = [
-  { sn: 1, name: "Bachelor in Biomedical Engineering", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 2, name: "Bachelor in Civil Engineering", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 3, name: "Bachelor in Computer Engineering", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 4, name: "Bachelor in Electrical Engineering", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 5, name: "Bachelor in Electronics Communication & Automation Engineering", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 6, name: "Bachelor in Architecture (B. Arch.)", duration: "5 Years / 10 Semesters", type: "Semester" },
-  { sn: 7, name: "Bachelor in Geomatic Engineering", duration: "4 Years / 8 Semesters", type: "Semester" },
-  { sn: 8, name: "Master of Engineering in Earthquake", duration: "2 Years / 4 Semesters", type: "Semester" },
-  { sn: 9, name: "Master of Science in Engineering Management", duration: "2 Years / 4 Semesters", type: "Semester" },
-  { sn: 10, name: "Master of Science in Information System Engineering", duration: "2 Years / 4 Semesters", type: "Semester" },
-  { sn: 11, name: "Master of Science in Urban Design & Conservation", duration: "2 Years / 4 Semesters", type: "Semester" },
-  { sn: 12, name: "Master of Science in Construction Management", duration: "2 Years / 4 Semesters", type: "Semester" },
-  { sn: 13, name: "Master of Science in Electrical Power Engineering", duration: "2 Years / 4 Semesters", type: "Semester" },
+  {
+    sn: 1,
+    name: "Bachelor in Biomedical Engineering",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 2,
+    name: "Bachelor in Civil Engineering",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 3,
+    name: "Bachelor in Computer Engineering",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 4,
+    name: "Bachelor in Electrical Engineering",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 5,
+    name: "Bachelor in Electronics Communication & Automation Engineering",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 6,
+    name: "Bachelor in Architecture (B. Arch.)",
+    duration: "5 Years / 10 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 7,
+    name: "Bachelor in Geomatic Engineering",
+    duration: "4 Years / 8 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 8,
+    name: "Master of Engineering in Earthquake",
+    duration: "2 Years / 4 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 9,
+    name: "Master of Science in Engineering Management",
+    duration: "2 Years / 4 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 10,
+    name: "Master of Science in Information System Engineering",
+    duration: "2 Years / 4 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 11,
+    name: "Master of Science in Urban Design & Conservation",
+    duration: "2 Years / 4 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 12,
+    name: "Master of Science in Construction Management",
+    duration: "2 Years / 4 Semesters",
+    type: "Semester",
+  },
+  {
+    sn: 13,
+    name: "Master of Science in Electrical Power Engineering",
+    duration: "2 Years / 4 Semesters",
+    type: "Semester",
+  },
 ];
 
 const colleges = [
-  { sn: 1, name: "P. U. School of Engineering (PUSOE)", address: "Biratnagar, Morang", programs: "BE Civil-96, BE Computer-96, BE Elx., Comm. & Automation-60, BE Electrical-48, M.Sc. EM-30, M.Sc. ISE-30, M.Sc. CM-20, M.Sc. EPE-20, M.E. in Earthquake-20" },
-  { sn: 2, name: "Acme Engineering College", address: "Kathmandu", programs: "BE Civil-144, BE Computer-60, B. Arch.-48, M.Sc. ISE-30, M.Sc. EM-30" },
-  { sn: 3, name: "Aryan School of Engineering and Management", address: "Kathmandu", programs: "BE Civil-96, B.E. (Computer)-48" },
-  { sn: 4, name: "Central Engineering College", address: "Janakpurdham, Dhanusha", programs: "BE Civil-48, BE Electrical-48" },
-  { sn: 5, name: "College of Information Technology and Engineering", address: "Kathmandu", programs: "BE Computer-40" },
-  { sn: 6, name: "Eastern College of Engineering", address: "Biratnagar, Morang", programs: "BE Civil-96, BE Computer-48, BE EC & Automation-30" },
-  { sn: 7, name: "Hillside College of Engineering", address: "Kathmandu", programs: "BE Civil-96, BE Electrical-48, M.Sc. CM-20, M.Sc. EPE-20, BE Computer-48" },
-  { sn: 8, name: "Himalayan College of Geomatic Engineering and Land Resources Management", address: "Kathmandu", programs: "BE Geomatic-48" },
-  { sn: 9, name: "Himalayan Institute of Science & Technology", address: "Kathmandu", programs: "BE Civil-60, M.Sc. ISE-30, M.Sc. EM-40, BE Computer-48" },
-  { sn: 10, name: "Himalayan Whitehouse Int'l College", address: "Kathmandu", programs: "BE Civil-144, BE Computer-48" },
-  { sn: 11, name: "Kantipur International College", address: "Kathmandu", programs: "BE Civil-96, B. Arch.-96, M.Sc. CM-20, M.E. in Earthquake-20" },
-  { sn: 12, name: "Kantipur City College", address: "Kathmandu", programs: "BE Civil-144, BE Computer-40" },
-  { sn: 13, name: "Khwopa Engineering College", address: "Bhaktapur", programs: "BE Civil-96, BE Computer-60, BE EC & Automation-80, B. Arch.-60, M.E. in Earthquake-20, M. Sc. UDC-20" },
-  { sn: 14, name: "Morgan Engineering and Management College", address: "Kathmandu", programs: "BE Civil-48" },
-  { sn: 15, name: "Nepal Polytechnic Institute", address: "Bharatpur, Chitwan", programs: "BE Civil-96, BE Electrical-48, BE Computer-48" },
-  { sn: 16, name: "Pathivara Center for Advance Studies", address: "Birtamode, Jhapa", programs: "BE Civil-48, BE Computer-48" },
-  { sn: 17, name: "Dhulabari Campus", address: "Mechinagar, Jhapa", programs: "BE Civil-48" },
-  { sn: 18, name: "National Institute of Engineering and Technology", address: "Kupondole, Lalitpur", programs: "BE Biomedical-144, BE (Computer)-48" },
-  { sn: 19, name: "Mega College of Engineering", address: "Lalitpur", programs: "BE (Computer)-48" },
-  { sn: 20, name: "Mansarobar Institute of Science and Technology", address: "Damak, Jhapa", programs: "BE Civil-48" },
-  { sn: 21, name: "S.R. Engineering College", address: "Biratnagar, Morang", programs: "BE Computer-48" },
+  {
+    sn: 1,
+    name: "P. U. School of Engineering (PUSOE)",
+    address: "Biratnagar, Morang",
+    programs:
+      "BE Civil-96, BE Computer-96, BE Elx., Comm. & Automation-60, BE Electrical-48, M.Sc. EM-30, M.Sc. ISE-30, M.Sc. CM-20, M.Sc. EPE-20, M.E. in Earthquake-20",
+  },
+  {
+    sn: 2,
+    name: "Acme Engineering College",
+    address: "Kathmandu",
+    programs:
+      "BE Civil-144, BE Computer-60, B. Arch.-48, M.Sc. ISE-30, M.Sc. EM-30",
+  },
+  {
+    sn: 3,
+    name: "Aryan School of Engineering and Management",
+    address: "Kathmandu",
+    programs: "BE Civil-96, B.E. (Computer)-48",
+  },
+  {
+    sn: 4,
+    name: "Central Engineering College",
+    address: "Janakpurdham, Dhanusha",
+    programs: "BE Civil-48, BE Electrical-48",
+  },
+  {
+    sn: 5,
+    name: "College of Information Technology and Engineering",
+    address: "Kathmandu",
+    programs: "BE Computer-40",
+  },
+  {
+    sn: 6,
+    name: "Eastern College of Engineering",
+    address: "Biratnagar, Morang",
+    programs: "BE Civil-96, BE Computer-48, BE EC & Automation-30",
+  },
+  {
+    sn: 7,
+    name: "Hillside College of Engineering",
+    address: "Kathmandu",
+    programs:
+      "BE Civil-96, BE Electrical-48, M.Sc. CM-20, M.Sc. EPE-20, BE Computer-48",
+  },
+  {
+    sn: 8,
+    name: "Himalayan College of Geomatic Engineering and Land Resources Management",
+    address: "Kathmandu",
+    programs: "BE Geomatic-48",
+  },
+  {
+    sn: 9,
+    name: "Himalayan Institute of Science & Technology",
+    address: "Kathmandu",
+    programs: "BE Civil-60, M.Sc. ISE-30, M.Sc. EM-40, BE Computer-48",
+  },
+  {
+    sn: 10,
+    name: "Himalayan Whitehouse Int'l College",
+    address: "Kathmandu",
+    programs: "BE Civil-144, BE Computer-48",
+  },
+  {
+    sn: 11,
+    name: "Kantipur International College",
+    address: "Kathmandu",
+    programs: "BE Civil-96, B. Arch.-96, M.Sc. CM-20, M.E. in Earthquake-20",
+  },
+  {
+    sn: 12,
+    name: "Kantipur City College",
+    address: "Kathmandu",
+    programs: "BE Civil-144, BE Computer-40",
+  },
+  {
+    sn: 13,
+    name: "Khwopa Engineering College",
+    address: "Bhaktapur",
+    programs:
+      "BE Civil-96, BE Computer-60, BE EC & Automation-80, B. Arch.-60, M.E. in Earthquake-20, M. Sc. UDC-20",
+  },
+  {
+    sn: 14,
+    name: "Morgan Engineering and Management College",
+    address: "Kathmandu",
+    programs: "BE Civil-48",
+  },
+  {
+    sn: 15,
+    name: "Nepal Polytechnic Institute",
+    address: "Bharatpur, Chitwan",
+    programs: "BE Civil-96, BE Electrical-48, BE Computer-48",
+  },
+  {
+    sn: 16,
+    name: "Pathivara Center for Advance Studies",
+    address: "Birtamode, Jhapa",
+    programs: "BE Civil-48, BE Computer-48",
+  },
+  {
+    sn: 17,
+    name: "Dhulabari Campus",
+    address: "Mechinagar, Jhapa",
+    programs: "BE Civil-48",
+  },
+  {
+    sn: 18,
+    name: "National Institute of Engineering and Technology",
+    address: "Kupondole, Lalitpur",
+    programs: "BE Biomedical-144, BE (Computer)-48",
+  },
+  {
+    sn: 19,
+    name: "Mega College of Engineering",
+    address: "Lalitpur",
+    programs: "BE (Computer)-48",
+  },
+  {
+    sn: 20,
+    name: "Mansarobar Institute of Science and Technology",
+    address: "Damak, Jhapa",
+    programs: "BE Civil-48",
+  },
+  {
+    sn: 21,
+    name: "S.R. Engineering College",
+    address: "Biratnagar, Morang",
+    programs: "BE Computer-48",
+  },
 ];
 
-/* ------------------------------------------------------------------
-   Icons
------------------------------------------------------------------- */
 function MailIcon({ className }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden="true">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
     </svg>
@@ -73,16 +248,19 @@ function MailIcon({ className }) {
 
 function ArrowUpRightIcon({ className }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className} aria-hidden="true">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
       <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
       <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
     </svg>
   );
 }
 
-/* ------------------------------------------------------------------
-   Dean Block
------------------------------------------------------------------- */
 function DeanBlock({ reduce }) {
   return (
     <motion.div
@@ -94,7 +272,6 @@ function DeanBlock({ reduce }) {
     >
       <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50/50">
         <div className="grid grid-cols-1 md:grid-cols-12">
-          {/* Photo */}
           <div className="relative md:col-span-4 lg:col-span-3">
             <div className="relative aspect-square h-full w-full md:aspect-auto md:h-full">
               <img
@@ -111,7 +288,6 @@ function DeanBlock({ reduce }) {
             </div>
           </div>
 
-          {/* Info */}
           <div className="flex flex-col justify-center p-6 sm:p-8 md:col-span-8 lg:col-span-9 lg:p-10">
             <div className="mb-3 flex items-center gap-3">
               <span className="h-px w-6 bg-amber-500" />
@@ -130,7 +306,6 @@ function DeanBlock({ reduce }) {
               Purbanchal University.
             </p>
 
-            {/* Contact links */}
             <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
               <a
                 href={`mailto:${dean.email}`}
@@ -142,8 +317,6 @@ function DeanBlock({ reduce }) {
                 {dean.email}
               </a>
             </div>
-
-            {/* Visit Website Button */}
             <div className="mt-6">
               <a
                 href={dean.website}
@@ -159,7 +332,6 @@ function DeanBlock({ reduce }) {
         </div>
       </div>
 
-      {/* Deputy Dean */}
       <div className="mt-4 flex flex-col items-start gap-3 rounded-2xl border border-dashed border-slate-200 bg-slate-50/40 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
         <div className="flex items-center gap-3">
           <span className="h-px w-6 bg-amber-500" />
@@ -178,10 +350,6 @@ function DeanBlock({ reduce }) {
     </motion.div>
   );
 }
-
-/* ------------------------------------------------------------------
-   Main Component
------------------------------------------------------------------- */
 export default function FacultyofEngineering() {
   const reduce = useReducedMotion();
 
@@ -198,7 +366,6 @@ export default function FacultyofEngineering() {
   return (
     <section className="relative w-full bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        {/* HERO */}
         <motion.header
           initial={reduce ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -222,10 +389,7 @@ export default function FacultyofEngineering() {
           </p>
         </motion.header>
 
-        {/* DEAN BLOCK */}
         <DeanBlock reduce={reduce} />
-
-        {/* PROGRAMS */}
         <div className="mb-16 sm:mb-20">
           <motion.div {...reveal()} className="mb-8">
             <h2 className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">
@@ -261,8 +425,8 @@ export default function FacultyofEngineering() {
                       p.type === "Yearly"
                         ? "bg-emerald-50 text-emerald-700"
                         : p.type === "Research"
-                        ? "bg-purple-50 text-purple-700"
-                        : "bg-blue-50 text-blue-700"
+                          ? "bg-purple-50 text-purple-700"
+                          : "bg-blue-50 text-blue-700"
                     }`}
                   >
                     {p.type}
@@ -273,7 +437,6 @@ export default function FacultyofEngineering() {
           </div>
         </div>
 
-        {/* COLLEGES */}
         <div>
           <motion.div {...reveal()} className="mb-8">
             <h2 className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">
