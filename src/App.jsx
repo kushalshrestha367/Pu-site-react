@@ -12,7 +12,7 @@ import Layout from "./Layout";
 import FacultyOfArts from "./pages/facilities/FacultyOfArts";
 import FacultyofEducation from "./pages/facilities/FacultyofEducation";
 import FacultyofEngineering from "./pages/facilities/FacultyofEngineering";
-import FacultyofLaw from "./pages/fa~cilities/FacultyofLaw";
+import FacultyofLaw from "./pages/facilities/FacultyofLaw";
 import FacultyofManagement from "./pages/facilities/FacultyofManagement";
 import FacultyofMedical from "./pages/facilities/FacultyofMedical";
 import FacultyofScienceAndTechnology from "./pages/facilities/FacultyofScienceAndTechnology";
