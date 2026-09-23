@@ -1,5 +1,7 @@
 import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { ArrowUpRightIcon } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -203,8 +205,8 @@ function DeanBlock({ reduce }) {
           </div>
           <div className="flex flex-col justify-center p-6 sm:p-8 md:col-span-8 lg:col-span-9 lg:p-10">
             <div className="mb-3 flex items-center gap-3">
-              <span className="h-px w-6 bg-amber-500" />
-              <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-700">
+              <span className="h-px w-6 bg-[#9e1c32]" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#9e1c32]">
                 {dean.role}
               </span>
             </div>
@@ -219,44 +221,39 @@ function DeanBlock({ reduce }) {
               Purbanchal University.
             </p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <a
-                href={`mailto:${dean.email}`}
-                className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 transition-colors hover:text-[#252659]"
-              >
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#252659] ring-1 ring-slate-200">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="h-3.5 w-3.5"
-                    aria-hidden="true"
-                  >
-                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                  </svg>
-                </span>
-                {dean.email}
-              </a>
-
-              <a
-                href={dean.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-[13.5px] font-semibold text-[#252659] transition-colors hover:text-amber-700"
-              >
-                Visit Website
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="h-3 w-3"
-                  aria-hidden="true"
+            <div className="mt-6">
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                <Link
+                  to={`mailto:${dean.email}`}
+                  className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 transition-colors hover:text-[#252659]"
                 >
-                  <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-                  <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-                </svg>
-              </a>
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#252659] ring-1 ring-slate-200">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="h-3.5 w-3.5"
+                      aria-hidden="true"
+                    >
+                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                  </span>
+                  {dean.email}
+                </Link>
+              </div>
+
+              <div className="mt-4">
+                <Link
+                  href={dean.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#252659] px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.14em] text-white shadow-md shadow-[#252659]/20 transition-all hover:-translate-y-0.5 hover:bg-[#1a1c4b] hover:shadow-lg hover:shadow-[#252659]/30"
+                >
+                  Visit Website
+                  <ArrowUpRightIcon className="h-3.5 w-3.5" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -338,8 +335,8 @@ export default function FacultyOfArts() {
                   <span
                     className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10.5px] font-semibold ${
                       p.type === "Yearly"
-                        ? "bg-emerald-50 text-emerald-700"
-                        : "bg-blue-50 text-blue-700"
+                        ? "bg-accent text-white"
+                        : "bg-[#9e1c32] text-white"
                     }`}
                   >
                     {p.type}
@@ -378,7 +375,7 @@ export default function FacultyOfArts() {
                     <p className="mt-1 text-[12.5px] text-slate-500">
                       {c.address}
                     </p>
-                    <p className="mt-2 text-[12px] font-medium text-amber-700">
+                    <p className="mt-2 text-[12px] font-medium text-[#9e1c32]">
                       {c.programs}
                     </p>
                   </div>

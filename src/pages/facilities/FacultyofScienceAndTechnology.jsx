@@ -447,8 +447,8 @@ function DeanBlock({ reduce }) {
 
           <div className="flex flex-col justify-center p-6 sm:p-8 md:col-span-8 lg:col-span-9 lg:p-10">
             <div className="mb-3 flex items-center gap-3">
-              <span className="h-px w-6 bg-amber-500" />
-              <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-700">
+              <span className="h-px w-6 bg-[#9e1c32]" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#9e1c32]">
                 {dean.role}
               </span>
             </div>
@@ -488,22 +488,6 @@ function DeanBlock({ reduce }) {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="mt-4 flex flex-col items-start gap-3 rounded-2xl border border-dashed border-slate-200 bg-slate-50/40 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-        <div className="flex items-center gap-3">
-          <span className="h-px w-6 bg-amber-500" />
-          <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-700">
-            {deputyDean.role}
-          </span>
-        </div>
-        <a
-          href={`mailto:${deputyDean.email}`}
-          className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 transition-colors hover:text-[#252659]"
-        >
-          <MailIcon className="h-3.5 w-3.5 text-[#252659]" />
-          {deputyDean.email}
-        </a>
       </div>
     </motion.div>
   );
@@ -583,8 +567,8 @@ export default function FacultyofScienceAndTechnology() {
                       p.type === "Yearly"
                         ? "bg-emerald-50 text-emerald-700"
                         : p.type === "Research"
-                          ? "bg-purple-50 text-purple-700"
-                          : "bg-blue-50 text-blue-700"
+                          ? "bg-[#9e1c32] text-white"
+                          : "bg-accent text-white"
                     }`}
                   >
                     {p.type}

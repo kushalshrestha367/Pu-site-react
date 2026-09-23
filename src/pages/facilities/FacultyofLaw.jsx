@@ -325,7 +325,7 @@ export default function FacultyofLaw() {
                   <span
                     className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10.5px] font-semibold ${
                       p.type === "Yearly"
-                        ? "bg-emerald-50 text-emerald-700"
+                        ? "bg-[#9e1c32] text-white"
                         : p.type === "Research"
                           ? "bg-purple-50 text-purple-700"
                           : "bg-blue-50 text-blue-700"
@@ -367,7 +367,7 @@ export default function FacultyofLaw() {
                     <p className="mt-1 text-[12px] text-slate-500">
                       {c.address}
                     </p>
-                    <p className="mt-1.5 text-[11.5px] font-medium leading-relaxed text-amber-700">
+                    <p className="mt-1.5 text-[11.5px] font-medium leading-relaxed text-[#9e1c32]">
                       {c.programs}
                     </p>
                   </div>

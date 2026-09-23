@@ -42,6 +42,12 @@ import NewsEvents from "./components/NewsEvents";
 import NewsEventDetail from "./components/NewsEventDetail";
 import NoticeDetail from "./pages/NoticeDetail";
 import DownloadDetail from "./pages/DownloadDetail";
+
+import Registrar from "./pages/central-office/office/Registrar";
+import Chancellor from "./pages/central-office/office/Chancellor";
+import ViceChancellorList from "./pages/ViceChancellorList";
+import RegistrarList from "./pages/RegistrarList";
+
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
   useEffect(() => {
@@ -162,13 +168,23 @@ const router = createBrowserRouter([
             children: [
               {
                 path: "vice-chancellor",
-                element: <AboutHasMessage />,
+                element: <Chancellor />,
                 handle: { breadcrumb: "Vice Chancellor" },
               },
               {
+                path: "vice-chancellor/list",
+                element: <ViceChancellorList />,
+                handle: { breadcrumb: "List of Cancellor" },
+              },
+              {
                 path: "registrar",
-                element: <AboutHasMessageFromRegistrar />,
+                element: <Registrar />,
                 handle: { breadcrumb: "Registrar" },
+              },
+              {
+                path: "registrar/list",
+                element: <RegistrarList />,
+                handle: { breadcrumb: "List of Registrar" },
               },
             ],
           },
