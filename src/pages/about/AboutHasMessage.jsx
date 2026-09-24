@@ -105,7 +105,7 @@ function AboutHasMessage() {
                 <p className="mt-1 text-xs text-slate-500">
                   PhD in Tropical Medicine
                 </p>
-                <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-800 ring-1 ring-amber-200">
+                <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-heading ring-1 ring-blue-100">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
@@ -128,7 +128,7 @@ function AboutHasMessage() {
             {/* Lead statement */}
             <motion.p
               {...reveal()}
-              className="relative font-serif text-2xl font-medium leading-[1.55] text-slate-900 sm:text-[1.7rem]"
+              className="relative font-serif text-2xl font-medium leading-[1.55] text-slate-900 sm:text-[1.7rem] text-justify"
             >
               <span
                 aria-hidden="true"
@@ -143,7 +143,7 @@ function AboutHasMessage() {
             </motion.p>
             
             <div className="my-10 h-px w-full bg-gradient-to-r from-[#252659] via-slate-500 to-transparent" />
-            <div className="space-y-6 font-serif text-[1.05rem] leading-[1.9] text-slate-700 sm:text-lg">
+            <div className="space-y-6 font-serif text-[1.05rem] leading-[1.9] text-slate-700 sm:text-lg text-justify">
               {paragraphs.map((text, i) =>
                 text === "QUOTE" ? (
                   <motion.blockquote

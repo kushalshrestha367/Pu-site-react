@@ -314,12 +314,12 @@ export default function AboutPu() {
                     aria-current={active === t.id ? "true" : undefined}
                     className={`-ml-px flex items-center gap-3 border-l-2 py-2 pl-5 text-sm transition-all duration-200 ${focus} ${
                       active === t.id
-                        ? "border-pu-red font-semibold text-heading"
+                        ? "border-accent font-semibold text-heading"
                         : "border-transparent text-body/60 hover:border-heading/25 hover:text-heading"
                     }`}
                   >
                     <span
-                      className={`text-[10px] tabular-nums ${active === t.id ? "text-pu-red" : "text-body/35"}`}
+                      className={`text-[10px] tabular-nums ${active === t.id ? "text-accent" : "text-body/35"}`}
                     >
                       {t.num}
                     </span>
@@ -353,7 +353,7 @@ export default function AboutPu() {
                 />
               </div>
               <figcaption className="mt-3 flex items-center gap-2 text-xs text-body/55">
-                <span aria-hidden className="h-px w-6 bg-pu-red" />
+                <span aria-hidden className="h-px w-6 bg-accent" />
                 The entrance gate at the Gothgaun campus, Morang.
               </figcaption>
             </motion.figure>
@@ -391,7 +391,7 @@ export default function AboutPu() {
                   ].map((p) => (
                     <li
                       key={p}
-                      className="border-l-2 border-pu-red bg-white px-4 py-2.5 text-sm font-medium text-heading"
+                      className="border-l-2 border-accent bg-white px-4 py-2.5 text-sm font-medium text-heading"
                     >
                       {p}
                     </li>
@@ -399,7 +399,7 @@ export default function AboutPu() {
                 </ul>
                 <ArrowRight
                   aria-hidden
-                  className="hidden shrink-0 self-center text-pu-red md:block"
+                  className="hidden shrink-0 self-center text-accent md:block"
                 />
                 <p className="flex flex-1 items-center bg-pu-dark px-5 py-4 text-sm font-semibold text-white">
                   Koshi Hospital, Biratnagar — teaching hospital for the MBBS
@@ -584,9 +584,9 @@ export default function AboutPu() {
               <motion.li {...B(0.15)} className="relative">
                 <span
                   aria-hidden
-                  className="absolute -left-[37px] top-1 h-3.5 w-3.5 rounded-full border-[3px] border-white bg-pu-red"
+                  className="absolute -left-[37px] top-1 h-3.5 w-3.5 rounded-full border-[3px] border-white bg-heading"
                 />
-                <p className="text-xs font-semibold uppercase tracking-wider text-pu-red">
+                <p className="text-xs font-semibold uppercase tracking-wider text-accent">
                   1999 – 2004
                 </p>
                 <h4 className="mt-1 text-lg font-bold text-heading font-heading">
@@ -620,7 +620,7 @@ export default function AboutPu() {
                   The second stage of the overall construction plan. See{" "}
                   <Link
                     to="https://purbanchaluniversity.edu.np/infrastructure-plans"
-                    className={`font-semibold text-pu-red underline decoration-pu-red/30 underline-offset-4 transition-colors hover:decoration-pu-red ${focus}`}
+                    className={`font-semibold text-accent underline decoration-accent underline-offset-4 transition-colors hover:decoration-accent ${focus}`}
                   >
                     Infrastructure plans
                   </Link>{" "}

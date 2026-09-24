@@ -4,22 +4,15 @@ import { motion, useReducedMotion } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1];
 
-/* ------------------------------------------------------------------
-   Content blocks — rendered in order.
-   type: "p" | "h" | "quote"
------------------------------------------------------------------- */
 const content = [
-  // ---- Intro paragraph ----
   {
     type: "p",
     text: "It is a profound honour to assume the role of Registrar. Working in close alignment with the forward-looking vision of our Vice-Chancellor, Prof. Dr. Sujan Babu Marhatta, we are fully committed to translating our shared goals into functional, everyday reality. While the Vice-Chancellor sets the strategic course for the university to make a transformative impact on society, our administrative philosophy will be strictly pragmatic: we will focus on actionable, results-oriented implementation to support that mission.",
   },
-  // ---- Lead-in ----
   {
     type: "p",
     text: "To ensure that Purbanchal University continues to thrive as a centre of educational innovation, our operations will be guided by the following strategic priorities:",
   },
-  // ---- Section 1 ----
   {
     type: "h",
     text: "Educational Innovation & Digital Transformation",
@@ -28,7 +21,6 @@ const content = [
     type: "p",
     text: "The Vice-Chancellor has rightly highlighted the critical role of rapid technological progress, artificial intelligence, and technology-enabled learning in modern higher education. To support this vision pragmatically, we will be accelerating a resource-conscious digital transformation of the university's core functions—spanning academic services, central administration, the examination system, and library services. Furthermore, to fully leverage these tools, we will be prioritizing the capacity enhancement of our faculty and non-teaching staff. Through targeted training, we will elevate essential IT skills and ensure the ethical and effective use of AI across our administrative and academic ecosystems.",
   },
-  // ---- Section 2 ----
   {
     type: "h",
     text: "Quality Assurance and Centres of Excellence",
@@ -37,16 +29,14 @@ const content = [
     type: "p",
     text: "In our collective mission to develop centres of excellence that address local and global challenges, rigorous academic oversight is essential. We will strengthen our focus on the Quality Assurance and Accreditation (QAA) process for both constituent campuses and our extensive network of affiliated colleges. By ensuring and sustaining quality education, we enable our graduates to embrace humanistic values and indigenous knowledge while remaining globally competitive. Ultimately, quality is a shared responsibility: we expect students to engage actively and ethically in their academic pursuits and use their education to support the socio-economic development of Koshi Province and the nation.",
   },
-  // ---- Section 3 ----
   {
     type: "h",
     text: "Participatory Leadership & Institutional Dialogue",
   },
   {
     type: "p",
-    text: "Navigating the complexities of modern higher education demands what the Vice-Chancellor aptly described as \"constructive, open, and informed dialogue.\" Our efforts will be dedicated to foster this environment through transparency, accountability, and participatory leadership. Rather than relying on theoretical assumptions, we will make rapid, informed decisions inclusively, drawing on the collective expertise of our university community while remaining accountable for the outcomes.",
+    text: 'Navigating the complexities of modern higher education demands what the Vice-Chancellor aptly described as "constructive, open, and informed dialogue." Our efforts will be dedicated to foster this environment through transparency, accountability, and participatory leadership. Rather than relying on theoretical assumptions, we will make rapid, informed decisions inclusively, drawing on the collective expertise of our university community while remaining accountable for the outcomes.',
   },
-  // ---- Closing quote ----
   {
     type: "quote",
     text: "As we continuously move forward to achieve our targeted goals, I echo the Vice-Chancellor's call to unite as one force. The path ahead requires adaptability and collective effort, and I deeply expect and appreciate your support and cooperation as we work together to build a modern, efficient, and academically rigorous Purbanchal University.",
@@ -135,7 +125,7 @@ function AboutHasMessageFromRegistrar() {
                 {...reveal(0.5)}
                 className="relative mx-auto -mt-10 w-[88%] rounded-2xl border border-slate-200 bg-white px-5 py-4 text-center shadow-lg shadow-slate-200/10"
               >
-                <p className="text-sm font-semibold text-amber-700">Registrar</p>
+                <p className="text-sm font-semibold text-accent">Registrar</p>
                 <h2 className="mt-1 font-serif text-lg font-bold leading-tight text-slate-900">
                   Prof. Dr. Panna Thapa
                 </h2>
@@ -145,7 +135,7 @@ function AboutHasMessageFromRegistrar() {
 
                 <a
                   href="mailto:registrar@purbuniv.edu.np"
-                  className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-800 ring-1 ring-amber-200 transition-colors hover:bg-amber-100"
+                  className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-accent ring-1 ring-blue-100 transition-colors hover:bg-amber-100"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -163,10 +153,9 @@ function AboutHasMessageFromRegistrar() {
             </div>
           </div>
           <div className="lg:col-span-8">
-            {/* Lead statement */}
             <motion.p
               {...reveal()}
-              className="relative font-serif text-2xl font-medium leading-[1.55] text-slate-900 sm:text-[1.7rem]"
+              className="relative font-serif text-2xl font-medium leading-[1.55] text-slate-900 sm:text-[1.7rem] text-justify"
             >
               <span
                 aria-hidden="true"
@@ -181,7 +170,7 @@ function AboutHasMessageFromRegistrar() {
             </motion.p>
 
             <div className="my-10 h-px w-full bg-gradient-to-r from-[#252659] via-slate-500 to-transparent" />
-            <div className="space-y-6 font-serif text-[1.05rem] leading-[1.9] text-slate-700 sm:text-lg">
+            <div className="space-y-6 font-serif text-[1.05rem] leading-[1.9] text-slate-700 sm:text-lg text-justify">
               {content.slice(1).map((block, i) => {
                 if (block.type === "h") {
                   return (
@@ -234,7 +223,7 @@ function AboutHasMessageFromRegistrar() {
                 </p>
                 <a
                   href="mailto:registrar@purbuniv.edu.np"
-                  className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-amber-700 hover:text-amber-800 hover:underline"
+                  className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-heading hover:text-blue-800 hover:underline"
                 >
                   registrar@purbuniv.edu.np
                 </a>

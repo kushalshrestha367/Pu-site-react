@@ -47,6 +47,7 @@ import Registrar from "./pages/central-office/office/Registrar";
 import Chancellor from "./pages/central-office/office/Chancellor";
 import ViceChancellorList from "./pages/ViceChancellorList";
 import RegistrarList from "./pages/RegistrarList";
+import GalleryAlbum from "./pages/GalleryAlbum";
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -279,23 +280,26 @@ const router = createBrowserRouter([
         handle: { breadcrumb: "Notices" },
       },
 
-      {
-        path: "gallery",
-        element: <PassThrough />,
-        handle: { breadcrumb: "Gallery", noLink: true },
-        children: [
-          {
-            path: "image",
-            element: <GalleryHasImage />,
-            handle: { breadcrumb: "Images" },
-          },
-          {
-            path: "video",
-            element: <GalleryHasVideo />,
-            handle: { breadcrumb: "Videos" },
-          },
-        ],
-      },
+     {
+  path: "gallery",
+  element: <PassThrough />,
+  handle: { breadcrumb: "Gallery", noLink: true },
+  children: [
+    {
+      path: "image",
+      handle: { breadcrumb: "Images", noLink: true },
+      children: [
+        { index: true, element: <GalleryHasImage /> },
+        { path: ":slug", element: <GalleryAlbum />, handle: { breadcrumb: "Album" } },
+      ],
+    },
+    {
+      path: "video",
+      element: <GalleryHasVideo />,
+      handle: { breadcrumb: "Videos" },
+    },
+  ],
+},
 
       {
         path: "contact-us",

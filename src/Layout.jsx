@@ -7,7 +7,7 @@ export default function Layout() {
   return (
     <>
       <Header />
-      <main className=" min-h-[70vh] pt-28 ">
+      <main className=" min-h-[70vh] pt-30 ">
         <Breadcrumbs />
         <Outlet />
       </main>
