@@ -6,12 +6,14 @@ import Breadcrumbs from "./components/Breadcrumbs";
 export default function Layout() {
   return (
     <>
-      <Header />
-      <main className=" min-h-[70vh] pt-30 ">
-        <Breadcrumbs />
-        <Outlet />
-      </main>
-      <Footer />
+      <>
+        <Header />
+        <main className="min-h-[70vh] pt-20 xl:pt-28">
+          <Breadcrumbs />
+          <Outlet />
+        </main>
+        <Footer />
+      </>
     </>
   );
 }

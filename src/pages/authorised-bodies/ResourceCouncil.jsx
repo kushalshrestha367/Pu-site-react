@@ -64,7 +64,7 @@ const sections = [
 ];
 
 const intro =
-  "पूर्वाञ्चल विश्वविद्यालय ऐन, २०५० को दफा १४ बमोजिम विश्वविद्यालयको भौतिक साधन र आर्थिक स्रोतको सङ्कलन तथा परिचालन गर्ने कामको लागि देहाय बमोजिमका सदस्यहरू भएको साधन-स्रोत परिषद् हुनेछः–";
+  "पूर्वाञ्चल विश्वविद्यालय ऐन, २०५० को दफा १४ बमोजिम विश्वविद्यालयको भौतिक साधन र आर्थिक स्रोतको सङ्कलन तथा परिचालन गर्ने कामको लागि देहाय बमोजिमका सदस्यहरू भएको साधन-स्रोत परिषद् हुनेछ :";
 
 const note =
   "द्रष्टव्यः ऐनको व्यवस्था अनुसार पदेन सदस्यहरू बाहेक अन्य सदस्यहरूको मनोनयन कार्यकारी परिषद्ले गर्नेछ । अध्यक्ष र मनोनीत सदस्यहरूको पदावधि चार वर्षको हुनेछ र पदावधि समाप्त भएपछि निजहरूको पूनः मनोनयन हुन सक्नेछ ।";
@@ -187,7 +187,7 @@ export default function ResourceCouncil() {
           transition={{ duration: 0.9, ease: EASE }}
           className="mb-8 sm:mb-10"
         >
-          <div className="mb-4 flex items-center gap-3 sm:mb-5">
+          {/* <div className="mb-4 flex items-center gap-3 sm:mb-5">
             <span
               className="h-[3px] w-8 rounded-full"
               style={{ backgroundColor: C.red }}
@@ -198,7 +198,7 @@ export default function ResourceCouncil() {
             >
               साधन-स्रोत परिषद्
             </span>
-          </div>
+          </div> */}
 
           <h1
             className="font-serif text-xl font-bold leading-[1.4] tracking-tight sm:text-2xl lg:text-3xl xl:text-4xl"
@@ -207,7 +207,7 @@ export default function ResourceCouncil() {
             साधन-स्रोत परिषद्‌को विवरण
           </h1>
 
-          <p className="mt-4 max-w-3xl text-[13.5px] leading-relaxed text-slate-600 sm:mt-5 sm:text-sm lg:text-[15px]">
+          <p className="mt-4 max-w-3xl text-[13.5px]  leading-relaxed text-slate-600 sm:mt-5 sm:text-sm lg:text-[15px]">
             {intro}
           </p>
         </motion.div>

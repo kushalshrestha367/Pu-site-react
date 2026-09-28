@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Mail, Phone } from "lucide-react";
 import Topbar from "./Topbar";
 import { Link } from "react-router-dom";
 
@@ -90,8 +90,8 @@ const navItems = [
       { label: "Video", to: "/gallery/video" },
     ],
   },
-  // { label: "Notice", to: "/notice" },
-  // { label: "Download", to: "/download" },
+  { label: "Notice", to: "/notice", mobileOnly: true },
+  { label: "Downloads", to: "/download", mobileOnly: true },
   { label: "Contact", to: "/contact-us" },
 ];
 
@@ -100,11 +100,10 @@ const ring =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pu-red";
 
 function DesktopDropdown({ item }) {
-
   const [closed, setClosed] = useState(false);
   const closeMenu = () => {
     setClosed(true);
-    document.activeElement?.blur?.(); // otherwise :focus-within keeps it open
+    document.activeElement?.blur?.();
   };
 
   const panel =
@@ -273,6 +272,22 @@ function MobileNav({ open, onClose }) {
             </li>
           ))}
         </ul>
+        <div className="mt-6 space-y-2 border-t border-gray-200 pt-4">
+          <Link
+            href="mailto:info@purbuniv.edu.np"
+            className="flex items-center gap-2 py-1 font-nav text-sm text-body hover:text-accent"
+          >
+            <Mail size={16} className="flex-shrink-0 text-accent" />
+            info@purbuniv.edu.np
+          </Link>
+          <Link
+            href="tel:+97721470765"
+            className="flex items-center gap-2 py-1 font-nav text-sm text-body hover:text-accent"
+          >
+            <Phone size={16} className="flex-shrink-0 text-accent" />
+            +977-21-470765
+          </Link>
+        </div>
       </div>
     </div>
   );
@@ -295,7 +310,7 @@ export default function Header() {
         className={`fixed left-0 right-0 top-0 z-[900] transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white/0"}`}
       >
         <div
-          className={`transition-all duration-500 ${scrolled ? "h-0 overflow-hidden opacity-0" : "opacity-100"}`}
+          className={`hidden transition-all  xl:block duration-500 ${scrolled ? "h-0 overflow-hidden opacity-0" : "opacity-100"}`}
         >
           <Topbar />
         </div>
@@ -321,20 +336,22 @@ export default function Header() {
 
             <nav aria-label="Main" className="hidden xl:block">
               <ul className="flex items-center gap-7 font-nav">
-                {navItems.map((item) =>
-                  item.children ? (
-                    <DesktopDropdown key={item.label} item={item} />
-                  ) : (
-                    <li key={item.label}>
-                      <Link
-                        to={item.to}
-                        className={`py-2 font-nav font-medium text-body transition hover:text-accent ${ring}`}
-                      >
-                        {item.label}
-                      </Link>
-                    </li>
-                  ),
-                )}
+                {navItems
+                  .filter((item) => !item.mobileOnly)
+                  .map((item) =>
+                    item.children ? (
+                      <DesktopDropdown key={item.label} item={item} />
+                    ) : (
+                      <li key={item.label}>
+                        <Link
+                          to={item.to}
+                          className={`py-2 font-nav font-medium text-body transition hover:text-accent ${ring}`}
+                        >
+                          {item.label}
+                        </Link>
+                      </li>
+                    ),
+                  )}
               </ul>
             </nav>
 

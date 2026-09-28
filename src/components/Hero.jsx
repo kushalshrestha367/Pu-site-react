@@ -15,7 +15,7 @@ export default function Hero() {
       <div className="container-x grid lg:grid-cols-2 gap-10 items-center relative z-10">
         <Reveal variant="right" className="space-y-5">
           <h1 className="text-4xl md:text-5xl font-bold text-heading font-heading">
-            Welcome to Purbanchal Universityy
+            Welcome to Purbanchal University
           </h1>
           <p className="text-lg leading-relaxed text-body/80">
             Purbanchal University, established in 1995, is a leading institution of higher education in

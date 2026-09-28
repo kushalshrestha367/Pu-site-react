@@ -285,12 +285,12 @@ export default function UniversitySabhaTable() {
           className="mb-8 sm:mb-10"
         >
           <div className="mb-4 flex items-center gap-3 sm:mb-5">
-            <span
+            {/* <span
               className="h-[3px] w-8 rounded-full"
               style={{ backgroundColor: C.red }}
-            />
+            /> */}
             <span
-              className="text-xs font-semibold sm:text-sm"
+              className="font-serif text-xl font-bold leading-[1.4] tracking-tight sm:text-2xl lg:text-3xl xl:text-4xl"
               style={{ color: C.accent }}
             >
               विश्वविद्यालय सभा
@@ -298,7 +298,7 @@ export default function UniversitySabhaTable() {
           </div>
 
           <h1
-            className="font-serif text-xl font-bold leading-[1.4] tracking-tight sm:text-2xl lg:text-3xl xl:text-4xl"
+            className="mt-4 max-w-3xl text-[13.5px] leading-relaxed text-slate-600 sm:mt-5 sm:text-sm lg:text-[15px]"
             style={{ color: C.heading }}
           >
             पूर्वाञ्चल विश्वविद्यालय ऐन, २०५०, केही नेपाल कानून संशोधन गर्ने ऐन,
@@ -307,7 +307,7 @@ export default function UniversitySabhaTable() {
           </h1>
         </motion.div>
 
-        <div className="mb-8 grid grid-cols-2 gap-2.5 sm:mb-10 sm:grid-cols-4 sm:gap-4">
+        <div className="mb-8 grid grid-cols-2 gap-2.5 sm:mb-10 sm:grid-cols-4 sm:gap-4 text-justify">
           {stats.map((s, i) => (
             <motion.div
               key={s.label}
@@ -319,7 +319,7 @@ export default function UniversitySabhaTable() {
                 ease: EASE,
               }}
               whileHover={reduce ? {} : { y: -4 }}
-              className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white p-3.5 shadow-sm transition-shadow hover:shadow-md sm:rounded-2xl sm:p-5"
+              className="group relative overflow-hidden text-justify rounded-xl border border-slate-200 bg-white p-3.5 shadow-sm transition-shadow hover:shadow-md sm:rounded-2xl sm:p-5"
             >
               <span
                 className="absolute left-0 top-0 h-full w-1"
@@ -329,7 +329,7 @@ export default function UniversitySabhaTable() {
                 {s.label}
               </p>
               <p
-                className="mt-1 font-serif text-xl font-bold sm:text-3xl"
+                className="mt-1  text-xl font-bold sm:text-3xl"
                 style={{ color: s.text }}
               >
                 {toNepali(s.value)}

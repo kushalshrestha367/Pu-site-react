@@ -175,7 +175,7 @@ function ChipNav({ active }) {
     <div className="sticky top-0 z-40 border-b border-heading/10 bg-white/90 backdrop-blur-md lg:hidden">
       <div
         ref={(el) => (scrollerRef.current = el)}
-        className="flex gap-2 overflow-x-auto px-4 py-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex gap-2 overflow-x-auto  px-4 py-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {TOC.map((t) => {
           const on = active === t.id;
@@ -294,7 +294,7 @@ export default function AboutPu() {
   const B = (delay = 0) => (reduce ? { initial: false } : blockMotion(delay));
 
   return (
-    <main className="bg-white">
+    <main className="bg-white ">
       <ChipNav active={active} />
       <div className="container-x grid gap-16 py-16 md:py-20 lg:grid-cols-[200px_1fr] lg:gap-20">
         <aside className="hidden lg:block">

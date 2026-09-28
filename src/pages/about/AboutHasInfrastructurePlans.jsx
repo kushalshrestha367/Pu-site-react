@@ -40,7 +40,7 @@ export default function AboutHasInfrastructurePlans() {
           initial={reduce ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
-          className="font-serif text-4xl font-bold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
+          className="font-serif text-4xl font-bold leading-[1.1] tracking-tight text-accent sm:text-5xl lg:text-6xl"
         >
           Update
           <br />

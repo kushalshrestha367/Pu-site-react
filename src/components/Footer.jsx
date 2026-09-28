@@ -38,24 +38,24 @@ const Linkedin = ({ size = 16 }) => (
 
 export default function Footer() {
   return (
-    <footer id="footer" className="bg-footerbg text-white pt-24">
+    <footer id="footer" className="bg-footerbg text-white pt-14 sm:pt-20 lg:pt-24">
       <div className="container-x">
-        <Reveal className="grid lg:grid-cols-2 gap-8 items-center">
-          <div>
-            <div className="flex gap-3 items-start mb-6">
-              <img src="assets/img/logo.png" alt="" className="max-h-[90px]" />
-              <h2 className="text-2xl md:text-3xl font-bold leading-snug font-heading">
-                Discover Your Potential at <br />Purbanchal University
+        <Reveal className="grid gap-8 items-center lg:grid-cols-2">
+          <div className="text-center sm:text-left">
+            <div className="mb-6 flex flex-col items-center gap-3 sm:flex-row sm:items-start">
+              <img src="assets/img/logo.png" alt="" className="max-h-[70px] sm:max-h-[90px]" />
+              <h2 className="font-heading text-xl font-bold leading-snug sm:text-2xl md:text-3xl">
+                Discover Your Potential at <br className="hidden sm:inline" />Purbanchal University
               </h2>
             </div>
             <div>
-              <p className="text-white/60 text-xs uppercase tracking-wider font-semibold mb-3">Follow us</p>
-              <div className="flex gap-2">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/60">Follow us</p>
+              <div className="flex justify-center gap-2 sm:justify-start">
                 {[Facebook, Instagram, Youtube, TwitterX, Linkedin].map((Icon, i) => (
                   <Link
                     key={i}
                     to="#"
-                    className="w-9 h-9 rounded-full border border-white flex items-center justify-center hover:bg-white hover:text-footerbg transition"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white transition hover:bg-white hover:text-footerbg"
                   >
                     <Icon size={16} />
                   </Link>
@@ -64,24 +64,24 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 items-start">
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start">
             <img
               src="/assets/img/it.png"
               alt="Janak Mani Timsina"
-              className="w-[140px] h-[160px] object-cover border-2 border-white/20 mx-auto sm:mx-0"
+              className="h-[140px] w-[120px] flex-shrink-0 border-2 border-white/20 object-cover sm:h-[160px] sm:w-[140px]"
             />
             <div className="text-center sm:text-left">
               <h4 className="text-lg font-bold">Janak Mani Timsina</h4>
-              <p className="text-white/60 text-sm flex items-center justify-center sm:justify-start gap-2 mt-1">
+              <p className="mt-1 flex items-center justify-center gap-2 text-sm text-white/60 sm:justify-start">
                 <Briefcase size={14} /> Information &amp; Liaison Officer
               </p>
               <div className="mt-3 space-y-2 text-sm text-white/70">
-                <div className="flex items-center justify-center sm:justify-start gap-2">
-                  <Phone size={14} className="text-white/80" />
+                <div className="flex items-center justify-center gap-2 sm:justify-start">
+                  <Phone size={14} className="flex-shrink-0 text-white/80" />
                   <span>977-21-590832 (Ext. 8009), 9852020325</span>
                 </div>
-                <div className="flex items-center justify-center sm:justify-start gap-2">
-                  <Mail size={14} className="text-white/80" />
+                <div className="flex items-center justify-center gap-2 sm:justify-start">
+                  <Mail size={14} className="flex-shrink-0 text-white/80" />
                   <Link to="mailto:info@purbuniv.edu.np" className="hover:underline">info@purbuniv.edu.np</Link>
                 </div>
               </div>
@@ -89,17 +89,18 @@ export default function Footer() {
           </div>
         </Reveal>
 
-        <hr className="border-white/20 mt-10" />
+        <hr className="mt-8 border-white/20 sm:mt-10" />
       </div>
 
       <div className="container-x border-b border-white/15">
-        <Reveal delay={1} className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 py-12">
+        <Reveal delay={1} className="grid gap-8 py-10 sm:grid-cols-2 md:py-12 lg:grid-cols-4">
           <div>
-            <h6 className="font-heading font-semibold text-footeraccent mb-5">Contact Info</h6>
+            <h6 className="mb-5 font-heading font-semibold text-footeraccent">Contact Info</h6>
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48498.45587957811!2d87.28015042167969!3d26.681418799999985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ef68cc0bb8220b%3A0xa6d5c5bec3773ef4!2z4KSq4KWC4KSw4KWN4KS14KS-4KSe4KWN4KSa4KSyIOCkteCkv-CktuCljeCkteCkteCkv-CkpuCljeCkr-CkvuCksuCkryDgpJXgpLLgpYfgpJwg4KSF4KSrIOCkruClh-CkoeCkv-CkleCksiDgpI_gpK3gpY3gpKHgpI8g4KSH4KSy4KS-4KSH4KShIOCkuOCkvuCkiOCkqOCljeCkuA!5e1!3m2!1sen!2snp!4v1779283119841!5m2!1sen!2snp"
-              width="100%" height="136" style={{ border: 0 }} allowFullScreen loading="lazy"
+              width="100%" height="160" style={{ border: 0 }} allowFullScreen loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
+              className="w-full"
             />
             <div className="mt-3 space-y-2 text-sm text-white/75">
               <div className="flex items-start gap-2"><MapPin size={16} className="mt-0.5 shrink-0" /> Sundarharaincha, Gothgaun, Morang, Nepal</div>
@@ -127,9 +128,9 @@ export default function Footer() {
       </div>
 
       <div className="py-8">
-        <div className="container-x flex flex-col lg:flex-row items-center justify-between gap-4 text-sm text-white/60">
+        <div className="container-x flex flex-col items-center justify-between gap-4 text-center text-sm text-white/60 lg:flex-row lg:text-left">
           <p>Copyright © 2024-2026. <span className="text-white/80">Purbanchal University</span>. All Rights Reserved</p>
-          <div className="flex flex-wrap items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
             <Link to="#!" className="hover:text-white">Privacy Policy</Link>
             <Link to="#!" className="hover:text-white">Terms of Service</Link>
             <span className="text-xs">
@@ -145,10 +146,10 @@ export default function Footer() {
 function FooterCol({ title, items }) {
   return (
     <div>
-      <h6 className="font-heading font-semibold text-footeraccent mb-5">{title}</h6>
+      <h6 className="mb-5 font-heading font-semibold text-footeraccent">{title}</h6>
       <nav className="flex flex-col gap-3">
         {items.map((i) => (
-          <Link key={i} to="#!" className="text-white/70 hover:text-white hover:translate-x-1 transition text-sm">
+          <Link key={i} to="#!" className="text-sm text-white/70 transition hover:translate-x-1 hover:text-white">
             {i}
           </Link>
         ))}

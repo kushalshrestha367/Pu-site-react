@@ -36,7 +36,7 @@ const sections = [
 ];
 
 const intro =
-  "पूर्वाञ्चल विश्वविद्यालय ऐन, २०५० को दफा १२ बमोजिम विश्वविद्यालयको कार्यकारी निकायको रूपमा काम गर्न देहायका अध्यक्ष, सदस्य-सचिव र सदस्यहरू रहेको कार्यकारी परिषद् हुनेछः–";
+  "पूर्वाञ्चल विश्वविद्यालय ऐन, २०५० को दफा १२ बमोजिम विश्वविद्यालयको कार्यकारी निकायको रूपमा काम गर्न देहायका अध्यक्ष, सदस्य-सचिव र सदस्यहरू रहेको कार्यकारी परिषद् हुनेछ :";
 
 const note =
   "द्रष्टव्यः ऐनको व्यवस्था अनुसार उपदफा (१) को खण्ड (ख) र (ग) बमोजिमका सदस्यहरूको मनोनयन उप–कुलपतिको सिफारिशमा सभाले गर्नेछ । मनोनीत सदस्यहरूको पदावधि तीन वर्षको हुनेछ ।";
@@ -145,7 +145,7 @@ export default function ExecutiveCouncil() {
           transition={{ duration: 0.9, ease: EASE }}
           className="mb-8 sm:mb-10"
         >
-          <div className="mb-4 flex items-center gap-3 sm:mb-5">
+          {/* <div className="mb-4 flex items-center gap-3 sm:mb-5">
             <span
               className="h-[3px] w-8 rounded-full"
               style={{ backgroundColor: C.red }}
@@ -156,7 +156,7 @@ export default function ExecutiveCouncil() {
             >
               कार्यकारी परिषद्
             </span>
-          </div>
+          </div> */}
 
           <h1
             className="font-serif text-xl font-bold leading-[1.4] tracking-tight sm:text-2xl lg:text-3xl xl:text-4xl"
