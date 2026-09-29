@@ -136,36 +136,30 @@ function InitialsAvatar({ name, className }) {
     </div>
   );
 }
-
 function ContactCard({ contact, directorName, directorImage }) {
   const [imgFailed, setImgFailed] = useState(false);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
-      className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
-    >
+    <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
       <div className="h-1 w-full bg-[#252659]" />
 
-      <div className="p-5 sm:p-6 lg:p-7 font-serif">
+      <div className="p-4 font-serif sm:p-5">
         {directorName && (
-          <div className="mb-4 flex justify-center sm:mb-5">
-            <div className="relative">
+          <div className="mb-3 flex justify-center">
+            <div className="relative w-full max-w-[180px]">
               <div className="absolute -inset-1 rounded-2xl bg-[#252659]/10" />
               {directorImage && !imgFailed ? (
                 <img
                   src={directorImage}
                   alt={directorName}
                   onError={() => setImgFailed(true)}
-                  className="relative h-28 w-28 rounded-2xl object-cover object-top ring-1 ring-slate-200 sm:h-36 sm:w-36 md:h-32 md:w-32 lg:h-40 lg:w-40"
+                  className="relative aspect-[4/5] w-full rounded-2xl object-cover object-top ring-1 ring-slate-200"
                   draggable={false}
                 />
               ) : (
                 <InitialsAvatar
                   name={directorName}
-                  className="relative h-28 w-28 rounded-2xl ring-1 ring-slate-200 sm:h-36 sm:w-36 md:h-32 md:w-32 lg:h-40 lg:w-40"
+                  className="relative aspect-[4/5] w-full rounded-2xl ring-1 ring-slate-200"
                 />
               )}
             </div>
@@ -173,30 +167,32 @@ function ContactCard({ contact, directorName, directorImage }) {
         )}
 
         {directorName && (
-          <h3 className="text-center font-serif text-base font-bold text-slate-900 sm:text-lg">
+          <h3 className="text-center font-serif text-[15px] font-bold leading-snug text-slate-900 sm:text-base">
             {directorName}
           </h3>
         )}
 
-        <p className="mt-1 text-center text-[13px] font-semibold text-accent sm:text-sm">
+        {/* Role */}
+        <p className="mt-1 text-center text-[12.5px] font-semibold text-accent sm:text-[13px]">
           {contact.role}
         </p>
 
+        {/* Centre name */}
         {contact.centre && (
-          <p className="mt-1 text-center text-[12.5px] text-slate-600 sm:text-sm">
+          <p className="mt-0.5 text-center text-[11.5px] leading-snug text-slate-600 sm:text-[12px]">
             {contact.centre}
           </p>
         )}
 
-        <div className="my-4 h-px w-full bg-slate-100 sm:my-5" />
+        <div className="my-3 h-px w-full bg-slate-100" />
 
-        <ul className="space-y-2.5 text-[13px] sm:space-y-3 sm:text-sm">
-          <li className="flex items-start gap-2.5">
+        <ul className="space-y-2 text-[12px] sm:text-[12.5px]">
+          <li className="flex items-start gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
-              className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#252659]"
+              className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#252659]"
               aria-hidden="true"
             >
               <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
@@ -209,24 +205,24 @@ function ContactCard({ contact, directorName, directorImage }) {
               {contact.email}
             </a>
           </li>
-          <li className="flex items-start gap-2.5">
+          <li className="flex items-start gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
-              className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#252659]"
+              className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#252659]"
               aria-hidden="true"
             >
               <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
             </svg>
             <span className="text-slate-700">{contact.phone}</span>
           </li>
-          <li className="flex items-start gap-2.5">
+          <li className="flex items-start gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
-              className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#252659]"
+              className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#252659]"
               aria-hidden="true"
             >
               <path
@@ -239,19 +235,14 @@ function ContactCard({ contact, directorName, directorImage }) {
           </li>
         </ul>
       </div>
-    </motion.div>
+    </div>
   );
 }
-
-/* ------------------------------------------------------------------ */
-/*  Mobile Tab Bar (scrollable chips) — same pattern as Divisions      */
-/* ------------------------------------------------------------------ */
 function MobileTabs({ centres, activeId, onSelect, reduce }) {
   const scrollRef = useRef(null);
 
   return (
     <div className="sticky top-0 z-30 -mx-4 mb-5 border-b border-slate-200 bg-white/85 backdrop-blur-lg lg:hidden">
-      {/* Top label strip */}
       <div className="flex items-center gap-2 px-4 pt-3 pb-1">
         <span className="h-[2px] w-5 rounded-full bg-[#252659]" />
         <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#252659]">
@@ -259,18 +250,15 @@ function MobileTabs({ centres, activeId, onSelect, reduce }) {
         </span>
       </div>
 
-      {/* Horizontal scroll chips */}
       <div className="relative">
-        {/* Left fade */}
-        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-6 bg-gradient-to-r from-white to-transparent" />
-        {/* Right fade */}
-        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-6 bg-gradient-to-l from-white to-transparent" />
+        {/* <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-6 bg-gradient-to-r from-white to-transparent" /> */}
+        {/* <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-6 bg-gradient-to-l from-white to-transparent" /> */}
 
         <div
           ref={scrollRef}
           role="tablist"
           aria-label="University centres"
-          className="flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 py-3"
+          className="flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 py-3 ml-1"
           style={{ scrollbarWidth: "none" }}
         >
           {centres.map((c) => {
@@ -300,9 +288,7 @@ function MobileTabs({ centres, activeId, onSelect, reduce }) {
                 }`}
               >
                 <span
-                  className={`flex h-5 w-5 flex-shrink-0 items-center justify-center ${
-                    isActive ? "text-amber-300" : "text-slate-500"
-                  }`}
+                  className={`flex h-5 w-5 flex-shrink-0 items-center justify-center ${isActive ? "text-amber-300" : "text-slate-500"}`}
                 >
                   <CentreIcon id={c.id} className="h-3.5 w-3.5" />
                 </span>
@@ -361,7 +347,6 @@ export default function Centres() {
           </p>
         </motion.div>
 
-        {/* Mobile chips tab bar */}
         <MobileTabs
           centres={centres}
           activeId={activeId}
@@ -370,7 +355,7 @@ export default function Centres() {
         />
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
-          {/* Desktop: vertical sidebar tabs */}
+          {/* Desktop sidebar tabs */}
           <div
             className="hidden lg:col-span-4 lg:block"
             role="tablist"
@@ -389,11 +374,7 @@ export default function Centres() {
                     onClick={() => setActiveId(c.id)}
                     initial={reduce ? false : { opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      duration: 0.5,
-                      delay: i * 0.08,
-                      ease: EASE,
-                    }}
+                    transition={{ duration: 0.5, delay: i * 0.08, ease: EASE }}
                     whileHover={reduce ? {} : { x: 4 }}
                     className={`group relative flex w-full min-h-[64px] items-center gap-3 rounded-xl border px-5 py-4 text-left transition-all duration-300 ${
                       isActive
@@ -402,19 +383,13 @@ export default function Centres() {
                     }`}
                   >
                     <span
-                      className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full transition-colors ${
-                        isActive
-                          ? "bg-white/15 text-white"
-                          : "bg-slate-100 text-slate-600 group-hover:bg-[#252659]/10 group-hover:text-[#252659]"
-                      }`}
+                      className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full transition-colors ${isActive ? "bg-white/15 text-white" : "bg-slate-100 text-slate-600 group-hover:bg-[#252659]/10 group-hover:text-[#252659]"}`}
                     >
                       <CentreIcon id={c.id} className="h-4 w-4" />
                     </span>
 
                     <span
-                      className={`min-w-0 flex-1 text-[13.5px] font-semibold leading-snug transition-colors ${
-                        isActive ? "text-white" : "text-slate-700"
-                      }`}
+                      className={`min-w-0 flex-1 text-[13.5px] font-semibold leading-snug transition-colors ${isActive ? "text-white" : "text-slate-700"}`}
                     >
                       {c.shortLabelLines.map((line, li) => (
                         <React.Fragment key={li}>
@@ -460,7 +435,7 @@ export default function Centres() {
                 </div>
 
                 <div className="px-5 py-6 sm:px-6 sm:py-7 lg:px-8 lg:py-8">
-                  {!active.description && (
+                  {!active.description ? (
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
                       <div className="md:col-span-6 lg:col-span-7">
                         <ContactCard contact={active.contact} />
@@ -474,19 +449,17 @@ export default function Centres() {
                         </div>
                       </div>
                     </div>
-                  )}
-
-                  {active.description && (
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-8">
-                      <div className="md:col-span-5">
+                  ) : (
+                    <div className="flow-root">
+                      {/* Floated card — on mobile it's centered above the text */}
+                      <div className="mx-auto mb-5 w-full max-w-[260px] md:float-left md:mb-4 md:mr-7 md:w-[240px] lg:mr-8 lg:w-[260px]">
                         <ContactCard
                           contact={active.contact}
                           directorName={active.directorName}
                           directorImage={active.directorImage}
                         />
                       </div>
-
-                      <div className="min-w-0 space-y-4 text-justify md:col-span-7">
+                      <div className="space-y-4">
                         {active.description.map((p, i) => (
                           <motion.p
                             key={i}
@@ -497,44 +470,43 @@ export default function Centres() {
                               delay: 0.15 + i * 0.08,
                               ease: EASE,
                             }}
-                            className="max-w-[65ch] text-justify text-[13.5px] leading-[1.85] text-slate-700 sm:text-[14.5px] lg:text-[15px] xl:text-base"
+                            className="text-justify text-[13.5px] leading-[1.85] text-slate-700 sm:text-[14.5px] lg:text-[15px] xl:text-base"
                           >
                             {p}
                           </motion.p>
                         ))}
                       </div>
-                    </div>
-                  )}
-
-                  {active.note && (
-                    <motion.div
-                      initial={reduce ? false : { opacity: 0, y: 16 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
-                      className="mt-6 rounded-2xl border border-blue-100 bg-blue-50/50 p-4 text-justify sm:mt-8 sm:p-5 lg:p-6"
-                    >
-                      <div className="flex items-start gap-3">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent"
-                          aria-hidden="true"
+                      {active.note && (
+                        <motion.div
+                          initial={reduce ? false : { opacity: 0, y: 16 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
+                          className="mt-6 rounded-2xl border border-blue-100 bg-blue-50/50 p-4 text-justify sm:mt-8 sm:p-5 lg:p-6"
                         >
-                          <path
-                            fillRule="evenodd"
-                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                        <p className="text-[12.5px] leading-relaxed text-slate-700 sm:text-[13.5px] lg:text-sm">
-                          <span className="font-semibold text-slate-800">
-                            Note:{" "}
-                          </span>
-                          {active.note}
-                        </p>
-                      </div>
-                    </motion.div>
+                          <div className="flex items-start gap-3">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                              className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent"
+                              aria-hidden="true"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                            <p className="text-[12.5px] leading-relaxed text-slate-700 sm:text-[13.5px] lg:text-sm">
+                              <span className="font-semibold text-slate-800">
+                                Note:{" "}
+                              </span>
+                              {active.note}
+                            </p>
+                          </div>
+                        </motion.div>
+                      )}
+                    </div>
                   )}
                 </div>
               </motion.div>

@@ -9,7 +9,7 @@ export default function Layout() {
       <>
         <Header />
         <main className="min-h-[70vh] pt-20 xl:pt-28">
-          <Breadcrumbs />
+          <Breadcrumbs/>
           <Outlet />
         </main>
         <Footer />

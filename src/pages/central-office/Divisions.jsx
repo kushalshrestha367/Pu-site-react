@@ -409,7 +409,7 @@ function MobileTabs({ divisions, activeId, onSelect, reduce }) {
       {/* Top label strip */}
       <div className="flex items-center gap-2 px-4 pt-3 pb-1">
         <span className="h-[2px] w-5 rounded-full bg-[#252659]" />
-        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#252659]">
+        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#252659] ">
           {divisions.length} Divisions
         </span>
       </div>
@@ -417,15 +417,15 @@ function MobileTabs({ divisions, activeId, onSelect, reduce }) {
       {/* Horizontal scroll chips */}
       <div className="relative">
         {/* Left fade */}
-        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-6 bg-gradient-to-r from-white to-transparent" />
+        {/* <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-6 bg-gradient-to-r from-white to-transparent" /> */}
         {/* Right fade */}
-        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-6 bg-gradient-to-l from-white to-transparent" />
+        {/* <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-6 bg-gradient-to-l from-white to-transparent" /> */}
 
         <div
           ref={scrollRef}
           role="tablist"
           aria-label="University divisions"
-          className="flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 py-3"
+          className="flex snap-x snap-mandatory gap-2 overflow-x-auto px-2 ml-1 py-3"
           style={{ scrollbarWidth: "none" }}
         >
           {divisions.map((c) => {

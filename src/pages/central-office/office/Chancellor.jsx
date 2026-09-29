@@ -48,8 +48,6 @@ function Portrait({ name, img, className = "" }) {
     />
   );
 }
-
-/* ============================ MOBILE CARD ============================ */
 function MobileCard({ row, label, index, reduce }) {
   return (
     <motion.li
@@ -119,8 +117,6 @@ function MobileCard({ row, label, index, reduce }) {
     </motion.li>
   );
 }
-
-/* ============================ DESKTOP ROW ============================ */
 function DesktopRow({ row, label, index, reduce }) {
   return (
     <motion.li
@@ -175,7 +171,6 @@ function DesktopRow({ row, label, index, reduce }) {
   );
 }
 
-/* ============================ LIST ============================ */
 function PeopleList({ data, category }) {
   const reduce = useReducedMotion();
   const [query, setQuery] = useState("");
@@ -245,8 +240,6 @@ function PeopleList({ data, category }) {
           />
         </div>
       </div>
-
-      {/* DESKTOP HEADER */}
       <div
         className="hidden grid-cols-[70px_260px_1fr_220px_220px] items-center gap-5 px-8 py-4  text-[12px] font-bold uppercase tracking-wider text-white lg:grid"
         style={{ backgroundColor: NAVY }}
@@ -267,8 +260,6 @@ function PeopleList({ data, category }) {
           To <ArrowUpDown size={11} className="opacity-60" />
         </div>
       </div>
-
-      {/* TABLET HEADER */}
       <div
         className="hidden grid-cols-[60px_220px_1fr] items-center gap-5 px-6 py-4  text-[12px] font-bold uppercase tracking-wider text-white sm:grid lg:hidden"
         style={{ backgroundColor: NAVY }}
@@ -281,8 +272,6 @@ function PeopleList({ data, category }) {
           Name &amp; Tenure <ArrowUpDown size={11} className="opacity-60" />
         </div>
       </div>
-
-      {/* MOBILE */}
       <ul className="space-y-4 p-4 sm:hidden">
         {visible.map((row, i) => (
           <MobileCard
@@ -299,8 +288,6 @@ function PeopleList({ data, category }) {
           </li>
         )}
       </ul>
-
-      {/* TABLET */}
       <ul className="hidden divide-y divide-slate-100 sm:block lg:hidden">
         {visible.map((row, i) => (
           <motion.li
@@ -374,8 +361,6 @@ function PeopleList({ data, category }) {
           </li>
         )}
       </ul>
-
-      {/* DESKTOP */}
       <ul className="hidden divide-y divide-slate-100 lg:block">
         {visible.map((row, i) => (
           <DesktopRow
@@ -394,8 +379,6 @@ function PeopleList({ data, category }) {
           </li>
         )}
       </ul>
-
-      {/* PAGINATION */}
       <div className="flex flex-col items-center gap-4 border-t border-slate-100 bg-slate-50/50 px-4 py-5  sm:flex-row sm:justify-between sm:px-7">
         <span className="text-center  text-[12.5px] text-slate-600 sm:text-left sm:text-[13px]">
           Showing{" "}
@@ -594,7 +577,6 @@ export default function ViceChancellor() {
               </div>
             </motion.div>
           ) : (
-            /* ============================ LIST ============================ */
             <motion.div
               key={`list-${category}`}
               initial={reduce ? false : { opacity: 0, y: 20 }}
