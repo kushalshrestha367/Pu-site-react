@@ -1,492 +1,632 @@
-import React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { Link } from "react-router-dom";
+import {
+  MailIcon,
+  ArrowUpRightIcon,
+  BookIcon,
+  BuildingIcon,
+  EyeIcon,
+  CloseIcon,
+  SearchIcon,
+} from "../../components/icons/index";
+// import API from "../../lib/api";
 
 const EASE = [0.22, 1, 0.36, 1];
-const dean = {
-  name: "Prof. Ram Prasad Dhakal",
-  role: "Dean",
-  email: "info@pufale.edu.np",
-  image:
-    "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&crop=faces&q=80",
-  website: "https://pufale.edu.np",
-};
+const NAVY = "#252659";
+const ACCENT = "#252659";
 
-const programs = [
-  {
-    sn: 1,
-    name: "Bachelor of Education (B.Ed.)",
-    duration: "4 Years",
-    type: "Yearly",
-  },
-  {
-    sn: 2,
-    name: "One Year Bachelor of Education",
-    duration: "1 Year",
-    type: "Yearly",
-  },
-  {
-    sn: 3,
-    name: "One Year Bachelor of Education (Distance Mode)",
-    duration: "1 Year",
-    type: "Yearly",
-  },
-  {
-    sn: 4,
-    name: "Master of Education (M. Ed.)",
-    duration: "2 Years",
-    type: "Yearly",
-  },
-];
+const USE_MOCK = true;
 
-const colleges = [
-  {
-    sn: 1,
-    name: "Janta Adarsha Multiple Campus",
-    address: "Biratnagar, Morang",
-    programs: "B. Ed.-60, One Year B. Ed.-40, M. Ed.-50",
+const getMockData = () => ({
+  faculty: {
+    id: 3,
+    slug: "education",
+    title: "Faculty of Education",
+    short_title: "Faculty of Education",
+    description:
+      "Teacher education and educational leadership programmes with affiliated colleges across Nepal.",
   },
-  {
-    sn: 2,
-    name: "Annapurna Multiple College",
-    address: "Kanchanrup, Saptari",
-    programs: "B. Ed.-200, One Year B.Ed.-60",
+  dean: {
+    id: 3,
+    name: "Prof. Dr. Krishna Prasad Pandey",
+    role: "Dean",
+    email: "info@pufale.edu.np",
+    alt_email: null,
+    website: null,
+    image_url:
+      "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&crop=faces&q=80",
+    bio: "Leading the Faculty of Education — advancing teacher education, pedagogical research, and educational leadership at Purbanchal University.",
   },
-  {
-    sn: 3,
-    name: "Caliber International College",
-    address: "Rajbiraj, Saptari",
-    programs: "B. Ed.-100",
-  },
-  {
-    sn: 4,
-    name: "Chisankhugadi Campus",
-    address: "Khanibhanjyang, Okhaldunga",
-    programs: "B. Ed.-60",
-  },
-  {
-    sn: 5,
-    name: "Damauli College",
-    address: "Damauli, Tanahu",
-    programs: "B. Ed.-120",
-  },
-  {
-    sn: 6,
-    name: "Everest Multiple College",
-    address: "Salleri, Solukhumbu",
-    programs: "B. Ed.-180",
-  },
-  {
-    sn: 7,
-    name: "Gograha College",
-    address: "Biratnagar, Morang",
-    programs: "B. Ed.-80, One Year B. Ed.-40, M. Ed.-50",
-  },
-  {
-    sn: 8,
-    name: "Harinagara Multiple College",
-    address: "Harinagar, Sunsari",
-    programs: "B. Ed.-60",
-  },
-  {
-    sn: 9,
-    name: "Himalayan Kiran Public Campus",
-    address: "Khandabari, Sankhuwasabha",
-    programs: "B. Ed.-80, One Year B. Ed.-40, M. Ed.-180",
-  },
-  {
-    sn: 10,
-    name: "Institute of Open Learning, Kathmandu",
-    address: "Kathmandu",
-    programs: "One Year B. Ed. (Distance Mode)-60",
-  },
-  {
-    sn: 11,
-    name: "Karfok Bidya Mandir Multiple Campus",
-    address: "Karfok, Illam",
-    programs: "B. Ed.-60, One Year B. Ed.-50",
-  },
-  {
-    sn: 12,
-    name: "Laxmiballav Narsing Multiple College",
-    address: "Babhangamakatti, Saptari",
-    programs: "B. Ed.-200",
-  },
-  {
-    sn: 13,
-    name: "Lumbini Adarsha Degree College",
-    address: "Kawashoti, Nawalparasi",
-    programs: "B. Ed.-180, One Year B. Ed.-50, M. Ed.-150",
-  },
-  {
-    sn: 14,
-    name: "Madan Aashrit Smriti Multiple College",
-    address: "Kerkha, Jhapa",
-    programs: "B. Ed.-80, One Year B. Ed.-40, M. Ed.-180",
-  },
-  {
-    sn: 15,
-    name: "Mangal Prasad Women's College",
-    address: "Nepalgunj, Banke",
-    programs: "B. Ed.-60",
-  },
-  {
-    sn: 16,
-    name: "Mother Memorial College",
-    address: "Phattepur, Saptari",
-    programs: "B. Ed.-50",
-  },
-  {
-    sn: 17,
-    name: "National Multiple College",
-    address: "Dharan, Sunsari",
-    programs: "B. Ed.-60",
-  },
-  {
-    sn: 18,
-    name: "Public Campus",
-    address: "Dhanibanigaun, Morang",
-    programs: "B. Ed.-200",
-  },
-  {
-    sn: 19,
-    name: "Royal Softech College",
-    address: "Lahan, Siraha",
-    programs: "B. Ed.-120",
-  },
-  {
-    sn: 20,
-    name: "Saraswati Public Campus",
-    address: "Dadarbairiya, Morang",
-    programs: "B. Ed.-60",
-  },
-  {
-    sn: 21,
-    name: "Sungava Multiple College",
-    address: "Kanchanpur, Saptari",
-    programs: "B. Ed.-100",
-  },
-  {
-    sn: 22,
-    name: "Tribhuvan Campus",
-    address: "Manechauka, Tanahu",
-    programs: "B. Ed.-80, One Year B. Ed.-30",
-  },
-  {
-    sn: 23,
-    name: "Triveni Public Campus",
-    address: "Bahrabise, Sankhuwasabha",
-    programs: "B. Ed.-60",
-  },
-  {
-    sn: 24,
-    name: "Wana Campus",
-    address: "Panchapakhan, Sankhuwasabha",
-    programs: "B. Ed.-60",
-  },
-  {
-    sn: 25,
-    name: "Annapurna College",
-    address: "Biratnagar, Morang",
-    programs: "M. Ed.-180",
-  },
-  {
-    sn: 26,
-    name: "Edenburg International College",
-    address: "Biratnagar, Morang",
-    programs: "M. Ed.-180",
-  },
-  {
-    sn: 27,
-    name: "Saptarishi Multiple College",
-    address: "Rajbiraj, Saptari",
-    programs: "M. Ed.-100",
-  },
-  {
-    sn: 28,
-    name: "Libju Community Campus",
-    address: "Manebhanjyang, Okhaldhunga",
-    programs: "B.Ed.-60",
-  },
-  {
-    sn: 29,
-    name: "Khadak Multiple Campus",
-    address: "Kalyanpur, Saptari",
-    programs: "B.Ed.-60",
-  },
-  {
-    sn: 30,
-    name: "Gurans Multiple Campus",
-    address: "Gurans, Dailekh",
-    programs: "B.Ed.-60",
-  },
-  {
-    sn: 31,
-    name: "Jagadamba Campus",
-    address: "Sunkoshi, Okhaldhunga",
-    programs: "B.Ed.-60",
-  },
-  {
-    sn: 32,
-    name: "Siddanath Campus",
-    address: "Bhangaha, Mahottari",
-    programs: "B.Ed.-60",
-  },
-  {
-    sn: 33,
-    name: "Arun Multiple Campus",
-    address: "Arun-3, Bhojpur",
-    programs: "B.Ed.-60",
-  },
-  {
-    sn: 34,
-    name: "Narayani Multiple Campus",
-    address: "Mauwakhola, Taplejung",
-    programs: "B.Ed.-60",
-  },
-  {
-    sn: 35,
-    name: "Saraswati Multiple Campus",
-    address: "Gadhi-3, Aurabani, Sunsari",
-    programs: "B.Ed.-60",
-  },
-  {
-    sn: 36,
-    name: "Adarsha Campus",
-    address: "Barahakshetra, Sunsari",
-    programs: "B.Ed.-60",
-  },
-  {
-    sn: 37,
-    name: "Amardaha Campus",
-    address: "Sunbarsi-2, Amardaha, Morang",
-    programs: "B.Ed.-60",
-  },
-];
+  programs: [
+    { id: 1, name: "Bachelor of Education (B.Ed.)", level: "Bachelor", duration: "4 Years", system: "Yearly" },
+    { id: 2, name: "One Year Bachelor of Education", level: "Bachelor", duration: "1 Year", system: "Yearly" },
+    { id: 3, name: "One Year Bachelor of Education (Distance Mode)", level: "Bachelor", duration: "1 Year", system: "Yearly" },
+    { id: 4, name: "Master of Education (M. Ed.)", level: "Master", duration: "2 Years", system: "Yearly" },
+  ],
+  colleges: [
+    { sn: 1, name: "Janta Adarsha Multiple Campus", address: "Biratnagar, Morang", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 1, faculty_id: 3, program: "B. Ed.", seat: 60, remark: "-" }, { id: 2, faculty_id: 3, program: "One Year B. Ed.", seat: 40, remark: "-" }, { id: 3, faculty_id: 3, program: "M. Ed.", seat: 50, remark: "-" }] },
+    { sn: 2, name: "Annapurna Multiple College", address: "Kanchanrup, Saptari", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 4, faculty_id: 3, program: "B. Ed.", seat: 200, remark: "-" }, { id: 5, faculty_id: 3, program: "One Year B.Ed.", seat: 60, remark: "-" }] },
+    { sn: 3, name: "Caliber International College", address: "Rajbiraj, Saptari", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 6, faculty_id: 3, program: "B. Ed.", seat: 100, remark: "-" }] },
+    { sn: 4, name: "Chisankhugadi Campus", address: "Khanibhanjyang, Okhaldunga", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 7, faculty_id: 3, program: "B. Ed.", seat: 60, remark: "-" }] },
+    { sn: 5, name: "Damauli College", address: "Damauli, Tanahu", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 8, faculty_id: 3, program: "B. Ed.", seat: 120, remark: "-" }] },
+    { sn: 6, name: "Everest Multiple College", address: "Salleri, Solukhumbu", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 9, faculty_id: 3, program: "B. Ed.", seat: 180, remark: "-" }] },
+    { sn: 7, name: "Gograha College", address: "Biratnagar, Morang", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 10, faculty_id: 3, program: "B. Ed.", seat: 80, remark: "-" }, { id: 11, faculty_id: 3, program: "One Year B. Ed.", seat: 40, remark: "-" }, { id: 12, faculty_id: 3, program: "M. Ed.", seat: 50, remark: "-" }] },
+    { sn: 8, name: "Harinagara Multiple College", address: "Harinagar, Sunsari", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 13, faculty_id: 3, program: "B. Ed.", seat: 60, remark: "-" }] },
+    { sn: 9, name: "Himalayan Kiran Public Campus", address: "Khandabari, Sankhuwasabha", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 14, faculty_id: 3, program: "B. Ed.", seat: 80, remark: "-" }, { id: 15, faculty_id: 3, program: "One Year B. Ed.", seat: 40, remark: "-" }, { id: 16, faculty_id: 3, program: "M. Ed.", seat: 180, remark: "-" }] },
+    { sn: 10, name: "Institute of Open Learning, Kathmandu", address: "Kathmandu", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 17, faculty_id: 3, program: "One Year B. Ed. (Distance Mode)", seat: 60, remark: "-" }] },
+    { sn: 11, name: "Karfok Bidya Mandir Multiple Campus", address: "Karfok, Illam", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 18, faculty_id: 3, program: "B. Ed.", seat: 60, remark: "-" }, { id: 19, faculty_id: 3, program: "One Year B. Ed.", seat: 50, remark: "-" }] },
+    { sn: 12, name: "Laxmiballav Narsing Multiple College", address: "Babhangamakatti, Saptari", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 20, faculty_id: 3, program: "B. Ed.", seat: 200, remark: "-" }] },
+    { sn: 13, name: "Lumbini Adarsha Degree College", address: "Kawashoti, Nawalparasi", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 21, faculty_id: 3, program: "B. Ed.", seat: 180, remark: "-" }, { id: 22, faculty_id: 3, program: "One Year B. Ed.", seat: 50, remark: "-" }, { id: 23, faculty_id: 3, program: "M. Ed.", seat: 150, remark: "-" }] },
+    { sn: 14, name: "Madan Aashrit Smriti Multiple College", address: "Kerkha, Jhapa", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 24, faculty_id: 3, program: "B. Ed.", seat: 80, remark: "-" }, { id: 25, faculty_id: 3, program: "One Year B. Ed.", seat: 40, remark: "-" }, { id: 26, faculty_id: 3, program: "M. Ed.", seat: 180, remark: "-" }] },
+    { sn: 15, name: "Mangal Prasad Women's College", address: "Nepalgunj, Banke", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 27, faculty_id: 3, program: "B. Ed.", seat: 60, remark: "-" }] },
+    { sn: 16, name: "Mother Memorial College", address: "Phattepur, Saptari", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 28, faculty_id: 3, program: "B. Ed.", seat: 50, remark: "-" }] },
+    { sn: 17, name: "National Multiple College", address: "Dharan, Sunsari", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 29, faculty_id: 3, program: "B. Ed.", seat: 60, remark: "-" }] },
+    { sn: 18, name: "Public Campus", address: "Dhanibanigaun, Morang", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 30, faculty_id: 3, program: "B. Ed.", seat: 200, remark: "-" }] },
+    { sn: 19, name: "Royal Softech College", address: "Lahan, Siraha", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 31, faculty_id: 3, program: "B. Ed.", seat: 120, remark: "-" }] },
+    { sn: 20, name: "Saraswati Public Campus", address: "Dadarbairiya, Morang", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 32, faculty_id: 3, program: "B. Ed.", seat: 60, remark: "-" }] },
+    { sn: 21, name: "Sungava Multiple College", address: "Kanchanpur, Saptari", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 33, faculty_id: 3, program: "B. Ed.", seat: 100, remark: "-" }] },
+    { sn: 22, name: "Tribhuvan Campus", address: "Manechauka, Tanahu", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 34, faculty_id: 3, program: "B. Ed.", seat: 80, remark: "-" }, { id: 35, faculty_id: 3, program: "One Year B. Ed.", seat: 30, remark: "-" }] },
+    { sn: 23, name: "Triveni Public Campus", address: "Bahrabise, Sankhuwasabha", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 36, faculty_id: 3, program: "B. Ed.", seat: 60, remark: "-" }] },
+    { sn: 24, name: "Wana Campus", address: "Panchapakhan, Sankhuwasabha", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 37, faculty_id: 3, program: "B. Ed.", seat: 60, remark: "-" }] },
+    { sn: 25, name: "Annapurna College", address: "Biratnagar, Morang", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 38, faculty_id: 3, program: "M. Ed.", seat: 180, remark: "-" }] },
+    { sn: 26, name: "Edenburg International College", address: "Biratnagar, Morang", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 39, faculty_id: 3, program: "M. Ed.", seat: 180, remark: "-" }] },
+    { sn: 27, name: "Saptarishi Multiple College", address: "Rajbiraj, Saptari", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 40, faculty_id: 3, program: "M. Ed.", seat: 100, remark: "-" }] },
+    { sn: 28, name: "Libju Community Campus", address: "Manebhanjyang, Okhaldhunga", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 41, faculty_id: 3, program: "B.Ed.", seat: 60, remark: "-" }] },
+    { sn: 29, name: "Khadak Multiple Campus", address: "Kalyanpur, Saptari", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 42, faculty_id: 3, program: "B.Ed.", seat: 60, remark: "-" }] },
+    { sn: 30, name: "Gurans Multiple Campus", address: "Gurans, Dailekh", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 43, faculty_id: 3, program: "B.Ed.", seat: 60, remark: "-" }] },
+    { sn: 31, name: "Jagadamba Campus", address: "Sunkoshi, Okhaldhunga", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 44, faculty_id: 3, program: "B.Ed.", seat: 60, remark: "-" }] },
+    { sn: 32, name: "Siddanath Campus", address: "Bhangaha, Mahottari", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 45, faculty_id: 3, program: "B.Ed.", seat: 60, remark: "-" }] },
+    { sn: 33, name: "Arun Multiple Campus", address: "Arun-3, Bhojpur", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 46, faculty_id: 3, program: "B.Ed.", seat: 60, remark: "-" }] },
+    { sn: 34, name: "Narayani Multiple Campus", address: "Mauwakhola, Taplejung", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 47, faculty_id: 3, program: "B.Ed.", seat: 60, remark: "-" }] },
+    { sn: 35, name: "Saraswati Multiple Campus", address: "Gadhi-3, Aurabani, Sunsari", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 48, faculty_id: 3, program: "B.Ed.", seat: 60, remark: "-" }] },
+    { sn: 36, name: "Adarsha Campus", address: "Barahakshetra, Sunsari", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 49, faculty_id: 3, program: "B.Ed.", seat: 60, remark: "-" }] },
+    { sn: 37, name: "Amardaha Campus", address: "Sunbarsi-2, Amardaha, Morang", contact: "", website: null, chief: "", chiefPhone: null, programs: [{ id: 50, faculty_id: 3, program: "B.Ed.", seat: 60, remark: "-" }] },
+  ],
+});
 
-function MailIcon({ className }) {
+function Eyebrow({ children, color = ACCENT }) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-    </svg>
+    <div className="flex items-center gap-3">
+      <span className="h-px w-8" style={{ backgroundColor: color }} />
+      <span className="text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color }}>
+        {children}
+      </span>
+    </div>
   );
 }
 
-function ArrowUpRightIcon({ className }) {
+function TypeBadge({ type }) {
+  const isAlt = type === "Yearly" || type === "Research";
+  const c = isAlt ? ACCENT : NAVY;
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className={className}
-      aria-hidden="true"
+    <span
+      className="inline-flex flex-shrink-0 items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold"
+      style={{ color: c, backgroundColor: `${c}10` }}
     >
-      <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-      <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-    </svg>
+      {type}
+    </span>
   );
 }
-function DeanBlock({ reduce }) {
+
+function LoadingSkeleton() {
+  return (
+    <section className="w-full bg-white py-10 sm:py-14 lg:py-20">
+      <div className="mx-auto max-w-6xl animate-pulse px-4 sm:px-6 lg:px-8">
+        <div className="mb-6 h-3 w-24 rounded bg-slate-200" />
+        <div className="mb-10 h-12 w-2/3 rounded bg-slate-200" />
+        <div className="mb-6 h-4 w-1/2 rounded bg-slate-200" />
+        <div className="grid gap-4 md:grid-cols-[200px_1fr]">
+          <div className="aspect-[4/5] w-full max-w-[200px] rounded-xl bg-slate-200" />
+          <div className="space-y-3">
+            <div className="h-3 w-24 rounded bg-slate-200" />
+            <div className="h-8 w-64 rounded bg-slate-200" />
+            <div className="h-4 w-full rounded bg-slate-200" />
+            <div className="h-4 w-5/6 rounded bg-slate-200" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function DeanBlock({ dean, reduce }) {
+  if (!dean) return null;
+  const emails = [dean.email, dean.alt_email].filter(Boolean);
+
   return (
     <motion.div
       initial={reduce ? false : { opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.7, ease: EASE }}
-      className="mb-16 sm:mb-20"
+      transition={{ duration: 0.6, ease: EASE }}
+      className="mb-10 flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-3.5 sm:mb-12 sm:gap-5 sm:p-5 md:gap-8 md:p-7 lg:p-8"
     >
-      <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50/50">
-        <div className="grid grid-cols-1 md:grid-cols-12">
-          <div className="relative md:col-span-4 lg:col-span-3">
-            <div className="relative aspect-square h-full w-full md:aspect-auto md:h-full">
-              <img
-                src={dean.image}
-                alt={dean.name}
-                className="h-full w-full object-cover object-top"
-                draggable={false}
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                  e.currentTarget.parentElement.classList.add("bg-[#252659]");
-                }}
-              />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-50/50 to-transparent md:hidden" />
-            </div>
-          </div>
-          <div className="flex flex-col justify-center p-6 sm:p-8 md:col-span-8 lg:col-span-9 lg:p-10">
-            <div className="mb-3 flex items-center gap-3">
-              <span className="h-px w-6 bg-amber-500" />
-              <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-amber-700">
-                {dean.role}
-              </span>
-            </div>
+      <div className="w-24 flex-shrink-0 self-center sm:w-28 md:w-40 lg:w-48">
+        <img
+          src={dean.image_url}
+          alt={dean.name}
+          draggable={false}
+          className="aspect-[4/5] w-full rounded-xl object-cover object-top"
+        />
+      </div>
 
-            <h2 className="font-serif text-2xl font-bold leading-tight tracking-tight text-slate-900 sm:text-3xl">
-              {dean.name}
-            </h2>
-
-            <p className="mt-3 max-w-lg text-[13.5px] leading-relaxed text-slate-600 sm:text-[14.5px]">
-              Leading the Faculty of Education — advancing teacher education,
-              pedagogical research, and educational development at Purbanchal
-              University.
-            </p>
-            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <a
-                href={`mailto:${dean.email}`}
-                className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 transition-colors hover:text-[#252659]"
-              >
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#252659] ring-1 ring-slate-200">
-                  <MailIcon className="h-3.5 w-3.5" />
-                </span>
-                {dean.email}
-              </a>
-            </div>
-            <div className="mt-6">
-              <a
-                href={dean.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-[#252659] px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.14em] text-white shadow-md shadow-[#252659]/20 transition-all hover:-translate-y-0.5 hover:bg-[#1a1c4b] hover:shadow-lg hover:shadow-[#252659]/30"
-              >
-                Visit Website
-                <ArrowUpRightIcon className="h-3.5 w-3.5" />
-              </a>
-            </div>
-          </div>
+      <div className="min-w-0 flex-1 text-left">
+        <div className="flex justify-start">
+          <Eyebrow>{dean.role}</Eyebrow>
         </div>
+
+        <h2 className="mt-2 font-serif text-base font-bold leading-tight tracking-tight sm:text-lg md:text-2xl lg:text-3xl" style={{ color: NAVY }}>
+          {dean.name}
+        </h2>
+
+        {dean.bio && (
+          <p className="mt-2 text-[11.5px] leading-relaxed text-slate-600 sm:text-[12.5px] md:text-[14px]">
+            {dean.bio}
+          </p>
+        )}
+
+        <div className="mt-3 flex flex-col items-start gap-1.5 sm:mt-4">
+          {emails.map((mail) => (
+            <a
+              key={mail}
+              href={`mailto:${mail}`}
+              className="inline-flex max-w-full items-center gap-2 text-[11.5px] font-medium text-slate-700 transition-colors hover:text-[#9e1c32] sm:text-[12.5px] md:text-[13.5px]"
+            >
+              <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full sm:h-7 sm:w-7" style={{ backgroundColor: `${ACCENT}12`, color: ACCENT }}>
+                <MailIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+              </span>
+              <span className="truncate">{mail}</span>
+            </a>
+          ))}
+        </div>
+
+        {dean.website && (
+          <Link
+            href={dean.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[10.5px] font-bold uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90 sm:mt-4 sm:px-4 sm:text-[11px] md:px-5 md:py-2.5 md:text-[12px]"
+            style={{ backgroundColor: NAVY }}
+          >
+            Visit Website
+            <ArrowUpRightIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+          </Link>
+        )}
       </div>
     </motion.div>
   );
 }
-export default function FacultyofEducation() {
-  const reduce = useReducedMotion();
 
-  const reveal = (delay = 0) =>
-    reduce
-      ? {}
-      : {
-          initial: { opacity: 0, y: 20 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, amount: 0.1 },
-          transition: { duration: 0.7, delay, ease: EASE },
-        };
+function TabSwitcher({ active, onChange, programCount, collegeCount }) {
+  const TABS = [
+    { id: "programs", label: "Programs", fullLabel: "Programs Offered", count: programCount, Icon: BookIcon },
+    { id: "colleges", label: "Colleges", fullLabel: "Affiliated Colleges", count: collegeCount, Icon: BuildingIcon },
+  ];
+  return (
+    <div className="mb-6 flex justify-center sm:mb-8">
+      <div className="relative inline-flex w-full max-w-md rounded-full border border-slate-200 bg-slate-50 p-1">
+        {TABS.map((tab) => {
+          const isActive = active === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => onChange(tab.id)}
+              className={`relative z-10 flex flex-1 items-center justify-center gap-2 rounded-full px-3 py-2.5 text-[12.5px] font-semibold transition-colors sm:px-6 sm:text-[13.5px] ${isActive ? "text-white" : "text-slate-600 hover:text-slate-900"}`}
+            >
+              {isActive && (
+                <motion.span
+                  layoutId="tabPill"
+                  transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                  className="absolute inset-0 -z-10 rounded-full"
+                  style={{ backgroundColor: NAVY }}
+                />
+              )}
+              <span className="sm:hidden">{tab.label}</span>
+              <span className="hidden sm:inline">{tab.fullLabel}</span>
+              <span className={`inline-flex h-5 min-w-[1.4rem] items-center justify-center rounded-full px-1.5 text-[10.5px] font-bold ${isActive ? "bg-white/20 text-white" : "bg-slate-200 text-slate-600"}`}>
+                {tab.count}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function ProgramsPanel({ programs, reduce }) {
+  return (
+    <ul className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+      {programs.map((p, i) => (
+        <motion.li
+          key={p.id}
+          initial={reduce ? false : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: Math.min(i * 0.02, 0.25), ease: EASE }}
+          className="flex flex-col gap-2 border-b border-slate-100 px-4 py-4 last:border-b-0 hover:bg-slate-50 sm:flex-row sm:items-center sm:gap-6 sm:px-6"
+        >
+          <div className="flex flex-1 items-start gap-2.5 sm:items-center sm:gap-0">
+            <span className="mt-0.5 flex-shrink-0 font-mono text-[12.5px] font-medium tabular-nums text-slate-400 sm:mt-0 sm:w-8">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <h3 className="flex-1 text-[14px] font-medium leading-snug text-slate-800 sm:text-[15px]">
+              {p.name}
+            </h3>
+          </div>
+          <div className="flex items-center justify-between gap-3 pl-7 sm:justify-end sm:pl-0 sm:flex-shrink-0">
+            <span className="text-[12.5px] text-slate-500">{p.duration}</span>
+            <TypeBadge type={p.system || p.type} />
+          </div>
+        </motion.li>
+      ))}
+    </ul>
+  );
+}
+
+function SearchBar({ value, onChange, shown, total }) {
+  return (
+    <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="relative w-full sm:max-w-sm">
+        <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="Search college, address or programme"
+          className="w-full rounded-full border border-slate-200 bg-white py-2.5 pl-11 pr-10 text-[13.5px] text-slate-800 placeholder:text-slate-400 focus:border-[#252659] focus:outline-none focus:ring-4 focus:ring-[#252659]/10"
+        />
+        {value && (
+          <button
+            onClick={() => onChange("")}
+            aria-label="Clear search"
+            className="absolute right-3 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+          >
+            <CloseIcon className="h-3.5 w-3.5" />
+          </button>
+        )}
+      </div>
+      <p className="text-[12.5px] text-slate-500">
+        Showing <span className="font-semibold text-slate-700">{shown}</span> of {total} colleges
+      </p>
+    </div>
+  );
+}
+
+function SeatChips({ items }) {
+  const list = Array.isArray(items) ? items : [];
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      {list.map((p, i) => (
+        <span key={i} className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1 text-[11.5px] text-slate-700">
+          {p.program}
+          {p.seat !== "" && p.seat != null && (
+            <span className="font-bold tabular-nums" style={{ color: ACCENT }}>{p.seat}</span>
+          )}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function CollegesPanel({ reduce, list, onView, query, onClear }) {
+  if (list.length === 0) {
+    return (
+      <div className="rounded-2xl border border-dashed border-slate-300 px-6 py-14 text-center">
+        <p className="font-serif text-lg font-bold" style={{ color: NAVY }}>No colleges found</p>
+        <p className="mt-1 text-sm text-slate-500">Nothing matches “{query}”.</p>
+        <button onClick={onClear} className="mt-5 rounded-full px-5 py-2 text-[12px] font-bold uppercase tracking-wider text-white" style={{ backgroundColor: NAVY }}>
+          Clear search
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <section className="relative w-full bg-white py-12 sm:py-16 lg:py-20">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <motion.header
-          initial={reduce ? false : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EASE }}
-          className="mb-12 sm:mb-16"
-        >
-          <div className="mb-4 flex items-center gap-3">
-            <span className="h-px w-8 bg-[#252659]" />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#252659]">
-              Faculty
+    <>
+      <div className="grid gap-3 sm:grid-cols-2 lg:hidden">
+        {list.map((c, i) => (
+          <motion.button
+            key={c.sn}
+            initial={reduce ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: Math.min(i * 0.01, 0.2), ease: EASE }}
+            onClick={() => onView(c)}
+            className="flex flex-col rounded-2xl border border-slate-200 bg-white p-4 text-left transition-colors hover:border-slate-300 hover:bg-slate-50 sm:p-5"
+          >
+            <div className="flex items-start gap-2.5">
+              <span className="mt-0.5 flex-shrink-0 text-[11px] font-semibold tabular-nums text-slate-400">
+                {String(c.sn).padStart(2, "0")}
+              </span>
+              <h3 className="flex-1 font-serif text-[15px] font-bold leading-snug sm:text-[1.05rem]" style={{ color: NAVY }}>
+                {c.name}
+              </h3>
+            </div>
+            <p className="mt-2 text-[12px] text-slate-500 sm:text-[12.5px]">{c.address}</p>
+            <div className="mt-3"><SeatChips items={c.programs} /></div>
+            <span className="mt-4 inline-flex items-center gap-1.5 text-[11.5px] font-bold uppercase tracking-wider" style={{ color: ACCENT }}>
+              View details <ArrowUpRightIcon className="h-3.5 w-3.5" />
             </span>
-          </div>
+          </motion.button>
+        ))}
+      </div>
 
-          <h1 className="font-serif text-3xl font-bold leading-[1.2] tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
-            Faculty of Education
+      <div className="hidden overflow-hidden rounded-2xl border border-slate-200 lg:block">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr style={{ backgroundColor: NAVY }} className="text-white">
+              {["SN", "College", "Address", "Contact", "Approved Programs / Quotas"].map((h) => (
+                <th key={h} className="px-4 py-3.5 text-left text-[11.5px] font-bold uppercase tracking-wider">{h}</th>
+              ))}
+              <th className="w-16 px-4 py-3.5 text-center text-[11.5px] font-bold uppercase tracking-wider">Detail</th>
+            </tr>
+          </thead>
+          <tbody>
+            {list.map((c) => (
+              <tr key={c.sn} onClick={() => onView(c)} className="cursor-pointer border-b border-slate-100 bg-white transition-colors last:border-b-0 hover:bg-slate-50">
+                <td className="px-4 py-4 align-top text-[12.5px] font-medium tabular-nums text-slate-400">{String(c.sn).padStart(2, "0")}</td>
+                <td className="px-4 py-4 align-top"><span className="text-[13.5px] font-semibold leading-snug" style={{ color: NAVY }}>{c.name}</span></td>
+                <td className="px-4 py-4 align-top text-[12.5px] leading-relaxed text-slate-600">{c.address}</td>
+                <td className="px-4 py-4 align-top text-[12.5px] leading-relaxed text-slate-600">{c.contact || "—"}</td>
+                <td className="px-4 py-4 align-top"><SeatChips items={c.programs} /></td>
+                <td className="px-4 py-4 text-center align-top">
+                  <button onClick={(e) => { e.stopPropagation(); onView(c); }} aria-label={`View details of ${c.name}`} className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-[#9e1c32]/10" style={{ color: ACCENT }}>
+                    <EyeIcon className="h-4 w-4" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+}
+
+function DetailRow({ label, value }) {
+  return (
+    <div className="flex flex-col gap-0.5 py-3 sm:flex-row sm:items-baseline sm:gap-6">
+      <span className="w-32 flex-shrink-0 text-[11px] font-bold uppercase tracking-wider text-slate-400">{label}</span>
+      <div className="flex-1 text-[13.5px] text-slate-700">{value}</div>
+    </div>
+  );
+}
+
+function CollegeDetailModal({ college, onClose, reduce }) {
+  useEffect(() => {
+    if (!college) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = original;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [college, onClose]);
+
+  return (
+    <AnimatePresence>
+      {college && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-[100] flex items-end justify-center bg-slate-900/60 backdrop-blur-sm sm:items-center sm:p-6"
+          onClick={onClose}
+          role="dialog"
+          aria-modal="true"
+        >
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduce ? undefined : { opacity: 0, y: 40 }}
+            transition={{ duration: 0.3, ease: EASE }}
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[92vh] w-full overflow-y-auto rounded-t-3xl bg-white shadow-2xl sm:my-6 sm:max-h-[88vh] sm:max-w-2xl sm:rounded-3xl"
+          >
+            <div className="mx-auto mt-3 h-1 w-10 rounded-full bg-slate-300 sm:hidden" />
+            <div className="flex items-start justify-between gap-4 px-5 pb-4 pt-5 sm:px-8 sm:pb-5 sm:pt-7">
+              <div>
+                <Eyebrow>College</Eyebrow>
+                <h3 className="mt-3 font-serif text-lg font-bold leading-tight sm:text-2xl" style={{ color: NAVY }}>{college.name}</h3>
+              </div>
+              <button onClick={onClose} aria-label="Close" className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200">
+                <CloseIcon className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="px-5 pb-7 sm:px-8 sm:pb-8">
+              <div className="divide-y divide-slate-100 border-y border-slate-100">
+                {college.website && (
+                  <DetailRow label="Official site" value={
+                    <a href={college.website} target="_blank" rel="noopener noreferrer" className="font-medium break-all hover:underline" style={{ color: ACCENT }}>
+                      {college.website.replace(/^https?:\/\//, "")}
+                    </a>
+                  } />
+                )}
+                {college.contact && <DetailRow label="Contact" value={college.contact} />}
+                {college.chief && (
+                  <DetailRow label="Campus chief" value={<>{college.chief}{college.chiefPhone && <span className="text-slate-500">, {college.chiefPhone}</span>}</>} />
+                )}
+                <DetailRow label="Address" value={college.address} />
+              </div>
+
+              <div className="mt-6 overflow-hidden rounded-xl border border-slate-200">
+                <table className="w-full border-collapse text-left">
+                  <thead>
+                    <tr style={{ backgroundColor: NAVY }} className="text-white">
+                      <th className="px-3 py-2.5 text-[11px] font-bold uppercase tracking-wider sm:px-4 sm:text-[11.5px]">Program</th>
+                      <th className="px-3 py-2.5 text-center text-[11px] font-bold uppercase tracking-wider sm:px-4 sm:text-[11.5px]">Seats</th>
+                      <th className="hidden px-3 py-2.5 text-center text-[11px] font-bold uppercase tracking-wider sm:table-cell sm:px-4 sm:text-[11.5px]">Remark</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {college.programs.map((p, i) => (
+                      <tr key={i} className="border-b border-slate-100 last:border-b-0">
+                        <td className="px-3 py-2.5 text-[12.5px] font-medium text-slate-800 sm:px-4 sm:text-[13px]">{p.program}</td>
+                        <td className="px-3 py-2.5 text-center text-[12.5px] font-semibold tabular-nums sm:px-4 sm:text-[13px]" style={{ color: ACCENT }}>{p.seat || "—"}</td>
+                        <td className="hidden px-3 py-2.5 text-center text-[12.5px] text-slate-500 sm:table-cell sm:px-4 sm:text-[13px]">{p.remark || "-"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+export default function FacultyofEducation() {
+  const reduce = useReducedMotion();
+  const [activeTab, setActiveTab] = useState("programs");
+  const [selectedCollege, setSelectedCollege] = useState(null);
+  const [query, setQuery] = useState("");
+
+  const [apiData, setApiData] = useState(null);
+  const [loading, setLoading] = useState(!USE_MOCK);
+  const [error, setError] = useState(null);
+
+  const data = USE_MOCK ? getMockData() : apiData;
+
+  useEffect(() => {
+    if (USE_MOCK) return;
+
+    let cancelled = false;
+
+    const loadFaculty = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await API.get(`/faculty/education`);
+        if (!cancelled) setApiData(response.data);
+      } catch (err) {
+        if (!cancelled) {
+          setError(
+            err.response?.data?.message ||
+              err.message ||
+              "Unable to load faculty data",
+          );
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    loadFaculty();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const closeModal = useCallback(() => setSelectedCollege(null), []);
+
+  const faculty = data?.faculty;
+  const dean = data?.dean;
+  const programs = data?.programs ?? [];
+  const colleges = data?.colleges ?? [];
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return colleges;
+    return colleges.filter(
+      (c) =>
+        c.name.toLowerCase().includes(q) ||
+        c.address.toLowerCase().includes(q) ||
+        c.programs.some((p) => p.program.toLowerCase().includes(q)),
+    );
+  }, [query, colleges]);
+
+  if (loading) return <LoadingSkeleton />;
+
+  if (error) {
+    return (
+      <section className="w-full bg-white py-20">
+        <div className="mx-auto max-w-xl px-6 text-center">
+          <p className="font-serif text-xl font-bold" style={{ color: NAVY }}>
+            Unable to load faculty data
+          </p>
+          <p className="mt-2 text-sm text-slate-500">{error}</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!faculty) return null;
+
+  return (
+    <section className="w-full bg-white py-10 selection:bg-[#252659] selection:text-white sm:py-14 lg:py-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <motion.header
+          initial={reduce ? false : { opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: EASE }}
+          className="mb-10 sm:mb-14"
+        >
+          <Eyebrow>Faculty</Eyebrow>
+          <h1 className="mt-4 font-serif text-3xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl" style={{ color: NAVY }}>
+            {faculty.title}
           </h1>
-
-          <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-slate-600 sm:text-[15px]">
-            Teacher education programmes and affiliated colleges across Nepal.
+          <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-slate-600 sm:text-base">
+            {faculty.description}
           </p>
         </motion.header>
-        <DeanBlock reduce={reduce} />
 
-        <div className="mb-16 sm:mb-20">
-          <motion.div {...reveal()} className="mb-8">
-            <h2 className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">
-              Programs Offered
-            </h2>
-            <p className="mt-2 text-[13.5px] text-slate-500">
-              {programs.length} programmes across undergraduate and graduate
-              levels
-            </p>
+        <DeanBlock dean={dean} reduce={reduce} />
+
+        <TabSwitcher
+          active={activeTab}
+          onChange={(id) => {
+            setActiveTab(id);
+            setQuery("");
+            setSelectedCollege(null);
+          }}
+          programCount={programs.length}
+          collegeCount={colleges.length}
+        />
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduce ? undefined : { opacity: 0, y: -6 }}
+            transition={{ duration: 0.3, ease: EASE }}
+          >
+            {activeTab === "programs" ? (
+              <ProgramsPanel programs={programs} reduce={reduce} />
+            ) : (
+              <>
+                <SearchBar
+                  value={query}
+                  onChange={setQuery}
+                  shown={filtered.length}
+                  total={colleges.length}
+                />
+                <CollegesPanel
+                  reduce={reduce}
+                  list={filtered}
+                  onView={setSelectedCollege}
+                  query={query}
+                  onClear={() => setQuery("")}
+                />
+              </>
+            )}
           </motion.div>
-
-          <div className="divide-y divide-slate-200 border-y border-slate-200">
-            {programs.map((p, i) => (
-              <motion.div
-                key={p.sn}
-                {...reveal(Math.min(i * 0.03, 0.3))}
-                className="group flex flex-col gap-2 py-4 transition-colors hover:bg-slate-50/60 sm:flex-row sm:items-center sm:gap-6 sm:py-5"
-              >
-                <span className="font-mono text-[12px] font-medium tabular-nums text-slate-400 sm:w-10 sm:flex-shrink-0">
-                  {String(p.sn).padStart(2, "0")}
-                </span>
-
-                <h3 className="flex-1 text-[14.5px] font-medium leading-snug text-slate-800 transition-colors group-hover:text-[#252659] sm:text-[15px]">
-                  {p.name}
-                </h3>
-
-                <div className="flex items-center gap-3 sm:flex-shrink-0">
-                  <span className="text-[12.5px] text-slate-500">
-                    {p.duration}
-                  </span>
-                  <span
-                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10.5px] font-semibold ${
-                      p.type === "Yearly"
-                        ? "bg-[#9e1c32] text-white"
-                        : p.type === "Research"
-                          ? "bg-purple-50 text-purple-700"
-                          : "bg-blue-50 text-blue-700"
-                    }`}
-                  >
-                    {p.type}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-        <div>
-          <motion.div {...reveal()} className="mb-8">
-            <h2 className="font-serif text-2xl font-bold text-slate-900 sm:text-3xl">
-              Affiliated Colleges
-            </h2>
-            <p className="mt-2 text-[13.5px] text-slate-500">
-              {colleges.length} colleges offering Faculty programmes across
-              Nepal
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 gap-x-8 gap-y-0 sm:grid-cols-2 lg:grid-cols-3">
-            {colleges.map((c, i) => (
-              <motion.div
-                key={c.sn}
-                {...reveal(Math.min(i * 0.015, 0.4))}
-                className="group border-t border-slate-200 py-5"
-              >
-                <div className="flex items-start gap-3">
-                  <span className="font-mono text-[11px] font-medium tabular-nums text-slate-400">
-                    {String(c.sn).padStart(2, "0")}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-[13.5px] font-semibold leading-snug text-slate-800 transition-colors group-hover:text-[#252659]">
-                      {c.name}
-                    </h3>
-                    <p className="mt-1 text-[12px] text-slate-500">
-                      {c.address}
-                    </p>
-                    <p className="mt-1.5 text-[11.5px] font-medium leading-relaxed text-[#9e1c32]">
-                      {c.programs}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+        </AnimatePresence>
       </div>
+
+      <CollegeDetailModal
+        college={selectedCollege}
+        onClose={closeModal}
+        reduce={reduce}
+      />
     </section>
   );
 }

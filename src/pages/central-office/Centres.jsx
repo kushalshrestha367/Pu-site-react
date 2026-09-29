@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -7,6 +7,7 @@ const centres = [
   {
     id: "research",
     title: "Research Centre",
+    shortLabel: "Research",
     shortLabelLines: ["Research Centre"],
     contact: {
       role: "Executive Director",
@@ -19,6 +20,7 @@ const centres = [
   {
     id: "curriculum",
     title: "Curriculum Research & Development Centre",
+    shortLabel: "Curriculum",
     shortLabelLines: ["Curriculum Research &", "Development Centre"],
     contact: {
       role: "Executive Director",
@@ -31,6 +33,7 @@ const centres = [
   {
     id: "monitoring",
     title: "Monitoring & Evaluation Centre",
+    shortLabel: "Monitoring",
     shortLabelLines: ["Monitoring & Evaluation Centre"],
     contact: {
       role: "Executive Director",
@@ -146,9 +149,9 @@ function ContactCard({ contact, directorName, directorImage }) {
     >
       <div className="h-1 w-full bg-[#252659]" />
 
-      <div className="p-6 sm:p-7 font-serif">
+      <div className="p-5 sm:p-6 lg:p-7 font-serif">
         {directorName && (
-          <div className="mb-5 flex justify-center">
+          <div className="mb-4 flex justify-center sm:mb-5">
             <div className="relative">
               <div className="absolute -inset-1 rounded-2xl bg-[#252659]/10" />
               {directorImage && !imgFailed ? (
@@ -156,13 +159,13 @@ function ContactCard({ contact, directorName, directorImage }) {
                   src={directorImage}
                   alt={directorName}
                   onError={() => setImgFailed(true)}
-                  className="relative h-32 w-32 rounded-2xl object-cover object-top ring-1 ring-slate-200 sm:h-40 sm:w-40 md:h-36 md:w-36 lg:h-44 lg:w-44"
+                  className="relative h-28 w-28 rounded-2xl object-cover object-top ring-1 ring-slate-200 sm:h-36 sm:w-36 md:h-32 md:w-32 lg:h-40 lg:w-40"
                   draggable={false}
                 />
               ) : (
                 <InitialsAvatar
                   name={directorName}
-                  className="relative h-32 w-32 rounded-2xl ring-1 ring-slate-200 sm:h-40 sm:w-40 md:h-36 md:w-36 lg:h-44 lg:w-44"
+                  className="relative h-28 w-28 rounded-2xl ring-1 ring-slate-200 sm:h-36 sm:w-36 md:h-32 md:w-32 lg:h-40 lg:w-40"
                 />
               )}
             </div>
@@ -170,24 +173,24 @@ function ContactCard({ contact, directorName, directorImage }) {
         )}
 
         {directorName && (
-          <h3 className="text-center font-serif text-lg font-bold text-slate-900">
+          <h3 className="text-center font-serif text-base font-bold text-slate-900 sm:text-lg">
             {directorName}
           </h3>
         )}
 
-        <p className="mt-1 text-center text-sm font-semibold text-accent">
+        <p className="mt-1 text-center text-[13px] font-semibold text-accent sm:text-sm">
           {contact.role}
         </p>
 
         {contact.centre && (
-          <p className="mt-1 text-center text-sm text-slate-600">
+          <p className="mt-1 text-center text-[12.5px] text-slate-600 sm:text-sm">
             {contact.centre}
           </p>
         )}
 
-        <div className="my-5 h-px w-full bg-slate-100" />
+        <div className="my-4 h-px w-full bg-slate-100 sm:my-5" />
 
-        <ul className="space-y-3 text-sm">
+        <ul className="space-y-2.5 text-[13px] sm:space-y-3 sm:text-sm">
           <li className="flex items-start gap-2.5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -240,6 +243,80 @@ function ContactCard({ contact, directorName, directorImage }) {
   );
 }
 
+/* ------------------------------------------------------------------ */
+/*  Mobile Tab Bar (scrollable chips) — same pattern as Divisions      */
+/* ------------------------------------------------------------------ */
+function MobileTabs({ centres, activeId, onSelect, reduce }) {
+  const scrollRef = useRef(null);
+
+  return (
+    <div className="sticky top-0 z-30 -mx-4 mb-5 border-b border-slate-200 bg-white/85 backdrop-blur-lg lg:hidden">
+      {/* Top label strip */}
+      <div className="flex items-center gap-2 px-4 pt-3 pb-1">
+        <span className="h-[2px] w-5 rounded-full bg-[#252659]" />
+        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#252659]">
+          {centres.length} Centres
+        </span>
+      </div>
+
+      {/* Horizontal scroll chips */}
+      <div className="relative">
+        {/* Left fade */}
+        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-6 bg-gradient-to-r from-white to-transparent" />
+        {/* Right fade */}
+        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-6 bg-gradient-to-l from-white to-transparent" />
+
+        <div
+          ref={scrollRef}
+          role="tablist"
+          aria-label="University centres"
+          className="flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 py-3"
+          style={{ scrollbarWidth: "none" }}
+        >
+          {centres.map((c) => {
+            const isActive = c.id === activeId;
+            return (
+              <button
+                key={c.id}
+                role="tab"
+                aria-selected={isActive}
+                aria-controls={`centre-panel-${c.id}`}
+                onClick={() => {
+                  onSelect(c.id);
+                  const el = scrollRef.current?.querySelector(
+                    `[data-chip="${c.id}"]`,
+                  );
+                  el?.scrollIntoView({
+                    behavior: "smooth",
+                    inline: "center",
+                    block: "nearest",
+                  });
+                }}
+                data-chip={c.id}
+                className={`flex flex-shrink-0 snap-start items-center gap-2 rounded-full border px-3.5 py-2 text-[12.5px] font-semibold whitespace-nowrap transition-all duration-300 ${
+                  isActive
+                    ? "border-[#252659] bg-[#252659] text-white shadow-md shadow-[#252659]/25"
+                    : "border-slate-200 bg-white text-slate-700 active:bg-slate-50"
+                }`}
+              >
+                <span
+                  className={`flex h-5 w-5 flex-shrink-0 items-center justify-center ${
+                    isActive ? "text-amber-300" : "text-slate-500"
+                  }`}
+                >
+                  <CentreIcon id={c.id} className="h-3.5 w-3.5" />
+                </span>
+                {c.shortLabel}
+              </button>
+            );
+          })}
+          <span className="w-2 flex-shrink-0" aria-hidden="true" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Centres() {
   const [activeId, setActiveId] = useState(centres[0].id);
   const reduce = useReducedMotion();
@@ -267,107 +344,92 @@ export default function Centres() {
           initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: EASE }}
-          className="mb-8 sm:mb-10"
+          className="mb-6 sm:mb-8 lg:mb-10"
         >
-          <div className="mb-4 flex items-center gap-3 sm:mb-5">
-            <span className="h-[3px] w-8 rounded-full bg-[#252659]" />
-            <span className="text-xs font-semibold text-[#252659] sm:text-sm">
+          <div className="mb-3 flex items-center gap-3 sm:mb-4 lg:mb-5">
+            <span className="h-[3px] w-6 rounded-full bg-[#252659] sm:w-8" />
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-[#252659] sm:text-xs lg:text-sm">
               केन्द्रहरू
             </span>
           </div>
-          <h1 className="font-serif text-xl font-bold leading-[1.4] tracking-tight text-slate-900 sm:text-2xl md:text-[28px] lg:text-3xl xl:text-4xl">
+          <h1 className="font-serif text-[22px] font-bold leading-[1.3] tracking-tight text-slate-900 sm:text-2xl md:text-[28px] lg:text-3xl xl:text-4xl">
             केन्द्रहरूको विवरण
           </h1>
-          <p className="mt-4 max-w-3xl text-[13.5px] leading-relaxed text-slate-600 sm:mt-5 sm:text-sm lg:text-[15px] xl:text-base">
+          <p className="mt-3 max-w-3xl text-[13px] leading-relaxed text-slate-600 sm:mt-4 sm:text-sm lg:text-[15px] xl:text-base">
             Purbanchal University's research, curriculum, and monitoring centres
             dedicated to academic excellence and institutional development.
           </p>
         </motion.div>
 
+        {/* Mobile chips tab bar */}
+        <MobileTabs
+          centres={centres}
+          activeId={activeId}
+          onSelect={setActiveId}
+          reduce={reduce}
+        />
+
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
+          {/* Desktop: vertical sidebar tabs */}
           <div
-            className="lg:col-span-4"
+            className="hidden lg:col-span-4 lg:block"
             role="tablist"
             aria-label="University centres"
           >
-            <div className="hidden lg:block">
-              <div className="space-y-2.5">
-                {centres.map((c, i) => {
-                  const isActive = c.id === activeId;
-                  return (
-                    <motion.button
-                      key={c.id}
-                      role="tab"
-                      aria-selected={isActive}
-                      aria-controls={`centre-panel-${c.id}`}
-                      id={`centre-tab-${c.id}`}
-                      onClick={() => setActiveId(c.id)}
-                      initial={reduce ? false : { opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{
-                        duration: 0.5,
-                        delay: i * 0.08,
-                        ease: EASE,
-                      }}
-                      whileHover={reduce ? {} : { x: 4 }}
-                      className={`group relative flex w-full min-h-[64px] items-center gap-3 rounded-xl border px-5 py-4 text-left transition-all duration-300 ${
-                        isActive
-                          ? "border-[#252659] bg-[#252659] shadow-lg shadow-[#252659]/20"
-                          : "border-slate-200 bg-white hover:border-[#252659]/40 hover:shadow-md"
-                      }`}
-                    >
-                      <span
-                        className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full transition-colors ${
-                          isActive
-                            ? "bg-white/15 text-white"
-                            : "bg-slate-100 text-slate-600 group-hover:bg-[#252659]/10 group-hover:text-[#252659]"
-                        }`}
-                      >
-                        <CentreIcon id={c.id} className="h-4 w-4" />
-                      </span>
-
-                      <span
-                        className={`min-w-0 flex-1 text-[13.5px] font-semibold leading-snug transition-colors ${
-                          isActive ? "text-white" : "text-slate-700"
-                        }`}
-                      >
-                        {c.shortLabelLines.map((line, li) => (
-                          <React.Fragment key={li}>
-                            {line}
-                            {li < c.shortLabelLines.length - 1 && <br />}
-                          </React.Fragment>
-                        ))}
-                      </span>
-                    </motion.button>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="flex flex-col gap-2.5 lg:hidden">
-              {centres.map((c) => {
+            <div className="space-y-2.5 lg:sticky lg:top-24">
+              {centres.map((c, i) => {
                 const isActive = c.id === activeId;
                 return (
-                  <button
+                  <motion.button
                     key={c.id}
                     role="tab"
                     aria-selected={isActive}
                     aria-controls={`centre-panel-${c.id}`}
+                    id={`centre-tab-${c.id}`}
                     onClick={() => setActiveId(c.id)}
-                    className={`w-full min-h-14 rounded-xl border px-5 py-4 text-left text-[13px] font-bold uppercase tracking-wide shadow-sm transition-colors sm:text-sm ${
+                    initial={reduce ? false : { opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{
+                      duration: 0.5,
+                      delay: i * 0.08,
+                      ease: EASE,
+                    }}
+                    whileHover={reduce ? {} : { x: 4 }}
+                    className={`group relative flex w-full min-h-[64px] items-center gap-3 rounded-xl border px-5 py-4 text-left transition-all duration-300 ${
                       isActive
-                        ? "border-[#252659] bg-[#252659] text-white shadow-md shadow-[#252659]/20"
-                        : "border-slate-200 bg-white text-slate-800 active:bg-slate-50"
+                        ? "border-[#252659] bg-[#252659] shadow-lg shadow-[#252659]/20"
+                        : "border-slate-200 bg-white hover:border-[#252659]/40 hover:shadow-md"
                     }`}
                   >
-                    <span className="block break-words leading-snug">
-                      {c.title}
+                    <span
+                      className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full transition-colors ${
+                        isActive
+                          ? "bg-white/15 text-white"
+                          : "bg-slate-100 text-slate-600 group-hover:bg-[#252659]/10 group-hover:text-[#252659]"
+                      }`}
+                    >
+                      <CentreIcon id={c.id} className="h-4 w-4" />
                     </span>
-                  </button>
+
+                    <span
+                      className={`min-w-0 flex-1 text-[13.5px] font-semibold leading-snug transition-colors ${
+                        isActive ? "text-white" : "text-slate-700"
+                      }`}
+                    >
+                      {c.shortLabelLines.map((line, li) => (
+                        <React.Fragment key={li}>
+                          {line}
+                          {li < c.shortLabelLines.length - 1 && <br />}
+                        </React.Fragment>
+                      ))}
+                    </span>
+                  </motion.button>
                 );
               })}
             </div>
           </div>
 
+          {/* Panel */}
           <div className="lg:col-span-8">
             <AnimatePresence mode="wait">
               <motion.div
@@ -381,21 +443,31 @@ export default function Centres() {
                 transition={{ duration: 0.5, ease: EASE }}
                 className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-200/50"
               >
-                <div className="border-b border-slate-100 bg-slate-50/60 px-6 py-5 sm:px-8 sm:py-6">
-                  <h2 className="break-words font-serif text-lg font-bold leading-tight text-slate-900 sm:text-xl lg:text-2xl xl:text-[28px]">
-                    {active.title}
-                  </h2>
+                <div className="border-b border-slate-100 bg-slate-50/60 px-5 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6">
+                  <div className="flex items-start gap-3">
+                    <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-[#252659]/5 text-[#252659] lg:hidden">
+                      <CentreIcon id={active.id} className="h-4 w-4" />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#252659] lg:hidden">
+                        Centre
+                      </p>
+                      <h2 className="break-words font-serif text-[17px] font-bold leading-tight text-slate-900 sm:text-xl lg:text-2xl xl:text-[28px]">
+                        {active.title}
+                      </h2>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="px-6 py-6 sm:px-8 sm:py-8">
+                <div className="px-5 py-6 sm:px-6 sm:py-7 lg:px-8 lg:py-8">
                   {!active.description && (
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
                       <div className="md:col-span-6 lg:col-span-7">
                         <ContactCard contact={active.contact} />
                       </div>
                       <div className="md:col-span-6 lg:col-span-5">
-                        <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 p-6 text-center">
-                          <p className="text-sm leading-relaxed text-slate-500">
+                        <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 p-5 text-center sm:p-6">
+                          <p className="text-[13px] leading-relaxed text-slate-500 sm:text-sm">
                             For inquiries regarding this centre, please reach
                             out using the contact details provided.
                           </p>
@@ -405,7 +477,7 @@ export default function Centres() {
                   )}
 
                   {active.description && (
-                    <div className="grid grid-cols-1 gap-8 md:grid-cols-12 text-justify">
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-8">
                       <div className="md:col-span-5">
                         <ContactCard
                           contact={active.contact}
@@ -414,7 +486,7 @@ export default function Centres() {
                         />
                       </div>
 
-                      <div className="min-w-0 space-y-4 md:col-span-7">
+                      <div className="min-w-0 space-y-4 text-justify md:col-span-7">
                         {active.description.map((p, i) => (
                           <motion.p
                             key={i}
@@ -425,7 +497,7 @@ export default function Centres() {
                               delay: 0.15 + i * 0.08,
                               ease: EASE,
                             }}
-                            className="max-w-[65ch] text-[14px] leading-[1.85] text-slate-700 sm:text-[15px] xl:text-base"
+                            className="max-w-[65ch] text-justify text-[13.5px] leading-[1.85] text-slate-700 sm:text-[14.5px] lg:text-[15px] xl:text-base"
                           >
                             {p}
                           </motion.p>
@@ -439,7 +511,7 @@ export default function Centres() {
                       initial={reduce ? false : { opacity: 0, y: 16 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
-                      className="mt-8 rounded-2xl border border-blue-100 bg-blue-50/50 p-5 sm:p-6 text-justify"
+                      className="mt-6 rounded-2xl border border-blue-100 bg-blue-50/50 p-4 text-justify sm:mt-8 sm:p-5 lg:p-6"
                     >
                       <div className="flex items-start gap-3">
                         <svg
@@ -455,7 +527,7 @@ export default function Centres() {
                             clipRule="evenodd"
                           />
                         </svg>
-                        <p className="text-[13.5px] leading-relaxed text-slate-700 sm:text-sm">
+                        <p className="text-[12.5px] leading-relaxed text-slate-700 sm:text-[13.5px] lg:text-sm">
                           <span className="font-semibold text-slate-800">
                             Note:{" "}
                           </span>

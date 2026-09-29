@@ -82,7 +82,7 @@ const navItems = [
       },
     ],
   },
-  // { label: "News & Event", to: "/news-and-event" },
+
   {
     label: "Gallery",
     children: [
@@ -141,15 +141,15 @@ function DesktopDropdown({ item }) {
         {item.children.map((c) => (
           <li key={c.label} className="relative group/sub">
             {isExternal(c.to) ? (
-              <Link
-                to={c.to}
+              <a
+                href={c.to}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={closeMenu}
                 className={itemClass}
               >
                 {c.label}
-              </Link>
+              </a>
             ) : (
               <Link to={c.to || "#"} onClick={closeMenu} className={itemClass}>
                 {c.label}
@@ -178,14 +178,25 @@ function DesktopDropdown({ item }) {
 }
 
 function MobileNav({ open, onClose }) {
-  const [expanded, setExpanded] = useState({});
+  const [expanded, setExpanded] = useState(null);
+
   if (!open) return null;
 
   const link = "block py-1.5 font-nav text-body hover:text-accent";
 
+  const toggle = (label) => {
+    setExpanded((prev) => (prev === label ? null : label));
+  };
+
   return (
-    <div className="fixed inset-0 z-[9000] bg-black/70 xl:hidden">
-      <div className="absolute inset-4 top-16 overflow-y-auto rounded-md bg-white p-4">
+    <div
+      className="fixed inset-0 z-[9000] bg-black/70 xl:hidden"
+      onClick={onClose}
+    >
+      <div
+        className="absolute inset-4 top-16 overflow-y-auto rounded-md bg-white p-4 pb-8"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button
           onClick={onClose}
           className="absolute right-4 top-4 text-2xl"
@@ -193,99 +204,115 @@ function MobileNav({ open, onClose }) {
         >
           <X />
         </button>
+
         <ul className="mt-8 space-y-1">
-          {navItems.map((item) => (
-            <li key={item.label}>
-              {item.children ? (
-                <>
-                  <button
-                    onClick={() =>
-                      setExpanded((e) => ({
-                        ...e,
-                        [item.label]: !e[item.label],
-                      }))
-                    }
-                    aria-expanded={!!expanded[item.label]}
-                    className="flex w-full justify-between py-2 font-nav font-medium text-body"
+          {navItems
+            .filter((item) => item.label !== "Contact")
+            .map((item) => (
+              <li key={item.label}>
+                {item.children ? (
+                  <>
+                    <button
+                      onClick={() => toggle(item.label)}
+                      aria-expanded={expanded === item.label}
+                      className="flex w-full items-center justify-between py-2 font-nav font-medium text-body"
+                    >
+                      {item.label}
+                      <ChevronDown
+                        size={16}
+                        className={`transition-transform ${
+                          expanded === item.label ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+
+                    {expanded === item.label && (
+                      <ul className="ml-3 space-y-1 border-l border-gray-200 py-1 pl-3">
+                        {item.children.map((c) => (
+                          <li key={c.label}>
+                            {c.children ? (
+                              <>
+                                <p className="py-1.5 font-nav font-medium text-heading">
+                                  {c.label}
+                                </p>
+                                <ul className="ml-3 border-l border-gray-200 pl-3">
+                                  {c.children.map((s) => (
+                                    <li key={s.label}>
+                                      <Link
+                                        to={s.to}
+                                        onClick={onClose}
+                                        className={link}
+                                      >
+                                        {s.label}
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </>
+                            ) : isExternal(c.to) ? (
+                              <a
+                                href={c.to}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={link}
+                              >
+                                {c.label}
+                              </a>
+                            ) : (
+                              <Link
+                                to={c.to || "#"}
+                                onClick={onClose}
+                                className={link}
+                              >
+                                {c.label}
+                              </Link>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </>
+                ) : (
+                  <Link
+                    to={item.to}
+                    onClick={onClose}
+                    className="block py-2 font-nav font-medium text-body hover:text-accent"
                   >
                     {item.label}
-                    <ChevronDown
-                      size={16}
-                      className={`transition ${expanded[item.label] ? "rotate-180" : ""}`}
-                    />
-                  </button>
-                  {expanded[item.label] && (
-                    <ul className="ml-3 space-y-1 border-l border-gray-200 py-1 pl-3">
-                      {item.children.map((c) => (
-                        <li key={c.label}>
-                          {c.children ? (
-                            <>
-                              <p className="py-1.5 font-nav font-medium text-heading">
-                                {c.label}
-                              </p>
-                              <ul className="ml-3 border-l border-gray-200 pl-3">
-                                {c.children.map((s) => (
-                                  <li key={s.label}>
-                                    <Link
-                                      to={s.to}
-                                      onClick={onClose}
-                                      className={link}
-                                    >
-                                      {s.label}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            </>
-                          ) : isExternal(c.to) ? (
-                            <Link
-                              to={c.to}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className={link}
-                            >
-                              {c.label}
-                            </Link>
-                          ) : (
-                            <Link
-                              to={c.to || "#"}
-                              onClick={onClose}
-                              className={link}
-                            >
-                              {c.label}
-                            </Link>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </>
-              ) : (
-                <Link
-                  to={item.to}
-                  onClick={onClose}
-                  className="block py-2 font-nav font-medium text-body hover:text-accent"
-                >
-                  {item.label}
-                </Link>
-              )}
-            </li>
-          ))}
+                  </Link>
+                )}
+              </li>
+            ))}
         </ul>
-        <div className="mt-6 space-y-2 border-t border-gray-200 pt-4">
+        <div className="mt-6 border-t border-gray-200 pt-5">
+          <p className="mb-3 font-heading text-base font-bold text-heading">
+            Get in Touch
+          </p>
+
+          <div className="space-y-2.5 ">
+            <Link
+              href="mailto:info@purbuniv.edu.np"
+              className="flex items-center gap-2.5 font-nav text-sm text-body transition-colors hover:text-accent"
+            >
+              <Mail size={16} className="flex-shrink-0 text-accent" />
+              <span className="truncate">info@purbuniv.edu.np</span>
+            </Link>
+
+            <Link
+              href="tel:+97721470765"
+              className="flex items-center gap-2.5 font-nav text-sm text-body transition-colors hover:text-accent"
+            >
+              <Phone size={16} className="flex-shrink-0 text-accent" />
+              <span>+977-21-470765</span>
+            </Link>
+          </div>
+
           <Link
-            href="mailto:info@purbuniv.edu.np"
-            className="flex items-center gap-2 py-1 font-nav text-sm text-body hover:text-accent"
+            to="/contact-us"
+            onClick={onClose}
+            className="mt-4 flex w-full items-center justify-center rounded-full bg-accent px-5 py-2.5 font-nav text-sm font-semibold text-white transition-colors hover:bg-pu-red/90"
           >
-            <Mail size={16} className="flex-shrink-0 text-accent" />
-            info@purbuniv.edu.np
-          </Link>
-          <Link
-            href="tel:+97721470765"
-            className="flex items-center gap-2 py-1 font-nav text-sm text-body hover:text-accent"
-          >
-            <Phone size={16} className="flex-shrink-0 text-accent" />
-            +977-21-470765
+            Get in Touch
           </Link>
         </div>
       </div>
@@ -304,13 +331,23 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  /* Lock body scroll while the mobile menu is open */
+  useEffect(() => {
+    if (!open) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, [open]);
+
   return (
     <>
       <header
         className={`fixed left-0 right-0 top-0 z-[900] transition-all duration-500 ${scrolled ? "bg-white shadow-md" : "bg-white/0"}`}
       >
         <div
-          className={`hidden transition-all  xl:block duration-500 ${scrolled ? "h-0 overflow-hidden opacity-0" : "opacity-100"}`}
+          className={`hidden transition-all xl:block duration-500 ${scrolled ? "h-0 overflow-hidden opacity-0" : "opacity-100"}`}
         >
           <Topbar />
         </div>

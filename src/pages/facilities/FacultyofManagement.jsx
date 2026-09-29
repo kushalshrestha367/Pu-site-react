@@ -1,98 +1,341 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { dean, programs, colleges } from "../../data/facultyData";
-import { Link } from "react-router-dom";
+import {
+  MailIcon,
+  ArrowUpRightIcon,
+  BookIcon,
+  BuildingIcon,
+  EyeIcon,
+  CloseIcon,
+  SearchIcon,
+} from "../../components/icons/index";
+// import API from "../../lib/api";
 
 const EASE = [0.22, 1, 0.36, 1];
 const NAVY = "#252659";
 const ACCENT = "#252659";
 
-const MailIcon = ({ className }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-    className={className}
-  >
-    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-  </svg>
-);
-const ArrowUpRightIcon = ({ className }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-    className={className}
-  >
-    <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-    <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-  </svg>
-);
-const BookIcon = ({ className }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-    className={className}
-  >
-    <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
-  </svg>
-);
-const BuildingIcon = ({ className }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-    className={className}
-  >
-    <path
-      fillRule="evenodd"
-      d="M4 16.5v-13h-.25a.75.75 0 010-1.5h12.5a.75.75 0 010 1.5H16v13h.25a.75.75 0 010 1.5h-3.5a.75.75 0 01-.75-.75v-2.5a.75.75 0 00-.75-.75h-2.5a.75.75 0 00-.75.75v2.5a.75.75 0 01-.75.75h-3.5a.75.75 0 010-1.5H4z"
-      clipRule="evenodd"
-    />
-  </svg>
-);
-const EyeIcon = ({ className }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-    className={className}
-  >
-    <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
-    <path
-      fillRule="evenodd"
-      d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-      clipRule="evenodd"
-    />
-  </svg>
-);
-const CloseIcon = ({ className }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-    className={className}
-  >
-    <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-  </svg>
-);
-const SearchIcon = ({ className }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-    className={className}
-  >
-    <path
-      fillRule="evenodd"
-      d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-      clipRule="evenodd"
-    />
-  </svg>
-);
+const USE_MOCK = true;
 
+const getMockData = () => ({
+  faculty: {
+    id: 2,
+    slug: "management",
+    title: "Faculty of Management",
+    short_title: "Faculty of Management",
+    description:
+      "Business, hospitality, and public administration programmes with affiliated colleges across Nepal.",
+  },
+  dean: {
+    id: 2,
+    name: "Prof. Dr. Uttam Kumar Regmi",
+    role: "Dean",
+    email: "info@pufom.edu.np",
+    alt_email: "deanmgmtpu@gmail.com",
+    website: "https://pufom.edu.np",
+    image_url:
+      "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&crop=faces&q=80",
+    bio: "Leading the Faculty of Management — advancing business education, research, and professional development at Purbanchal University.",
+  },
+  programs: [
+    {
+      id: 1,
+      name: "Bachelor of Business Administration (BBA)",
+      level: "Bachelor",
+      duration: "4 Years / 8 Semesters",
+      system: "Semester",
+    },
+    {
+      id: 2,
+      name: "Bachelor of Business Studies (BBS)",
+      level: "Bachelor",
+      duration: "4 Years",
+      system: "Yearly",
+    },
+    {
+      id: 3,
+      name: "Bachelor of Fashion Design Management (BFDM)",
+      level: "Bachelor",
+      duration: "4 Years / 8 Semesters",
+      system: "Semester",
+    },
+    {
+      id: 4,
+      name: "Bachelor of Hospitality & Catering Management (BHCM)",
+      level: "Bachelor",
+      duration: "4 Years / 8 Semesters",
+      system: "Semester",
+    },
+    {
+      id: 5,
+      name: "Bachelor of Travel and Tourism Studies (BTTS)",
+      level: "Bachelor",
+      duration: "4 Years / 8 Semesters",
+      system: "Semester",
+    },
+    {
+      id: 6,
+      name: "Bachelor of Hotel Management (BHM)",
+      level: "Bachelor",
+      duration: "4 Years / 8 Semesters",
+      system: "Semester",
+    },
+    {
+      id: 7,
+      name: "Executive Master of Business Administration",
+      level: "Master",
+      duration: "2 Years / 4 Semesters",
+      system: "Semester",
+    },
+    {
+      id: 8,
+      name: "Master of Business Administration (MBA)",
+      level: "Master",
+      duration: "2 Years / 4 Semesters",
+      system: "Semester",
+    },
+    {
+      id: 9,
+      name: "Master of Hotel And Hospitality Management (MHHM)",
+      level: "Master",
+      duration: "2 Years / 4 Semesters",
+      system: "Semester",
+    },
+    {
+      id: 10,
+      name: "Master of Public Administration (MPA)",
+      level: "Master",
+      duration: "2 Years / 4 Semesters",
+      system: "Semester",
+    },
+    {
+      id: 11,
+      name: "Master of Tourism Studies (MTS)",
+      level: "Master",
+      duration: "2 Years / 4 Semesters",
+      system: "Semester",
+    },
+    {
+      id: 12,
+      name: "M.Phil. In Management",
+      level: "M.Phil.",
+      duration: "1.5 Years / 3 Semesters",
+      system: "Semester",
+    },
+    {
+      id: 13,
+      name: "Ph.D. In Management",
+      level: "PhD",
+      duration: "—",
+      system: "Research",
+    },
+  ],
+  colleges: [
+    {
+      sn: 1,
+      name: "P. U. School of Management (PUSOM)",
+      address: "Biratnagar, Morang",
+      contact: "021-456789, 9852000001",
+      website: "https://pusom.edu.np",
+      chief: "Prof. Dr. Ramesh Shrestha",
+      chiefPhone: "9851000001",
+      programs: [
+        { id: 1, faculty_id: 2, program: "BBA", seat: 105, remark: "-" },
+        {
+          id: 2,
+          faculty_id: 2,
+          program: "MBA (Spring/Fall)",
+          seat: 33,
+          remark: "-",
+        },
+        { id: 3, faculty_id: 2, program: "M.Phil.", seat: 16, remark: "-" },
+        { id: 4, faculty_id: 2, program: "Ph.D.", seat: 0, remark: "Research" },
+      ],
+    },
+    {
+      sn: 2,
+      name: "Gomendra Multiple College",
+      address: "Birtamode, Jhapa",
+      contact: "023-545678",
+      website: "https://gomendra.edu.np",
+      chief: "Mr. Goma Devi Neupane",
+      chiefPhone: "9852000003",
+      programs: [
+        { id: 5, faculty_id: 2, program: "BBA", seat: 96, remark: "-" },
+        { id: 6, faculty_id: 2, program: "BBS", seat: 60, remark: "-" },
+        { id: 7, faculty_id: 2, program: "MBA (Fall)", seat: 33, remark: "-" },
+      ],
+    },
+    {
+      sn: 3,
+      name: "South Asian School of Tourism & Hotel Management",
+      address: "Biratnagar, Morang",
+      contact: "021-533444",
+      website: "https://sasthm.edu.np",
+      chief: "Mr. Suman Rai",
+      chiefPhone: "9852000004",
+      programs: [
+        { id: 8, faculty_id: 2, program: "BBA", seat: 144, remark: "-" },
+        { id: 9, faculty_id: 2, program: "BHM", seat: 144, remark: "-" },
+        { id: 10, faculty_id: 2, program: "MBA (Fall)", seat: 33, remark: "-" },
+        {
+          id: 11,
+          faculty_id: 2,
+          program: "MHHM (Fall)",
+          seat: 33,
+          remark: "-",
+        },
+      ],
+    },
+    {
+      sn: 4,
+      name: "Zenith International College",
+      address: "Biratnagar, Morang",
+      contact: "021-511223",
+      website: "https://zenith.edu.np",
+      chief: "Dr. Bikash Koirala",
+      chiefPhone: "9852000005",
+      programs: [
+        { id: 12, faculty_id: 2, program: "BBA", seat: 144, remark: "-" },
+        {
+          id: 13,
+          faculty_id: 2,
+          program: "MBA (Spring)",
+          seat: 33,
+          remark: "-",
+        },
+        { id: 14, faculty_id: 2, program: "MBA (Fall)", seat: 33, remark: "-" },
+      ],
+    },
+    {
+      sn: 5,
+      name: "Dharan College of Management",
+      address: "Dharan, Sunsari",
+      contact: "025-520333",
+      website: "https://dcm.edu.np",
+      chief: "Dr. Sita Sharma",
+      chiefPhone: "9852000010",
+      programs: [
+        { id: 15, faculty_id: 2, program: "BBA", seat: 48, remark: "-" },
+        { id: 16, faculty_id: 2, program: "MBA (Fall)", seat: 33, remark: "-" },
+      ],
+    },
+    {
+      sn: 6,
+      name: "Birgunj Public College",
+      address: "Birgunj, Parsa",
+      contact: "051-526138, 051-522584",
+      website: "https://birgunjpublic.edu.np",
+      chief: "Prof. Dr. Rajesh Gupta",
+      chiefPhone: "9852000024",
+      programs: [
+        { id: 17, faculty_id: 2, program: "BBA", seat: 144, remark: "-" },
+        {
+          id: 18,
+          faculty_id: 2,
+          program: "MBA (Spring)",
+          seat: 33,
+          remark: "-",
+        },
+        { id: 19, faculty_id: 2, program: "MBA (Fall)", seat: 33, remark: "-" },
+      ],
+    },
+    {
+      sn: 7,
+      name: "Presidency College of Management Sciences",
+      address: "Bharatpur, Chitwan",
+      contact: "056-530123",
+      website: "https://presidency.edu.np",
+      chief: "Dr. Prakash Adhikari",
+      chiefPhone: "9852000025",
+      programs: [
+        { id: 20, faculty_id: 2, program: "BBA", seat: 144, remark: "-" },
+        {
+          id: 21,
+          faculty_id: 2,
+          program: "MBA (Spring)",
+          seat: 33,
+          remark: "-",
+        },
+        { id: 22, faculty_id: 2, program: "MBA (Fall)", seat: 33, remark: "-" },
+      ],
+    },
+    {
+      sn: 8,
+      name: "Novel Academy",
+      address: "Pokhara, Kaski",
+      contact: "061-540456",
+      website: "https://novelacademy.edu.np",
+      chief: "Dr. Sudhir Gurung",
+      chiefPhone: "9852000031",
+      programs: [
+        { id: 23, faculty_id: 2, program: "BBA", seat: 48, remark: "-" },
+        {
+          id: 24,
+          faculty_id: 2,
+          program: "MBA (Spring)",
+          seat: 33,
+          remark: "-",
+        },
+        { id: 25, faculty_id: 2, program: "MBA (Fall)", seat: 33, remark: "-" },
+      ],
+    },
+    {
+      sn: 9,
+      name: "Asian College of Management & Technology",
+      address: "Kathmandu",
+      contact: "01-4790099, 01-4790284",
+      website: "https://acmt.edu.np",
+      chief: "Dr. Bishnu Prasad Sharma",
+      chiefPhone: "9852000033",
+      programs: [
+        { id: 26, faculty_id: 2, program: "BBA", seat: 96, remark: "-" },
+        { id: 27, faculty_id: 2, program: "MBA (Fall)", seat: 33, remark: "-" },
+        {
+          id: 28,
+          faculty_id: 2,
+          program: "MBA (Spring)",
+          seat: 33,
+          remark: "-",
+        },
+      ],
+    },
+    {
+      sn: 10,
+      name: "Kathmandu Don Bosco College",
+      address: "Kathmandu",
+      contact: "01-5709012",
+      website: "https://kdb.edu.np",
+      chief: "Dr. Suman Raj Sharma",
+      chiefPhone: "9852000039",
+      programs: [
+        { id: 29, faculty_id: 2, program: "BBA", seat: 144, remark: "-" },
+        {
+          id: 30,
+          faculty_id: 2,
+          program: "MBA (Spring)",
+          seat: 33,
+          remark: "-",
+        },
+        { id: 31, faculty_id: 2, program: "MBA (Fall)", seat: 33, remark: "-" },
+        {
+          id: 32,
+          faculty_id: 2,
+          program: "EMBA (Spring)",
+          seat: 30,
+          remark: "-",
+        },
+        {
+          id: 33,
+          faculty_id: 2,
+          program: "EMBA (Fall)",
+          seat: 30,
+          remark: "-",
+        },
+      ],
+    },
+  ],
+});
 function Eyebrow({ children, color = ACCENT }) {
   return (
     <div className="flex items-center gap-3">
@@ -120,88 +363,116 @@ function TypeBadge({ type }) {
   );
 }
 
-function DeanBlock({ reduce }) {
+function LoadingSkeleton() {
+  return (
+    <section className="w-full bg-white py-10 sm:py-14 lg:py-20">
+      <div className="mx-auto max-w-6xl animate-pulse px-4 sm:px-6 lg:px-8">
+        <div className="mb-6 h-3 w-24 rounded bg-slate-200" />
+        <div className="mb-10 h-12 w-2/3 rounded bg-slate-200" />
+        <div className="mb-6 h-4 w-1/2 rounded bg-slate-200" />
+        <div className="grid gap-4 md:grid-cols-[200px_1fr]">
+          <div className="aspect-[4/5] w-full max-w-[200px] rounded-xl bg-slate-200" />
+          <div className="space-y-3">
+            <div className="h-3 w-24 rounded bg-slate-200" />
+            <div className="h-8 w-64 rounded bg-slate-200" />
+            <div className="h-4 w-full rounded bg-slate-200" />
+            <div className="h-4 w-5/6 rounded bg-slate-200" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+function DeanBlock({ dean, reduce }) {
+  if (!dean) return null;
+  const emails = [dean.email, dean.alt_email].filter(Boolean);
+
   return (
     <motion.div
       initial={reduce ? false : { opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, ease: EASE }}
-      className="mb-10 grid items-center gap-6 rounded-2xl border border-slate-200 bg-white p-5 sm:mb-12 sm:gap-8 sm:p-7 md:grid-cols-[200px_1fr] lg:gap-10 lg:p-8"
+      className="mb-10 flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-3.5 sm:mb-12 sm:gap-5 sm:p-5 md:gap-8 md:p-7 lg:p-8"
     >
-      <img
-        src={dean.image}
-        alt={dean.name}
-        draggable={false}
-        className="mx-auto aspect-[4/5] w-full max-w-[200px] rounded-xl object-cover object-top md:mx-0 md:max-w-none"
-      />
+      <div className="w-24 flex-shrink-0 self-center sm:w-28 md:w-40 lg:w-48">
+        <img
+          src={dean.image_url}
+          alt={dean.name}
+          draggable={false}
+          className="aspect-[4/5] w-full rounded-xl object-cover object-top"
+        />
+      </div>
 
-      <div className="text-center md:text-left">
-        <div className="flex justify-center md:justify-start">
+      <div className="min-w-0 flex-1 text-left">
+        <div className="flex justify-start">
           <Eyebrow>{dean.role}</Eyebrow>
         </div>
+
         <h2
-          className="mt-3 font-serif text-2xl font-bold leading-tight tracking-tight sm:text-3xl"
+          className="mt-2 font-serif text-base font-bold leading-tight tracking-tight sm:text-lg md:text-2xl lg:text-3xl"
           style={{ color: NAVY }}
         >
           {dean.name}
         </h2>
-        <p className="mt-3 max-w-lg text-[13.5px] leading-relaxed text-slate-600 sm:text-[14.5px]">
-          Leading the Faculty of Management — advancing business education,
-          research, and professional development at Purbanchal University.
-        </p>
 
-        <div className="mt-5 flex flex-col items-center gap-2.5 sm:flex-row sm:flex-wrap sm:gap-x-6 md:items-start">
-          {[dean.email, dean.altEmail].map((mail) => (
-            <Link
+        {dean.bio && (
+          <p className="mt-2 text-[11.5px] leading-relaxed text-slate-600 sm:text-[12.5px] md:text-[14px]">
+            {dean.bio}
+          </p>
+        )}
+
+        <div className="mt-3 flex flex-col items-start gap-1.5 sm:mt-4">
+          {emails.map((mail) => (
+            <a
               key={mail}
-              to={`mailto:${mail}`}
-              className="inline-flex items-center gap-2 text-[13px] font-medium text-slate-700 transition-colors hover:text-pu-red sm:text-[13.5px]"
+              href={`mailto:${mail}`}
+              className="inline-flex max-w-full items-center gap-2 text-[11.5px] font-medium text-slate-700 transition-colors hover:text-[#9e1c32] sm:text-[12.5px] md:text-[13.5px]"
             >
               <span
-                className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full"
+                className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full sm:h-7 sm:w-7"
                 style={{ backgroundColor: `${ACCENT}12`, color: ACCENT }}
               >
-                <MailIcon className="h-3.5 w-3.5" />
+                <MailIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
               </span>
-              <span className="break-all">{mail}</span>
-            </Link>
+              <span className="truncate">{mail}</span>
+            </a>
           ))}
         </div>
 
-        <Link
-          to={dean.website}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-6 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
-          style={{ backgroundColor: NAVY }}
-        >
-          Visit Website
-          <ArrowUpRightIcon className="h-3.5 w-3.5" />
-        </Link>
+        {dean.website && (
+          <a
+            href={dean.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[10.5px] font-bold uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90 sm:mt-4 sm:px-4 sm:text-[11px] md:px-5 md:py-2.5 md:text-[12px]"
+            style={{ backgroundColor: NAVY }}
+          >
+            Visit Website
+            <ArrowUpRightIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+          </a>
+        )}
       </div>
     </motion.div>
   );
 }
-
-const TABS = [
-  {
-    id: "programs",
-    label: "Programs",
-    fullLabel: "Programs Offered",
-    count: programs.length,
-    Icon: BookIcon,
-  },
-  {
-    id: "colleges",
-    label: "Colleges",
-    fullLabel: "Affiliated Colleges",
-    count: colleges.length,
-    Icon: BuildingIcon,
-  },
-];
-
-function TabSwitcher({ active, onChange }) {
+function TabSwitcher({ active, onChange, programCount, collegeCount }) {
+  const TABS = [
+    {
+      id: "programs",
+      label: "Programs",
+      fullLabel: "Programs Offered",
+      count: programCount,
+      Icon: BookIcon,
+    },
+    {
+      id: "colleges",
+      label: "Colleges",
+      fullLabel: "Affiliated Colleges",
+      count: collegeCount,
+      Icon: BuildingIcon,
+    },
+  ];
   return (
     <div className="mb-6 flex justify-center sm:mb-8">
       <div className="relative inline-flex w-full max-w-md rounded-full border border-slate-200 bg-slate-50 p-1">
@@ -241,12 +512,12 @@ function TabSwitcher({ active, onChange }) {
     </div>
   );
 }
-function ProgramsPanel({ reduce }) {
+function ProgramsPanel({ programs, reduce }) {
   return (
     <ul className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
       {programs.map((p, i) => (
         <motion.li
-          key={p.sn}
+          key={p.id}
           initial={reduce ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
@@ -256,26 +527,24 @@ function ProgramsPanel({ reduce }) {
           }}
           className="flex flex-col gap-2 border-b border-slate-100 px-4 py-4 last:border-b-0 hover:bg-slate-50 sm:flex-row sm:items-center sm:gap-6 sm:px-6"
         >
-          {/* SN + Name on same line */}
           <div className="flex flex-1 items-start gap-2.5 sm:items-center sm:gap-0">
             <span className="mt-0.5 flex-shrink-0 font-mono text-[12.5px] font-medium tabular-nums text-slate-400 sm:mt-0 sm:w-8">
-              {String(p.sn).padStart(2, "0")}
+              {String(i + 1).padStart(2, "0")}
             </span>
             <h3 className="flex-1 text-[14px] font-medium leading-snug text-slate-800 sm:text-[15px]">
               {p.name}
             </h3>
           </div>
-
           <div className="flex items-center justify-between gap-3 pl-7 sm:justify-end sm:pl-0 sm:flex-shrink-0">
             <span className="text-[12.5px] text-slate-500">{p.duration}</span>
-            <TypeBadge type={p.type} />
+            <TypeBadge type={p.system || p.type} />
           </div>
         </motion.li>
       ))}
     </ul>
   );
 }
-function SearchBar({ value, onChange, shown }) {
+function SearchBar({ value, onChange, shown, total }) {
   return (
     <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div className="relative w-full sm:max-w-sm">
@@ -299,30 +568,32 @@ function SearchBar({ value, onChange, shown }) {
       </div>
       <p className="text-[12.5px] text-slate-500">
         Showing <span className="font-semibold text-slate-700">{shown}</span> of{" "}
-        {colleges.length} colleges
+        {total} colleges
       </p>
     </div>
   );
 }
 
 function SeatChips({ items }) {
+  const list = Array.isArray(items) ? items : [];
   return (
     <div className="flex flex-wrap gap-1.5">
-      {items.map((p, i) => (
+      {list.map((p, i) => (
         <span
           key={i}
           className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1 text-[11.5px] text-slate-700"
         >
           {p.program}
-          <span className="font-bold tabular-nums" style={{ color: ACCENT }}>
-            {p.seat}
-          </span>
+          {p.seat !== "" && p.seat != null && (
+            <span className="font-bold tabular-nums" style={{ color: ACCENT }}>
+              {p.seat}
+            </span>
+          )}
         </span>
       ))}
     </div>
   );
 }
-
 function CollegesPanel({ reduce, list, onView, query, onClear }) {
   if (list.length === 0) {
     return (
@@ -360,7 +631,6 @@ function CollegesPanel({ reduce, list, onView, query, onClear }) {
             onClick={() => onView(c)}
             className="flex flex-col rounded-2xl border border-slate-200 bg-white p-4 text-left transition-colors hover:border-slate-300 hover:bg-slate-50 sm:p-5"
           >
-            {/* SN + Name on same line */}
             <div className="flex items-start gap-2.5">
               <span className="mt-0.5 flex-shrink-0 text-[11px] font-semibold tabular-nums text-slate-400">
                 {String(c.sn).padStart(2, "0")}
@@ -437,7 +707,7 @@ function CollegesPanel({ reduce, list, onView, query, onClear }) {
                   {c.address}
                 </td>
                 <td className="px-4 py-4 align-top text-[12.5px] leading-relaxed text-slate-600">
-                  {c.contact}
+                  {c.contact || "—"}
                 </td>
                 <td className="px-4 py-4 align-top">
                   <SeatChips items={c.programs} />
@@ -449,7 +719,7 @@ function CollegesPanel({ reduce, list, onView, query, onClear }) {
                       onView(c);
                     }}
                     aria-label={`View details of ${c.name}`}
-                    className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:hover:bg-pu-red/10"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-[#9e1c32]/10"
                     style={{ color: ACCENT }}
                   >
                     <EyeIcon className="h-4 w-4" />
@@ -463,7 +733,6 @@ function CollegesPanel({ reduce, list, onView, query, onClear }) {
     </>
   );
 }
-
 function DetailRow({ label, value }) {
   return (
     <div className="flex flex-col gap-0.5 py-3 sm:flex-row sm:items-baseline sm:gap-6">
@@ -510,7 +779,6 @@ function CollegeDetailModal({ college, onClose, reduce }) {
             className="max-h-[92vh] w-full overflow-y-auto rounded-t-3xl bg-white shadow-2xl sm:my-6 sm:max-h-[88vh] sm:max-w-2xl sm:rounded-3xl"
           >
             <div className="mx-auto mt-3 h-1 w-10 rounded-full bg-slate-300 sm:hidden" />
-
             <div className="flex items-start justify-between gap-4 px-5 pb-4 pt-5 sm:px-8 sm:pb-5 sm:pt-7">
               <div>
                 <Eyebrow>College</Eyebrow>
@@ -532,32 +800,40 @@ function CollegeDetailModal({ college, onClose, reduce }) {
 
             <div className="px-5 pb-7 sm:px-8 sm:pb-8">
               <div className="divide-y divide-slate-100 border-y border-slate-100">
-                <DetailRow
-                  label="Official site"
-                  value={
-                    <a
-                      href={college.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-medium break-all hover:underline"
-                      style={{ color: ACCENT }}
-                    >
-                      {college.website.replace(/^https?:\/\//, "")}
-                    </a>
-                  }
-                />
-                <DetailRow label="Contact" value={college.contact} />
-                <DetailRow
-                  label="Campus chief"
-                  value={
-                    <>
-                      {college.chief}
-                      <span className="text-slate-500">
-                        , {college.chiefPhone}
-                      </span>
-                    </>
-                  }
-                />
+                {college.website && (
+                  <DetailRow
+                    label="Official site"
+                    value={
+                      <a
+                        href={college.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium break-all hover:underline"
+                        style={{ color: ACCENT }}
+                      >
+                        {college.website.replace(/^https?:\/\//, "")}
+                      </a>
+                    }
+                  />
+                )}
+                {college.contact && (
+                  <DetailRow label="Contact" value={college.contact} />
+                )}
+                {college.chief && (
+                  <DetailRow
+                    label="Campus chief"
+                    value={
+                      <>
+                        {college.chief}
+                        {college.chiefPhone && (
+                          <span className="text-slate-500">
+                            , {college.chiefPhone}
+                          </span>
+                        )}
+                      </>
+                    }
+                  />
+                )}
                 <DetailRow label="Address" value={college.address} />
               </div>
 
@@ -572,7 +848,7 @@ function CollegeDetailModal({ college, onClose, reduce }) {
                         Program
                       </th>
                       <th className="px-3 py-2.5 text-center text-[11px] font-bold uppercase tracking-wider sm:px-4 sm:text-[11.5px]">
-                        Seat
+                        Seats
                       </th>
                       <th className="hidden px-3 py-2.5 text-center text-[11px] font-bold uppercase tracking-wider sm:table-cell sm:px-4 sm:text-[11.5px]">
                         Remark
@@ -592,10 +868,10 @@ function CollegeDetailModal({ college, onClose, reduce }) {
                           className="px-3 py-2.5 text-center text-[12.5px] font-semibold tabular-nums sm:px-4 sm:text-[13px]"
                           style={{ color: ACCENT }}
                         >
-                          {p.seat}
+                          {p.seat || "—"}
                         </td>
                         <td className="hidden px-3 py-2.5 text-center text-[12.5px] text-slate-500 sm:table-cell sm:px-4 sm:text-[13px]">
-                          {p.remark}
+                          {p.remark || "-"}
                         </td>
                       </tr>
                     ))}
@@ -609,14 +885,54 @@ function CollegeDetailModal({ college, onClose, reduce }) {
     </AnimatePresence>
   );
 }
-
 export default function FacultyofManagement() {
   const reduce = useReducedMotion();
   const [activeTab, setActiveTab] = useState("programs");
   const [selectedCollege, setSelectedCollege] = useState(null);
   const [query, setQuery] = useState("");
 
+  const [apiData, setApiData] = useState(null);
+  const [loading, setLoading] = useState(!USE_MOCK);
+  const [error, setError] = useState(null);
+  const data = USE_MOCK ? getMockData() : apiData;
+  useEffect(() => {
+    if (USE_MOCK) return;
+
+    let cancelled = false;
+
+    const loadFaculty = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await API.get(`/faculty/management`);
+        if (!cancelled) setApiData(response.data);
+      } catch (err) {
+        if (!cancelled) {
+          setError(
+            err.response?.data?.message ||
+              err.message ||
+              "Unable to load faculty data",
+          );
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    loadFaculty();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const closeModal = useCallback(() => setSelectedCollege(null), []);
+
+  const faculty = data?.faculty;
+  const dean = data?.dean;
+  const programs = data?.programs ?? [];
+  const colleges = data?.colleges ?? [];
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -627,33 +943,47 @@ export default function FacultyofManagement() {
         c.address.toLowerCase().includes(q) ||
         c.programs.some((p) => p.program.toLowerCase().includes(q)),
     );
-  }, [query]);
+  }, [query, colleges]);
+
+  if (loading) return <LoadingSkeleton />;
+
+  if (error) {
+    return (
+      <section className="w-full bg-white py-20">
+        <div className="mx-auto max-w-xl px-6 text-center">
+          <p className="font-serif text-xl font-bold" style={{ color: NAVY }}>
+            Unable to load faculty data
+          </p>
+          <p className="mt-2 text-sm text-slate-500">{error}</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!faculty) return null;
 
   return (
     <section className="w-full bg-white py-10 selection:bg-[#252659] selection:text-white sm:py-14 lg:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <motion.header
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: EASE }}
-          className="mb-10 sm:mb-14 "
+          className="mb-10 sm:mb-14"
         >
           <Eyebrow>Faculty</Eyebrow>
           <h1
             className="mt-4 font-serif text-3xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl"
             style={{ color: NAVY }}
           >
-            Faculty of Management
+            {faculty.title}
           </h1>
           <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-slate-600 sm:text-base">
-            Business, hospitality, and public administration programmes with
-            affiliated colleges across Nepal.
+            {faculty.description}
           </p>
         </motion.header>
 
-        <DeanBlock reduce={reduce} />
-        {/* <TabSwitcher active={activeTab} onChange={setActiveTab} /> */}
+        <DeanBlock dean={dean} reduce={reduce} />
 
         <TabSwitcher
           active={activeTab}
@@ -662,6 +992,8 @@ export default function FacultyofManagement() {
             setQuery("");
             setSelectedCollege(null);
           }}
+          programCount={programs.length}
+          collegeCount={colleges.length}
         />
 
         <AnimatePresence mode="wait">
@@ -673,13 +1005,14 @@ export default function FacultyofManagement() {
             transition={{ duration: 0.3, ease: EASE }}
           >
             {activeTab === "programs" ? (
-              <ProgramsPanel reduce={reduce} />
+              <ProgramsPanel programs={programs} reduce={reduce} />
             ) : (
               <>
                 <SearchBar
                   value={query}
                   onChange={setQuery}
                   shown={filtered.length}
+                  total={colleges.length}
                 />
                 <CollegesPanel
                   reduce={reduce}
