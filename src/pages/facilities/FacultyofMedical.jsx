@@ -29,9 +29,9 @@ const getMockData = () => ({
     id: 5,
     name: "Prof. Dr. Paricha Upadhaya",
     role: "Dean",
-    email: "dean.pumedical@purbuniv.edu.np",
+    email: "info@pufomas.edu.np",
     alt_email: null,
-    website: null,
+    website: "https://pufoe.edu.np",
     image_url:
       "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&h=500&fit=crop&crop=faces&q=80",
     bio: "Leading the Faculty of Medical Sciences — advancing healthcare education, clinical training, and health research at Purbanchal University.",
@@ -42,7 +42,7 @@ const getMockData = () => ({
     role: "Deputy Dean",
     email: "info@pufomas.edu.np",
     alt_email: null,
-    website: null,
+    website: "https://pufoe.edu.np",
     image_url:
       "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=500&fit=crop&crop=faces&q=80",
     bio: "Supporting clinical education, curriculum development, and quality assurance across the Faculty's expanding healthcare programmes.",
@@ -822,9 +822,82 @@ function TypeBadge({ type }) {
     </span>
   );
 }
+// function PersonCard({ person, reduce, delay = 0 }) {
+//   if (!person) return null;
+//   const emails = [person.email, person.alt_email].filter(Boolean);
+
+//   return (
+//     <motion.div
+//       initial={reduce ? false : { opacity: 0, y: 20 }}
+//       whileInView={{ opacity: 1, y: 0 }}
+//       viewport={{ once: true, amount: 0.2 }}
+//       transition={{ duration: 0.6, delay, ease: EASE }}
+//       className="flex h-full items-start gap-3 rounded-2xl border border-slate-200 bg-white p-3.5 sm:items-center sm:gap-5 sm:p-5"
+//     >
+//       {/* Photo — always left, top-aligned on mobile */}
+//       <div className="w-[88px] flex-shrink-0 self-start sm:w-24 sm:self-center md:w-28 lg:w-32">
+//         <img
+//           src={person.image_url}
+//           alt={person.name}
+//           draggable={false}
+//           className="aspect-[4/5] w-full rounded-xl object-cover object-top"
+//         />
+//       </div>
+//       <div className="min-w-0 flex-1 text-left">
+//         <div className="flex justify-start">
+//           <Eyebrow>{person.role}</Eyebrow>
+//         </div>
+
+//         <h2
+//           className="mt-1.5 font-serif text-[15px] font-bold leading-tight tracking-tight sm:mt-2 sm:text-base md:text-lg lg:text-xl"
+//           style={{ color: NAVY }}
+//         >
+//           {person.name}
+//         </h2>
+
+//         {person.bio && (
+//           <p className="mt-1.5 text-[11px] leading-relaxed text-slate-600 sm:mt-2 sm:text-[12px] md:text-[12.5px]">
+//             {person.bio}
+//           </p>
+//         )}
+
+//         <div className="mt-2.5 flex flex-col items-start gap-1 sm:mt-3">
+//           {emails.map((mail) => (
+//             <a
+//               key={mail}
+//               href={`mailto:${mail}`}
+//               className="inline-flex max-w-full items-center gap-1.5 text-[11px] font-medium text-slate-700 transition-colors hover:text-[#9e1c32] sm:gap-2 sm:text-[12px]"
+//             >
+//               <span
+//                 className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full sm:h-6 sm:w-6"
+//                 style={{ backgroundColor: `${ACCENT}12`, color: ACCENT }}
+//               >
+//                 <MailIcon className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+//               </span>
+//               <span className="truncate">{mail}</span>
+//             </a>
+//           ))}
+//         </div>
+
+//         {person.website && (
+//           <a
+//             href={person.website}
+//             target="_blank"
+//             rel="noopener noreferrer"
+//             className="mt-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90 sm:px-3.5 sm:py-2 sm:text-[10.5px]"
+//             style={{ backgroundColor: NAVY }}
+//           >
+//             Visit Website
+//             <ArrowUpRightIcon className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+//           </a>
+//         )}
+//       </div>
+//     </motion.div>
+//   );
+// }
 function PersonCard({ person, reduce, delay = 0 }) {
-  if (!person) return null;
-  const emails = [person.email, person.alt_email].filter(Boolean);
+  const emails = [person.email, person.altEmail].filter(Boolean);
+  const hasContact = emails.length > 0 || person.website;
 
   return (
     <motion.div
@@ -832,69 +905,110 @@ function PersonCard({ person, reduce, delay = 0 }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, delay, ease: EASE }}
-      className="flex h-full items-start gap-3 rounded-2xl border border-slate-200 bg-white p-3.5 sm:items-center sm:gap-5 sm:p-5"
+      className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-3.5 sm:p-5"
     >
-      {/* Photo — always left, top-aligned on mobile */}
-      <div className="w-[88px] flex-shrink-0 self-start sm:w-24 sm:self-center md:w-28 lg:w-32">
-        <img
-          src={person.image_url}
-          alt={person.name}
-          draggable={false}
-          className="aspect-[4/5] w-full rounded-xl object-cover object-top"
-        />
-      </div>
-      <div className="min-w-0 flex-1 text-left">
-        <div className="flex justify-start">
-          <Eyebrow>{person.role}</Eyebrow>
+      {/* Top: photo (left) + text block (right) */}
+      <div className="flex gap-3 sm:gap-5">
+        <div className="w-24 flex-shrink-0 self-center sm:w-28 md:w-32">
+          <img
+            src={person.image_url}
+            alt={person.name}
+            draggable={false}
+            className="aspect-[4/5] w-full rounded-xl object-cover object-top"
+          />
         </div>
 
-        <h2
-          className="mt-1.5 font-serif text-[15px] font-bold leading-tight tracking-tight sm:mt-2 sm:text-base md:text-lg lg:text-xl"
-          style={{ color: NAVY }}
-        >
-          {person.name}
-        </h2>
+        <div className="min-w-0 flex-1 text-left">
+          <div className="flex justify-start">
+            <Eyebrow>{person.role}</Eyebrow>
+          </div>
 
-        {person.bio && (
-          <p className="mt-1.5 text-[11px] leading-relaxed text-slate-600 sm:mt-2 sm:text-[12px] md:text-[12.5px]">
-            {person.bio}
-          </p>
-        )}
+          <h2
+            className="mt-2 font-serif text-base font-bold leading-tight tracking-tight sm:text-lg md:text-xl"
+            style={{ color: NAVY }}
+          >
+            {person.name}
+          </h2>
 
-        <div className="mt-2.5 flex flex-col items-start gap-1 sm:mt-3">
+          {person.bio && (
+            <p className="mt-2 text-[12px] leading-relaxed text-slate-600 sm:text-[12.5px] md:text-[13px]">
+              {person.bio}
+            </p>
+          )}
+
+          {/* DESKTOP / TABLET — email + button STACKED vertically */}
+          {hasContact && (
+            <div className="mt-3 hidden flex-col items-start gap-2 md:flex">
+              {emails.map((mail) => (
+                <a
+                  key={mail}
+                  href={`mailto:${mail}`}
+                  className="inline-flex max-w-full items-center gap-2 text-[12px] font-medium text-slate-700 transition-colors hover:text-[#9e1c32] sm:text-[12.5px]"
+                >
+                  <span
+                    className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full"
+                    style={{ backgroundColor: `${ACCENT}12`, color: ACCENT }}
+                  >
+                    <MailIcon className="h-3 w-3" />
+                  </span>
+                  <span className="truncate">{mail}</span>
+                </a>
+              ))}
+
+              {person.website && (
+                <a
+                  href={person.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[10.5px] font-bold uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90 sm:px-4 sm:text-[11px]"
+                  style={{ backgroundColor: NAVY }}
+                >
+                  Visit Website
+                  <ArrowUpRightIcon className="h-3 w-3" />
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* MOBILE ONLY — email + button SIDE BY SIDE at the bottom */}
+      {hasContact && (
+        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-slate-100 pt-4 md:hidden">
           {emails.map((mail) => (
             <a
               key={mail}
               href={`mailto:${mail}`}
-              className="inline-flex max-w-full items-center gap-1.5 text-[11px] font-medium text-slate-700 transition-colors hover:text-[#9e1c32] sm:gap-2 sm:text-[12px]"
+              className="inline-flex max-w-full items-center gap-2 text-[11.5px] font-medium text-slate-700 transition-colors hover:text-[#9e1c32]"
             >
               <span
-                className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full sm:h-6 sm:w-6"
+                className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full"
                 style={{ backgroundColor: `${ACCENT}12`, color: ACCENT }}
               >
-                <MailIcon className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+                <MailIcon className="h-3 w-3" />
               </span>
               <span className="truncate">{mail}</span>
             </a>
           ))}
-        </div>
 
-        {person.website && (
-          <a
-            href={person.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90 sm:px-3.5 sm:py-2 sm:text-[10.5px]"
-            style={{ backgroundColor: NAVY }}
-          >
-            Visit Website
-            <ArrowUpRightIcon className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
-          </a>
-        )}
-      </div>
+          {person.website && (
+            <a
+              href={person.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex flex-shrink-0 items-center gap-1.5 rounded-full px-3.5 py-2 text-[10.5px] font-bold uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
+              style={{ backgroundColor: NAVY }}
+            >
+              Visit Website
+              <ArrowUpRightIcon className="h-3 w-3" />
+            </a>
+          )}
+        </div>
+      )}
     </motion.div>
   );
 }
+
 
 function LeadershipBlock({ dean, deputyDean, reduce }) {
   return (

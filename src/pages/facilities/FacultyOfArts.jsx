@@ -10,6 +10,7 @@ import {
   SearchIcon,
 } from "../../components/icons/index";
 
+
 const EASE = [0.22, 1, 0.36, 1];
 const NAVY = "#252659";
 const ACCENT = "#252659";
@@ -220,6 +221,7 @@ const MOCK_DATA = {
   ],
 };
 
+
 function Eyebrow({ children, color = ACCENT }) {
   return (
     <div className="flex items-center gap-3">
@@ -264,9 +266,85 @@ function LoadingSkeleton() {
   );
 }
 
+// function DeanBlock({ dean, reduce }) {
+//   if (!dean) return null;
+//   const emails = [dean.email, dean.alt_email].filter(Boolean);
+
+//   return (
+//     <motion.div
+//       initial={reduce ? false : { opacity: 0, y: 20 }}
+//       whileInView={{ opacity: 1, y: 0 }}
+//       viewport={{ once: true, amount: 0.2 }}
+//       transition={{ duration: 0.6, ease: EASE }}
+//       className="mb-10 flex gap-3 rounded-2xl border border-slate-200 bg-white p-3.5 sm:mb-12 sm:gap-5 sm:p-5 md:gap-8 md:p-7 lg:p-8"
+//     >
+//       <div className="w-24 flex-shrink-0 sm:w-28 md:w-40 lg:w-48 mt-12">
+//         <img
+//           src={dean.image_url}
+//           alt={dean.name}
+//           draggable={false}
+//           className="aspect-[4/5] w-full rounded-xl object-cover object-top"
+//         />
+//       </div>
+
+//       {/* Info — always right, always left-aligned */}
+//       <div className="min-w-0 flex-1 text-left">
+//         <div className="flex justify-start">
+//           <Eyebrow>{dean.role}</Eyebrow>
+//         </div>
+
+//         <h2
+//           className="mt-2 font-serif text-base font-bold leading-tight tracking-tight sm:text-lg md:text-2xl lg:text-3xl"
+//           style={{ color: NAVY }}
+//         >
+//           {dean.name}
+//         </h2>
+
+//         {dean.bio && (
+//           <p className="mt-2 text-[11.5px] leading-relaxed text-slate-600 sm:text-[12.5px] md:text-[14px]">
+//             {dean.bio}
+//           </p>
+//         )}
+
+//         <div className="mt-3 flex flex-col items-start gap-1.5 sm:mt-4">
+//           {emails.map((mail) => (
+//             <a
+//               key={mail}
+//               href={`mailto:${mail}`}
+//               className="inline-flex max-w-full items-center gap-2 text-[11.5px] font-medium text-slate-700 transition-colors hover:text-[#9e1c32] sm:text-[12.5px] md:text-[13.5px]"
+//             >
+//               <span
+//                 className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full sm:h-7 sm:w-7"
+//                 style={{ backgroundColor: `${ACCENT}12`, color: ACCENT }}
+//               >
+//                 <MailIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+//               </span>
+//               <span className="truncate">{mail}</span>
+//             </a>
+//           ))}
+//         </div>
+
+//         {dean.website && (
+//           <a
+//             href={dean.website}
+//             target="_blank"
+//             rel="noopener noreferrer"
+//             className="mt-3 inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[10.5px] font-bold uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90 sm:mt-4 sm:px-4 sm:text-[11px] md:px-5 md:py-2.5 md:text-[12px]"
+//             style={{ backgroundColor: NAVY }}
+//           >
+//             Visit Website
+//             <ArrowUpRightIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+//           </a>
+//         )}
+//       </div>
+//     </motion.div>
+//   );
+// }
+
 function DeanBlock({ dean, reduce }) {
   if (!dean) return null;
   const emails = [dean.email, dean.alt_email].filter(Boolean);
+  const hasContact = emails.length > 0 || dean.website;
 
   return (
     <motion.div
@@ -274,70 +352,110 @@ function DeanBlock({ dean, reduce }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, ease: EASE }}
-      className="mb-10 flex gap-3 rounded-2xl border border-slate-200 bg-white p-3.5 sm:mb-12 sm:gap-5 sm:p-5 md:gap-8 md:p-7 lg:p-8"
+      className="mb-10 rounded-2xl border border-slate-200 bg-white p-3.5 sm:mb-12 sm:p-5 md:p-7 lg:p-8"
     >
-      <div className="w-24 flex-shrink-0 sm:w-28 md:w-40 lg:w-48 mt-12">
-        <img
-          src={dean.image_url}
-          alt={dean.name}
-          draggable={false}
-          className="aspect-[4/5] w-full rounded-xl object-cover object-top"
-        />
-      </div>
-
-      {/* Info — always right, always left-aligned */}
-      <div className="min-w-0 flex-1 text-left">
-        <div className="flex justify-start">
-          <Eyebrow>{dean.role}</Eyebrow>
+      {/* Top: image + text block */}
+      <div className="flex items-center gap-3 sm:gap-5 md:gap-8">
+        <div className="w-24 flex-shrink-0 self-center sm:w-28 md:w-40 lg:w-48">
+          <img
+            src={dean.image_url}
+            alt={dean.name}
+            draggable={false}
+            className="aspect-[4/5] w-full rounded-xl object-cover object-top"
+          />
         </div>
 
-        <h2
-          className="mt-2 font-serif text-base font-bold leading-tight tracking-tight sm:text-lg md:text-2xl lg:text-3xl"
-          style={{ color: NAVY }}
-        >
-          {dean.name}
-        </h2>
+        <div className="min-w-0 flex-1 text-left">
+          <div className="flex justify-start">
+            <Eyebrow>{dean.role}</Eyebrow>
+          </div>
 
-        {dean.bio && (
-          <p className="mt-2 text-[11.5px] leading-relaxed text-slate-600 sm:text-[12.5px] md:text-[14px]">
-            {dean.bio}
-          </p>
-        )}
+          <h2
+            className="mt-2 font-serif text-base font-bold leading-tight tracking-tight sm:text-lg md:text-2xl lg:text-3xl"
+            style={{ color: NAVY }}
+          >
+            {dean.name}
+          </h2>
 
-        <div className="mt-3 flex flex-col items-start gap-1.5 sm:mt-4">
+          {dean.bio && (
+            <p className="mt-2 text-[11.5px] leading-relaxed text-slate-600 sm:text-[12.5px] md:text-[14px]">
+              {dean.bio}
+            </p>
+          )}
+
+          {/* DESKTOP / TABLET — email and button STACKED vertically */}
+          {hasContact && (
+            <div className="mt-4 hidden flex-col items-start gap-2.5 md:flex">
+              {emails.map((mail) => (
+                <a
+                  key={mail}
+                  href={`mailto:${mail}`}
+                  className="inline-flex max-w-full items-center gap-2 text-[12.5px] font-medium text-slate-700 transition-colors hover:text-[#9e1c32] md:text-[13.5px]"
+                >
+                  <span
+                    className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full"
+                    style={{ backgroundColor: `${ACCENT}12`, color: ACCENT }}
+                  >
+                    <MailIcon className="h-3.5 w-3.5" />
+                  </span>
+                  <span className="truncate">{mail}</span>
+                </a>
+              ))}
+
+              {dean.website && (
+                <a
+                  href={dean.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex flex-shrink-0 items-center gap-1.5 mt-1 rounded-full px-4 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90 md:px-5 md:py-2.5 md:text-[12px]"
+                  style={{ backgroundColor: NAVY }}
+                >
+                  Visit Website
+                  <ArrowUpRightIcon className="h-3.5 w-3.5" />
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* MOBILE ONLY — email and button SIDE BY SIDE at the bottom */}
+      {hasContact && (
+        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-slate-100 pt-4 md:hidden">
           {emails.map((mail) => (
             <a
               key={mail}
               href={`mailto:${mail}`}
-              className="inline-flex max-w-full items-center gap-2 text-[11.5px] font-medium text-slate-700 transition-colors hover:text-[#9e1c32] sm:text-[12.5px] md:text-[13.5px]"
+              className="inline-flex max-w-full items-center gap-2 text-[11.5px] font-medium text-slate-700 transition-colors hover:text-[#9e1c32]"
             >
               <span
-                className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full sm:h-7 sm:w-7"
+                className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full"
                 style={{ backgroundColor: `${ACCENT}12`, color: ACCENT }}
               >
-                <MailIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                <MailIcon className="h-3 w-3" />
               </span>
               <span className="truncate">{mail}</span>
             </a>
           ))}
-        </div>
 
-        {dean.website && (
-          <a
-            href={dean.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-3 inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[10.5px] font-bold uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90 sm:mt-4 sm:px-4 sm:text-[11px] md:px-5 md:py-2.5 md:text-[12px]"
-            style={{ backgroundColor: NAVY }}
-          >
-            Visit Website
-            <ArrowUpRightIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-          </a>
-        )}
-      </div>
+          {dean.website && (
+            <a
+              href={dean.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex flex-shrink-0 items-center gap-1.5 rounded-full px-3.5 py-2 text-[10.5px] font-bold uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
+              style={{ backgroundColor: NAVY }}
+            >
+              Visit Website
+              <ArrowUpRightIcon className="h-3 w-3" />
+            </a>
+          )}
+        </div>
+      )}
     </motion.div>
   );
 }
+
 function TabSwitcher({ active, onChange, programCount, collegeCount }) {
   const TABS = [
     { id: "programs", label: "Programs", fullLabel: "Programs Offered", count: programCount, Icon: BookIcon },
